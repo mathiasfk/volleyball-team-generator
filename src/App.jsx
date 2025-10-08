@@ -13,197 +13,198 @@ import './App.css'
 function App() {
   const { t } = useTranslation()
   useSEO() // Initialize SEO management
-  const [participantes, setParticipantes] = useState([])
-  const [novoNome, setNovoNome] = useState('')
-  const [editandoId, setEditandoId] = useState(null)
-  const [nomeEditado, setNomeEditado] = useState('')
-  const [times, setTimes] = useState([])
-  const [pessoasDeFora, setPessoasDeFora] = useState([])
-  const [erro, setErro] = useState('')
-  const [dadosCarregados, setDadosCarregados] = useState(false)
+  const [participants, setParticipants] = useState([])
+  const [newName, setNewName] = useState('')
+  const [editingId, setEditingId] = useState(null)
+  const [editedName, setEditedName] = useState('')
+  const [teams, setTeams] = useState([])
+  const [benchPlayers, setBenchPlayers] = useState([])
+  const [error, setError] = useState('')
+  const [dataLoaded, setDataLoaded] = useState(false)
 
-  // Cores vibrantes para os times
-  const coresDosTimes = [
-    { nome: t('colors.red'), cor: '#ef4444', corTexto: '#ffffff' },
-    { nome: t('colors.blue'), cor: '#3b82f6', corTexto: '#ffffff' },
-    { nome: t('colors.green'), cor: '#22c55e', corTexto: '#ffffff' },
-    { nome: t('colors.purple'), cor: '#a855f7', corTexto: '#ffffff' },
-    { nome: t('colors.orange'), cor: '#f97316', corTexto: '#ffffff' },
-    { nome: t('colors.pink'), cor: '#ec4899', corTexto: '#ffffff' }
+  // Vibrant colors for teams
+  const teamColors = [
+    { name: t('colors.red'), color: '#ef4444', textColor: '#ffffff' },
+    { name: t('colors.blue'), color: '#3b82f6', textColor: '#ffffff' },
+    { name: t('colors.green'), color: '#22c55e', textColor: '#ffffff' },
+    { name: t('colors.purple'), color: '#a855f7', textColor: '#ffffff' },
+    { name: t('colors.orange'), color: '#f97316', textColor: '#ffffff' },
+    { name: t('colors.pink'), color: '#ec4899', textColor: '#ffffff' }
   ]
 
-  // Carregar dados do localStorage ao inicializar
+  // Load data from localStorage on initialization
   useEffect(() => {
-    console.log('🔍 Carregando dados do localStorage...')
-    const participantesSalvos = localStorage.getItem('volei-participantes')
+    console.log('🔍 Loading data from localStorage...')
+    const savedParticipants = localStorage.getItem('volei-participantes')
     
-    console.log('📦 Dados encontrados:', participantesSalvos)
+    console.log('📦 Data found:', savedParticipants)
     
-    if (participantesSalvos) {
+    if (savedParticipants) {
       try {
-        const dadosParsed = JSON.parse(participantesSalvos)
-        console.log('✅ Dados carregados com sucesso:', dadosParsed)
-        setParticipantes(dadosParsed)
+        const parsedData = JSON.parse(savedParticipants)
+        console.log('✅ Data loaded successfully:', parsedData)
+        setParticipants(parsedData)
       } catch (error) {
-        console.error('❌ Erro ao carregar participantes:', error)
-        console.log('🗑️ Limpando dados corrompidos...')
+        console.error('❌ Error loading participants:', error)
+        console.log('🗑️ Clearing corrupted data...')
         localStorage.removeItem('volei-participantes')
       }
     } else {
-      console.log('⚠️ Nenhum dado salvo encontrado no localStorage')
+      console.log('⚠️ No saved data found in localStorage')
     }
     
-    // Marcar que os dados foram carregados (ou tentativa foi feita)
-    setDadosCarregados(true)
+    // Mark that data has been loaded (or attempt was made)
+    setDataLoaded(true)
   }, [])
 
-  // Salvar participantes no localStorage sempre que a lista mudar
-  // MAS APENAS depois que os dados iniciais foram carregados
+  // Save participants to localStorage whenever the list changes
+  // BUT ONLY after initial data has been loaded
   useEffect(() => {
-    if (!dadosCarregados) {
-      console.log('⏳ Aguardando carregamento inicial...')
+    if (!dataLoaded) {
+      console.log('⏳ Waiting for initial load...')
       return
     }
     
-    console.log('💾 Salvando participantes:', participantes)
+    console.log('💾 Saving participants:', participants)
     try {
-      localStorage.setItem('volei-participantes', JSON.stringify(participantes))
-      console.log('✅ Dados salvos com sucesso no localStorage')
+      localStorage.setItem('volei-participantes', JSON.stringify(participants))
+      console.log('✅ Data saved successfully to localStorage')
     } catch (error) {
-      console.error('❌ Erro ao salvar no localStorage:', error)
+      console.error('❌ Error saving to localStorage:', error)
     }
-  }, [participantes, dadosCarregados])
+  }, [participants, dataLoaded])
 
-  const limparErro = () => {
-    if (erro) setErro('')
+  const clearError = () => {
+    if (error) setError('')
   }
 
-  const verificarNomeDuplicado = (nome, idExcluir = null) => {
-    return participantes.some(p => 
-      p.nome.toLowerCase().trim() === nome.toLowerCase().trim() && 
-      p.id !== idExcluir
+  const isDuplicateName = (name, idToExclude = null) => {
+    return participants.some(p => 
+      p.nome.toLowerCase().trim() === name.toLowerCase().trim() && 
+      p.id !== idToExclude
     )
   }
 
-  const adicionarParticipante = () => {
-    const nomeFormatado = novoNome.trim()
+  const addParticipant = () => {
+    const formattedName = newName.trim()
     
-    if (!nomeFormatado) {
-      setErro(t('errors.empty_name'))
+    if (!formattedName) {
+      setError(t('errors.empty_name'))
       return
     }
 
-    if (verificarNomeDuplicado(nomeFormatado)) {
-      setErro(t('errors.duplicate_name'))
+    if (isDuplicateName(formattedName)) {
+      setError(t('errors.duplicate_name'))
       return
     }
 
-    const novoParticipante = {
+    const newParticipant = {
       id: Date.now().toString(),
-      nome: nomeFormatado
+      nome: formattedName
     }
-    setParticipantes([...participantes, novoParticipante])
-    setNovoNome('')
-    limparErro()
+    setParticipants([...participants, newParticipant])
+    setNewName('')
+    clearError()
   }
 
-  const removerParticipante = (id) => {
-    setParticipantes(participantes.filter(p => p.id !== id))
-    limparErro()
+  const removeParticipant = (id) => {
+    setParticipants(participants.filter(p => p.id !== id))
+    clearError()
   }
 
-  const limparTodosParticipantes = () => {
-    setParticipantes([])
-    setTimes([])
-    setPessoasDeFora([])
+  const clearAllParticipants = () => {
+    setParticipants([])
+    setTeams([])
+    setBenchPlayers([])
     localStorage.removeItem('volei-participantes')
-    limparErro()
+    clearError()
   }
 
-  const iniciarEdicao = (participante) => {
-    setEditandoId(participante.id)
-    setNomeEditado(participante.nome)
-    limparErro()
+  const startEditing = (participant) => {
+    setEditingId(participant.id)
+    setEditedName(participant.nome)
+    clearError()
   }
 
-  const salvarEdicao = () => {
-    const nomeFormatado = nomeEditado.trim()
+  const saveEdit = () => {
+    const formattedName = editedName.trim()
     
-    if (!nomeFormatado) {
-      setErro(t('errors.empty_name'))
+    if (!formattedName) {
+      setError(t('errors.empty_name'))
       return
     }
 
-    if (verificarNomeDuplicado(nomeFormatado, editandoId)) {
-      setErro(t('errors.duplicate_name'))
+    if (isDuplicateName(formattedName, editingId)) {
+      setError(t('errors.duplicate_name'))
       return
     }
 
-    setParticipantes(participantes.map(p => 
-      p.id === editandoId ? { ...p, nome: nomeFormatado } : p
+    setParticipants(participants.map(p => 
+      p.id === editingId ? { ...p, nome: formattedName } : p
     ))
-    setEditandoId(null)
-    setNomeEditado('')
-    limparErro()
+    setEditingId(null)
+    setEditedName('')
+    clearError()
   }
 
-  const cancelarEdicao = () => {
-    setEditandoId(null)
-    setNomeEditado('')
-    limparErro()
+  const cancelEdit = () => {
+    setEditingId(null)
+    setEditedName('')
+    clearError()
   }
 
-  const sortearTimes = () => {
-    if (participantes.length === 0) return
+  const drawTeams = () => {
+    if (participants.length === 0) return
 
-    // Embaralhar todos os participantes aleatoriamente
-    const participantesEmbaralhados = [...participantes].sort(() => Math.random() - 0.5)
+    // Draw teams based on number of participants
+    // Shuffle all participants randomly
+    const shuffledParticipants = [...participants].sort(() => Math.random() - 0.5)
     
-    let timesFormados = []
-    let pessoasRestantes = []
+    let formedTeams = []
+    let remainingPlayers = []
 
-    if (participantes.length < 12) {
-      // Menos de 12 pessoas: dividir igualmente em 2 times + 1 de fora
-      if (participantes.length <= 2) {
-        // Muito poucos participantes, criar apenas 1 time
-        timesFormados.push(participantesEmbaralhados)
+    if (participants.length < 12) {
+      // Less than 12 people: split into 2 teams + 1 on bench
+      if (participants.length <= 2) {
+        // Very few participants, create only 1 team
+        formedTeams.push(shuffledParticipants)
       } else {
-        // Dividir em 2 times igualmente, deixando 1 de fora se ímpar
-        const tamanhoTime = Math.floor((participantes.length - 1) / 2)
-        timesFormados.push(participantesEmbaralhados.slice(0, tamanhoTime))
-        timesFormados.push(participantesEmbaralhados.slice(tamanhoTime, tamanhoTime * 2))
+        // Split into 2 teams equally, leave 1 out if odd
+        const teamSize = Math.floor((participants.length - 1) / 2)
+        formedTeams.push(shuffledParticipants.slice(0, teamSize))
+        formedTeams.push(shuffledParticipants.slice(teamSize, teamSize * 2))
         
-        // Se sobrou alguém, fica de fora
-        if (participantesEmbaralhados.length > tamanhoTime * 2) {
-          pessoasRestantes = participantesEmbaralhados.slice(tamanhoTime * 2)
+        // If someone left, goes to bench
+        if (shuffledParticipants.length > teamSize * 2) {
+          remainingPlayers = shuffledParticipants.slice(teamSize * 2)
         }
       }
     } else {
-      // 12 ou mais pessoas: times de 6 + resto de fora
-      const numeroTimes = Math.floor(participantes.length / 6)
+      // 12 or more people: teams of 6 + rest on bench
+      const numberOfTeams = Math.floor(participants.length / 6)
       
-      for (let i = 0; i < numeroTimes; i++) {
-        const inicio = i * 6
-        const fim = inicio + 6
-        timesFormados.push(participantesEmbaralhados.slice(inicio, fim))
+      for (let i = 0; i < numberOfTeams; i++) {
+        const start = i * 6
+        const end = start + 6
+        formedTeams.push(shuffledParticipants.slice(start, end))
       }
       
-      // Pessoas restantes ficam de fora
-      const restantes = participantes.length % 6
-      if (restantes > 0) {
-        pessoasRestantes = participantesEmbaralhados.slice(numeroTimes * 6)
+      // Remaining people go to bench
+      const remaining = participants.length % 6
+      if (remaining > 0) {
+        remainingPlayers = shuffledParticipants.slice(numberOfTeams * 6)
       }
     }
 
-    setTimes(timesFormados)
-    setPessoasDeFora(pessoasRestantes)
-    limparErro()
+    setTeams(formedTeams)
+    setBenchPlayers(remainingPlayers)
+    clearError()
   }
 
-  const limparSorteio = () => {
-    setTimes([])
-    setPessoasDeFora([])
-    limparErro()
+  const clearDraw = () => {
+    setTeams([])
+    setBenchPlayers([])
+    clearError()
   }
 
   return (
@@ -216,17 +217,17 @@ function App() {
           <LanguageSelector />
         </div>
 
-        {/* Alerta de Erro */}
-        {erro && (
+        {/* Error Alert */}
+        {error && (
           <Alert className="mb-6 bg-red-900 border-red-700">
             <AlertCircle className="h-4 w-4" />
             <AlertDescription className="text-red-200">
-              {erro}
+              {error}
             </AlertDescription>
           </Alert>
         )}
 
-        {/* Seção de Adicionar Participantes */}
+        {/* Add Participants Section */}
         <Card className="mb-6 bg-gray-800 border-gray-700">
           <CardHeader>
             <CardTitle className="text-white flex items-center gap-2">
@@ -239,56 +240,56 @@ function App() {
               <Input
                 type="text"
                 placeholder={t('participants.placeholder')}
-                value={novoNome}
+                value={newName}
                 onChange={(e) => {
-                  setNovoNome(e.target.value)
-                  limparErro()
+                  setNewName(e.target.value)
+                  clearError()
                 }}
-                onKeyPress={(e) => e.key === 'Enter' && adicionarParticipante()}
+                onKeyPress={(e) => e.key === 'Enter' && addParticipant()}
                 className="bg-gray-700 border-gray-600 text-white placeholder-gray-400"
               />
               <Button 
-                onClick={adicionarParticipante}
+                onClick={addParticipant}
                 className="bg-blue-600 hover:bg-blue-700"
               >
                 {t('participants.add')}
               </Button>
               <Button 
-                onClick={limparTodosParticipantes}
+                onClick={clearAllParticipants}
                 variant="destructive"
                 className="bg-red-600 hover:bg-red-700"
-                disabled={participantes.length === 0}
+                disabled={participants.length === 0}
               >
                 <Trash className="w-4 h-4 mr-2" />
                 {t('participants.clear_all')}
               </Button>
             </div>
 
-            {/* Lista de Participantes */}
+            {/* Participants List */}
             <div className="space-y-2">
-              {participantes.map((participante) => (
-                <div key={participante.id} className="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
-                  {editandoId === participante.id ? (
+              {participants.map((participant) => (
+                <div key={participant.id} className="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                  {editingId === participant.id ? (
                     <div className="flex gap-2 flex-1">
                       <Input
                         type="text"
-                        value={nomeEditado}
+                        value={editedName}
                         onChange={(e) => {
-                          setNomeEditado(e.target.value)
-                          limparErro()
+                          setEditedName(e.target.value)
+                          clearError()
                         }}
-                        onKeyPress={(e) => e.key === 'Enter' && salvarEdicao()}
+                        onKeyPress={(e) => e.key === 'Enter' && saveEdit()}
                         className="bg-gray-600 border-gray-500 text-white"
                       />
                       <Button 
-                        onClick={salvarEdicao}
+                        onClick={saveEdit}
                         size="sm"
                         className="bg-green-600 hover:bg-green-700"
                       >
                         {t('participants.save')}
                       </Button>
                       <Button 
-                        onClick={cancelarEdicao}
+                        onClick={cancelEdit}
                         size="sm"
                         variant="outline"
                         className="border-gray-500 text-gray-300 hover:bg-gray-600"
@@ -298,10 +299,10 @@ function App() {
                     </div>
                   ) : (
                     <>
-                      <span className="text-white">{participante.nome}</span>
+                      <span className="text-white">{participant.nome}</span>
                       <div className="flex gap-2">
                         <Button
-                          onClick={() => iniciarEdicao(participante)}
+                          onClick={() => startEditing(participant)}
                           size="sm"
                           variant="outline"
                           className="border-gray-500 text-gray-300 hover:bg-gray-600"
@@ -309,7 +310,7 @@ function App() {
                           <Edit2 className="w-4 h-4" />
                         </Button>
                         <Button
-                          onClick={() => removerParticipante(participante.id)}
+                          onClick={() => removeParticipant(participant.id)}
                           size="sm"
                           variant="destructive"
                           className="bg-red-600 hover:bg-red-700"
@@ -325,25 +326,25 @@ function App() {
 
             <div className="mt-4 text-center">
               <Badge variant="secondary" className="bg-gray-700 text-white">
-                {t('participants.total', { count: participantes.length })}
+                {t('participants.total', { count: participants.length })}
               </Badge>
             </div>
           </CardContent>
         </Card>
 
-        {/* Botões de Ação */}
+        {/* Action Buttons */}
         <div className="flex gap-4 justify-center mb-6">
           <Button
-            onClick={sortearTimes}
-            disabled={participantes.length === 0}
+            onClick={drawTeams}
+            disabled={participants.length === 0}
             className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg"
           >
             <Shuffle className="w-5 h-5 mr-2" />
             {t('actions.draw_teams')}
           </Button>
-          {times.length > 0 && (
+          {teams.length > 0 && (
             <Button
-              onClick={limparSorteio}
+              onClick={clearDraw}
               variant="outline"
               className="border-gray-500 text-gray-300 hover:bg-gray-600 px-8 py-3 text-lg"
             >
@@ -352,47 +353,47 @@ function App() {
           )}
         </div>
 
-        {/* Resultado do Sorteio */}
-        {times.length > 0 && (
+        {/* Draw Results */}
+        {teams.length > 0 && (
           <div className="space-y-6">
             <h2 className="text-2xl font-bold text-center text-green-400">
               {t('results.title')}
             </h2>
             
-            {/* Times */}
+            {/* Teams */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {times.map((time, index) => {
-                const corTime = coresDosTimes[index % coresDosTimes.length]
+              {teams.map((team, index) => {
+                const teamColor = teamColors[index % teamColors.length]
                 return (
                   <Card key={index} className="bg-gray-800 border-gray-700">
                     <CardHeader 
                       className="text-center"
-                      style={{ backgroundColor: corTime.cor }}
+                      style={{ backgroundColor: teamColor.color }}
                     >
                       <CardTitle 
                         className="text-xl font-bold"
-                        style={{ color: corTime.corTexto }}
+                        style={{ color: teamColor.textColor }}
                       >
-                        {t('results.team', { color: corTime.nome })}
+                        {t('results.team', { color: teamColor.name })}
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="pt-4">
                       <div className="space-y-2">
-                        {time.map((participante, idx) => (
+                        {team.map((participant, idx) => (
                           <div 
-                            key={participante.id} 
+                            key={participant.id} 
                             className="bg-gray-700 p-2 rounded text-center text-white"
                           >
-                            {idx + 1}. {participante.nome}
+                            {idx + 1}. {participant.nome}
                           </div>
                         ))}
                       </div>
                       <div className="mt-3 text-center">
                         <Badge 
                           className="text-white"
-                          style={{ backgroundColor: corTime.cor }}
+                          style={{ backgroundColor: teamColor.color }}
                         >
-                          {t('results.players_count', { count: time.length })}
+                          {t('results.players_count', { count: team.length })}
                         </Badge>
                       </div>
                     </CardContent>
@@ -401,8 +402,8 @@ function App() {
               })}
             </div>
 
-            {/* Pessoas de Fora */}
-            {pessoasDeFora.length > 0 && (
+            {/* Bench Players */}
+            {benchPlayers.length > 0 && (
               <Card className="bg-gray-800 border-gray-700">
                 <CardHeader className="text-center bg-orange-600">
                   <CardTitle className="text-xl font-bold text-white">
@@ -411,18 +412,18 @@ function App() {
                 </CardHeader>
                 <CardContent className="pt-4">
                   <div className="space-y-2">
-                    {pessoasDeFora.map((participante) => (
+                    {benchPlayers.map((participant) => (
                       <div 
-                        key={participante.id} 
+                        key={participant.id} 
                         className="bg-gray-700 p-2 rounded text-center text-white"
                       >
-                        {participante.nome}
+                        {participant.nome}
                       </div>
                     ))}
                   </div>
                   <div className="mt-3 text-center">
                     <Badge className="bg-orange-600 text-white">
-                      {t('results.bench_count', { count: pessoasDeFora.length })}
+                      {t('results.bench_count', { count: benchPlayers.length })}
                     </Badge>
                   </div>
                 </CardContent>
