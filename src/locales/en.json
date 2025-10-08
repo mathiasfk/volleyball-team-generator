@@ -1,0 +1,44 @@
+{
+  "app": {
+    "title": "🏐 Volleyball Team Generator"
+  },
+  "participants": {
+    "manage": "Manage Participants",
+    "add": "Add",
+    "clear_all": "Clear All",
+    "placeholder": "Participant name",
+    "total": "Total: {{count}} participants",
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "remove": "Remove"
+  },
+  "actions": {
+    "draw_teams": "Draw Teams",
+    "clear_draw": "Clear Draw"
+  },
+  "results": {
+    "title": "Draw Results",
+    "team": "Team {{color}}",
+    "players_count": "{{count}} players",
+    "bench_title": "Bench Players",
+    "bench_count": "{{count}} person(s) on bench"
+  },
+  "colors": {
+    "red": "Red",
+    "blue": "Blue", 
+    "green": "Green",
+    "purple": "Purple",
+    "orange": "Orange",
+    "pink": "Pink"
+  },
+  "errors": {
+    "empty_name": "Please enter a valid name.",
+    "duplicate_name": "A participant with this name already exists. Please use a different name."
+  },
+  "language": {
+    "label": "Language",
+    "english": "English",
+    "portuguese": "Português"
+  }
+}

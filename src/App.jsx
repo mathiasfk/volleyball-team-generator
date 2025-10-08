@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button.jsx'
 import { Input } from '@/components/ui/input.jsx'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.jsx'
 import { Badge } from '@/components/ui/badge.jsx'
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx'
 import { Trash2, Edit2, Users, Shuffle, AlertCircle, Trash } from 'lucide-react'
+import LanguageSelector from './components/LanguageSelector.jsx'
 import './App.css'
 
 function App() {
+  const { t } = useTranslation()
   const [participantes, setParticipantes] = useState([])
   const [novoNome, setNovoNome] = useState('')
   const [editandoId, setEditandoId] = useState(null)
@@ -19,12 +22,12 @@ function App() {
 
   // Cores vibrantes para os times
   const coresDosTimes = [
-    { nome: 'Vermelho', cor: '#ef4444', corTexto: '#ffffff' },
-    { nome: 'Azul', cor: '#3b82f6', corTexto: '#ffffff' },
-    { nome: 'Verde', cor: '#22c55e', corTexto: '#ffffff' },
-    { nome: 'Roxo', cor: '#a855f7', corTexto: '#ffffff' },
-    { nome: 'Laranja', cor: '#f97316', corTexto: '#ffffff' },
-    { nome: 'Rosa', cor: '#ec4899', corTexto: '#ffffff' }
+    { nome: t('colors.red'), cor: '#ef4444', corTexto: '#ffffff' },
+    { nome: t('colors.blue'), cor: '#3b82f6', corTexto: '#ffffff' },
+    { nome: t('colors.green'), cor: '#22c55e', corTexto: '#ffffff' },
+    { nome: t('colors.purple'), cor: '#a855f7', corTexto: '#ffffff' },
+    { nome: t('colors.orange'), cor: '#f97316', corTexto: '#ffffff' },
+    { nome: t('colors.pink'), cor: '#ec4899', corTexto: '#ffffff' }
   ]
 
   // Carregar dados do localStorage ao inicializar
@@ -84,12 +87,12 @@ function App() {
     const nomeFormatado = novoNome.trim()
     
     if (!nomeFormatado) {
-      setErro('Por favor, digite um nome válido.')
+      setErro(t('errors.empty_name'))
       return
     }
 
     if (verificarNomeDuplicado(nomeFormatado)) {
-      setErro('Já existe um participante com este nome. Por favor, use um nome diferente.')
+      setErro(t('errors.duplicate_name'))
       return
     }
 
@@ -125,12 +128,12 @@ function App() {
     const nomeFormatado = nomeEditado.trim()
     
     if (!nomeFormatado) {
-      setErro('Por favor, digite um nome válido.')
+      setErro(t('errors.empty_name'))
       return
     }
 
     if (verificarNomeDuplicado(nomeFormatado, editandoId)) {
-      setErro('Já existe um participante com este nome. Por favor, use um nome diferente.')
+      setErro(t('errors.duplicate_name'))
       return
     }
 
@@ -204,9 +207,12 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-900 text-white p-4">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-4xl font-bold text-center mb-8 text-blue-400">
-          🏐 Sorteio de Times de Vôlei
-        </h1>
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-4xl font-bold text-blue-400">
+            {t('app.title')}
+          </h1>
+          <LanguageSelector />
+        </div>
 
         {/* Alerta de Erro */}
         {erro && (
@@ -223,14 +229,14 @@ function App() {
           <CardHeader>
             <CardTitle className="text-white flex items-center gap-2">
               <Users className="w-5 h-5" />
-              Gerenciar Participantes
+              {t('participants.manage')}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex gap-2 mb-4">
               <Input
                 type="text"
-                placeholder="Nome do participante"
+                placeholder={t('participants.placeholder')}
                 value={novoNome}
                 onChange={(e) => {
                   setNovoNome(e.target.value)
@@ -243,7 +249,7 @@ function App() {
                 onClick={adicionarParticipante}
                 className="bg-blue-600 hover:bg-blue-700"
               >
-                Adicionar
+                {t('participants.add')}
               </Button>
               <Button 
                 onClick={limparTodosParticipantes}
@@ -252,7 +258,7 @@ function App() {
                 disabled={participantes.length === 0}
               >
                 <Trash className="w-4 h-4 mr-2" />
-                Limpar Todos
+                {t('participants.clear_all')}
               </Button>
             </div>
 
@@ -277,7 +283,7 @@ function App() {
                         size="sm"
                         className="bg-green-600 hover:bg-green-700"
                       >
-                        Salvar
+                        {t('participants.save')}
                       </Button>
                       <Button 
                         onClick={cancelarEdicao}
@@ -285,7 +291,7 @@ function App() {
                         variant="outline"
                         className="border-gray-500 text-gray-300 hover:bg-gray-600"
                       >
-                        Cancelar
+                        {t('participants.cancel')}
                       </Button>
                     </div>
                   ) : (
@@ -317,7 +323,7 @@ function App() {
 
             <div className="mt-4 text-center">
               <Badge variant="secondary" className="bg-gray-700 text-white">
-                Total: {participantes.length} participantes
+                {t('participants.total', { count: participantes.length })}
               </Badge>
             </div>
           </CardContent>
@@ -331,7 +337,7 @@ function App() {
             className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg"
           >
             <Shuffle className="w-5 h-5 mr-2" />
-            Sortear Times
+            {t('actions.draw_teams')}
           </Button>
           {times.length > 0 && (
             <Button
@@ -339,7 +345,7 @@ function App() {
               variant="outline"
               className="border-gray-500 text-gray-300 hover:bg-gray-600 px-8 py-3 text-lg"
             >
-              Limpar Sorteio
+              {t('actions.clear_draw')}
             </Button>
           )}
         </div>
@@ -348,7 +354,7 @@ function App() {
         {times.length > 0 && (
           <div className="space-y-6">
             <h2 className="text-2xl font-bold text-center text-green-400">
-              🎯 Resultado do Sorteio
+              {t('results.title')}
             </h2>
             
             {/* Times */}
@@ -365,7 +371,7 @@ function App() {
                         className="text-xl font-bold"
                         style={{ color: corTime.corTexto }}
                       >
-                        Time {corTime.nome}
+                        {t('results.team', { color: corTime.nome })}
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="pt-4">
@@ -384,7 +390,7 @@ function App() {
                           className="text-white"
                           style={{ backgroundColor: corTime.cor }}
                         >
-                          {time.length} jogadores
+                          {t('results.players_count', { count: time.length })}
                         </Badge>
                       </div>
                     </CardContent>
@@ -398,7 +404,7 @@ function App() {
               <Card className="bg-gray-800 border-gray-700">
                 <CardHeader className="text-center bg-orange-600">
                   <CardTitle className="text-xl font-bold text-white">
-                    🏃 Pessoas de Fora
+                    {t('results.bench_title')}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="pt-4">
@@ -414,7 +420,7 @@ function App() {
                   </div>
                   <div className="mt-3 text-center">
                     <Badge className="bg-orange-600 text-white">
-                      {pessoasDeFora.length} pessoa(s) de fora
+                      {t('results.bench_count', { count: pessoasDeFora.length })}
                     </Badge>
                   </div>
                 </CardContent>

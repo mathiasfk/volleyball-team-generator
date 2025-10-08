@@ -1,0 +1,44 @@
+{
+  "app": {
+    "title": "🏐 Sorteio de Times de Vôlei"
+  },
+  "participants": {
+    "manage": "Gerenciar Participantes",
+    "add": "Adicionar",
+    "clear_all": "Limpar Todos",
+    "placeholder": "Nome do participante",
+    "total": "Total: {{count}} participantes",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "remove": "Remover"
+  },
+  "actions": {
+    "draw_teams": "Sortear Times",
+    "clear_draw": "Limpar Sorteio"
+  },
+  "results": {
+    "title": "Resultado do Sorteio",
+    "team": "Time {{color}}",
+    "players_count": "{{count}} jogadores",
+    "bench_title": "Pessoas de Fora",
+    "bench_count": "{{count}} pessoa(s) de fora"
+  },
+  "colors": {
+    "red": "Vermelho",
+    "blue": "Azul",
+    "green": "Verde", 
+    "purple": "Roxo",
+    "orange": "Laranja",
+    "pink": "Rosa"
+  },
+  "errors": {
+    "empty_name": "Por favor, digite um nome válido.",
+    "duplicate_name": "Já existe um participante com este nome. Por favor, use um nome diferente."
+  },
+  "language": {
+    "label": "Idioma",
+    "english": "English",
+    "portuguese": "Português"
+  }
+}
