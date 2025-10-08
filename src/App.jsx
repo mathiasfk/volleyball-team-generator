@@ -10,6 +10,8 @@ import LanguageSelector from './components/LanguageSelector.jsx'
 import useSEO from './hooks/useSEO.js'
 import './App.css'
 
+const LOCAL_STORAGE_KEY = 'volleyball-participants'
+
 function App() {
   const { t } = useTranslation()
   useSEO() // Initialize SEO management
@@ -36,7 +38,7 @@ function App() {
   useEffect(() => {
     if (dataLoaded) return // Prevent re-loading if already done
 
-    const savedParticipants = localStorage.getItem('volei-participantes')
+    const savedParticipants = localStorage.getItem(LOCAL_STORAGE_KEY)
     let parsedData = null
     let errorLoading = null
     
@@ -46,7 +48,7 @@ function App() {
         setParticipants(parsedData)
       } catch (error) {
         errorLoading = error
-        localStorage.removeItem('volei-participantes')
+        localStorage.removeItem(LOCAL_STORAGE_KEY)
       }
     }
 
@@ -68,7 +70,7 @@ function App() {
     }
     
     try {
-      localStorage.setItem('volei-participantes', JSON.stringify(participants))
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(participants))
     } catch (error) {
       console.error('❌ Error saving to localStorage:', error)
     }
@@ -135,7 +137,7 @@ function App() {
     setParticipants([])
     setTeams([])
     setBenchPlayers([])
-    localStorage.removeItem('volei-participantes')
+    localStorage.removeItem(LOCAL_STORAGE_KEY)
     clearError()
   }
 
