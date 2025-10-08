@@ -7,10 +7,12 @@ import { Badge } from '@/components/ui/badge.jsx'
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx'
 import { Trash2, Edit2, Users, Shuffle, AlertCircle, Trash } from 'lucide-react'
 import LanguageSelector from './components/LanguageSelector.jsx'
+import useSEO from './hooks/useSEO.js'
 import './App.css'
 
 function App() {
   const { t } = useTranslation()
+  useSEO() // Initialize SEO management
   const [participantes, setParticipantes] = useState([])
   const [novoNome, setNovoNome] = useState('')
   const [editandoId, setEditandoId] = useState(null)

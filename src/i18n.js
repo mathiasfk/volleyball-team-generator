@@ -13,11 +13,27 @@ const resources = {
   }
 }
 
+// Function to detect language from URL or localStorage
+const detectLanguage = () => {
+  const urlParams = new URLSearchParams(window.location.search)
+  const urlLang = urlParams.get('lang')
+  const savedLang = localStorage.getItem('i18nextLng')
+  
+  // Priority: URL param > localStorage > default to English
+  if (urlLang && (urlLang === 'en' || urlLang === 'pt')) {
+    return urlLang
+  }
+  if (savedLang && (savedLang === 'en' || savedLang === 'pt')) {
+    return savedLang
+  }
+  return 'en'
+}
+
 i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: localStorage.getItem('i18nextLng') || 'en', // get saved language or default to English
+    lng: detectLanguage(),
     fallbackLng: 'en',
     
     interpolation: {
