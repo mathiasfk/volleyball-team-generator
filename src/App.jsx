@@ -34,24 +34,27 @@ function App() {
 
   // Load data from localStorage on initialization
   useEffect(() => {
-    console.log('🔍 Loading data from localStorage...')
+    if (dataLoaded) return // Prevent re-loading if already done
+
     const savedParticipants = localStorage.getItem('volei-participantes')
-    
-    console.log('📦 Data found:', savedParticipants)
+    let parsedData = null
+    let errorLoading = null
     
     if (savedParticipants) {
       try {
-        const parsedData = JSON.parse(savedParticipants)
-        console.log('✅ Data loaded successfully:', parsedData)
+        parsedData = JSON.parse(savedParticipants)
         setParticipants(parsedData)
       } catch (error) {
-        console.error('❌ Error loading participants:', error)
-        console.log('🗑️ Clearing corrupted data...')
+        errorLoading = error
         localStorage.removeItem('volei-participantes')
       }
-    } else {
-      console.log('⚠️ No saved data found in localStorage')
     }
+
+    gtag('event', 'load_local_storage', {
+        'found_storage': !!savedParticipants,
+        'loaded_participant_count': parsedData ? parsedData.length : 0,
+        'error_loading': errorLoading ? errorLoading.message : null,
+    });
     
     // Mark that data has been loaded (or attempt was made)
     setDataLoaded(true)
@@ -61,14 +64,11 @@ function App() {
   // BUT ONLY after initial data has been loaded
   useEffect(() => {
     if (!dataLoaded) {
-      console.log('⏳ Waiting for initial load...')
       return
     }
     
-    console.log('💾 Saving participants:', participants)
     try {
       localStorage.setItem('volei-participantes', JSON.stringify(participants))
-      console.log('✅ Data saved successfully to localStorage')
     } catch (error) {
       console.error('❌ Error saving to localStorage:', error)
     }
@@ -87,19 +87,29 @@ function App() {
 
   const addParticipant = () => {
     const formattedName = newName.trim()
+    const isDuplicate = isDuplicateName(formattedName)
+    const isEmpty = formattedName === ''
+    const participantId = Date.now().toString()
+
+    gtag('event', 'add_participant', {
+        'participant_name': formattedName,
+        'is_empty': isEmpty,
+        'is_duplicate': isDuplicate,
+        'id': participantId
+    });
     
-    if (!formattedName) {
+    if (isEmpty) {
       setError(t('errors.empty_name'))
       return
     }
 
-    if (isDuplicateName(formattedName)) {
+    if (isDuplicate) {
       setError(t('errors.duplicate_name'))
       return
     }
 
     const newParticipant = {
-      id: Date.now().toString(),
+      id: participantId,
       nome: formattedName
     }
     setParticipants([...participants, newParticipant])
@@ -108,11 +118,20 @@ function App() {
   }
 
   const removeParticipant = (id) => {
+    gtag('event', 'remove_participant', {
+        'id': id
+    });
     setParticipants(participants.filter(p => p.id !== id))
     clearError()
   }
 
   const clearAllParticipants = () => {
+    gtag('event', 'clear_participants', {
+        'participant_count': participants.length,
+        'previous_team_count': teams.length,
+        'previous_bench_players_count': benchPlayers.length
+    });
+
     setParticipants([])
     setTeams([])
     setBenchPlayers([])
@@ -121,6 +140,11 @@ function App() {
   }
 
   const startEditing = (participant) => {
+    gtag('event', 'edit_participant_start', {
+        'previous_name': participant.nome,
+        'id': participant.id
+    });
+    
     setEditingId(participant.id)
     setEditedName(participant.nome)
     clearError()
@@ -128,13 +152,22 @@ function App() {
 
   const saveEdit = () => {
     const formattedName = editedName.trim()
+    const isDuplicate = isDuplicateName(formattedName, editingId)
+    const isEmpty = formattedName === ''
+
+    gtag('event', 'edit_participant_save', {
+        'new_name': formattedName,
+        'is_empty': isEmpty,
+        'is_duplicate': isDuplicate,
+        'id': editingId
+    });
     
-    if (!formattedName) {
+    if (isEmpty) {
       setError(t('errors.empty_name'))
       return
     }
 
-    if (isDuplicateName(formattedName, editingId)) {
+    if (isDuplicate) {
       setError(t('errors.duplicate_name'))
       return
     }
@@ -148,14 +181,32 @@ function App() {
   }
 
   const cancelEdit = () => {
+    gtag('event', 'edit_participant_cancel', {
+        'id': editingId
+    });
+
     setEditingId(null)
     setEditedName('')
     clearError()
   }
 
   const drawTeams = () => {
-    if (participants.length === 0) return
+    const { formedTeams, remainingPlayers } = calculateTeams()
 
+    gtag('event', 'draw_team', {
+        'participant_count': participants.length,
+        'new_teams_count': formedTeams.length,
+        'new_bench_players_count': remainingPlayers.length,
+        'previous_team_count': teams.length,
+        'previous_bench_players_count': benchPlayers.length
+    });
+
+    setTeams(formedTeams)
+    setBenchPlayers(remainingPlayers)
+    clearError()
+  }
+
+  const calculateTeams = () => {
     // Draw teams based on number of participants
     // Shuffle all participants randomly
     const shuffledParticipants = [...participants].sort(() => Math.random() - 0.5)
@@ -195,13 +246,16 @@ function App() {
         remainingPlayers = shuffledParticipants.slice(numberOfTeams * 6)
       }
     }
-
-    setTeams(formedTeams)
-    setBenchPlayers(remainingPlayers)
-    clearError()
+    return { formedTeams, remainingPlayers }
   }
 
   const clearDraw = () => {
+    gtag('event', 'clear_draw', {
+        'participant_count': participants.length,
+        'previous_team_count': teams.length,
+        'previous_bench_players_count': benchPlayers.length
+    });
+
     setTeams([])
     setBenchPlayers([])
     clearError()
