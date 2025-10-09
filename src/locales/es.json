@@ -1,0 +1,45 @@
+{
+  "app": {
+    "title": "🏐 Generador de Equipos de Vóley"
+  },
+  "participants": {
+    "manage": "Gestionar Participantes",
+    "add": "Agregar",
+    "clear_all": "Borrar Todo",
+    "placeholder": "Nombre del participante",
+    "total": "Total: {{count}} participantes",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "remove": "Eliminar"
+  },
+  "actions": {
+    "draw_teams": "Sortear Equipos",
+    "clear_draw": "Borrar Sorteo"
+  },
+  "results": {
+    "title": "Resultados del Sorteo",
+    "team": "Equipo {{color}}",
+    "players_count": "{{count}} jugadores",
+    "bench_title": "Jugadores en el Banco",
+    "bench_count": "{{count}} persona(s) en el banco"
+  },
+  "colors": {
+    "red": "Rojo",
+    "blue": "Azul", 
+    "green": "Verde",
+    "purple": "Morado",
+    "orange": "Naranja",
+    "pink": "Rosa"
+  },
+  "errors": {
+    "empty_name": "Por favor, ingresa un nombre válido.",
+    "duplicate_name": "Ya existe un participante con este nombre. Usa un nombre diferente."
+  },
+  "language": {
+    "label": "Idioma",
+    "english": "English",
+    "portuguese": "Português",
+    "spanish": "Español"
+  }
+}

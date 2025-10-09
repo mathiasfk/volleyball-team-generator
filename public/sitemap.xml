@@ -16,6 +16,10 @@
       href="https://volleyball-team-generator.com/?lang=pt" />
     <xhtml:link
       rel="alternate"
+      hreflang="es"
+      href="https://volleyball-team-generator.com/?lang=es" />
+    <xhtml:link
+      rel="alternate"
       hreflang="x-default"
       href="https://volleyball-team-generator.com/" />
   </url>
