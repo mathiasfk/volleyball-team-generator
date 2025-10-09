@@ -44,10 +44,16 @@ const useSEO = () => {
           languageName: 'हिन्दी',
           locale: 'hi_IN',
         },
+        ar: {
+          title: 'مولّد فرق الكرة الطائرة - أنشئ فرقاً عادلة ومتوازنة فوراً',
+          description:
+            'مولّد فرق كرة الطائرة مجاني عبر الإنترنت. أنشئ تلقائياً فرقاً عادلة ومتوازنة من لاعبيك. مثالي للمدربين والدوريات الترفيهية والمباريات الودية.',
+          languageName: 'العربية',
+          locale: 'ar_SA',
+        },
       }
       // Update title and meta tags based on the selected language
       const { title, description, languageName, locale } = seoData[lang] || seoData.en
-
 
       document.title = title
 
@@ -71,6 +77,14 @@ const useSEO = () => {
 
       let twitterDesc = document.querySelector('meta[name="twitter:description"]')
       if (twitterDesc) twitterDesc.setAttribute('content', description)
+
+      // Update language direction for RTL languages
+      const rtlLanguages = ['ar']
+      if (rtlLanguages.includes(lang)) {
+        document.documentElement.dir = 'rtl'
+      } else {
+        document.documentElement.dir = 'ltr'
+      }
 
       // Update HTML lang attribute
       document.documentElement.lang = lang
