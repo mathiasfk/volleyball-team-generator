@@ -13,6 +13,7 @@ const languages = [
   { code: 'pt', labelKey: 'language.portuguese', emoji: '🇧🇷' },
   { code: 'es', labelKey: 'language.spanish', emoji: '🇪🇸' },
   { code: 'zh', labelKey: 'language.chinese', emoji: '🇨🇳' },
+  { code: 'hi', labelKey: 'language.hindi', emoji: '🇮🇳' },
 ]
 
 const LanguageSelector = () => {

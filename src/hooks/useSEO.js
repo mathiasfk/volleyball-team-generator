@@ -37,7 +37,13 @@ const useSEO = () => {
           languageName: '中文',
           locale: 'zh_CN',
         },
-
+        hi: {
+          title: 'वॉलीबॉल टीम जनरेटर - तुरंत बनाएं संतुलित और निष्पक्ष टीमें',
+          description:
+            'फ्री ऑनलाइन वॉलीबॉल टीम जनरेटर। अपने खिलाड़ियों से स्वतः निष्पक्ष और संतुलित टीमें बनाएं। कोचों, मनोरंजन लीगों और पिकअप खेलों के लिए परफेक्ट।',
+          languageName: 'हिन्दी',
+          locale: 'hi_IN',
+        },
       }
       // Update title and meta tags based on the selected language
       const { title, description, languageName, locale } = seoData[lang] || seoData.en
