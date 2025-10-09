@@ -10,7 +10,10 @@ import LanguageSelector from './components/LanguageSelector.jsx'
 import useSEO from './hooks/useSEO.js'
 import './App.css'
 
-const LOCAL_STORAGE_KEY = 'volleyball-participants'
+const LOCAL_STORAGE_KEY_PARTICIPANTS = 'volleyball-participants'
+const LOCAL_STORAGE_KEY_TEAMS = 'volleyball-teams'
+const LOCAl_STORAGE_KEY_BENCH = 'volleyball-bench'
+
 
 function App() {
   const { t } = useTranslation()
@@ -37,30 +40,67 @@ function App() {
   // Load data from localStorage on initialization
   useEffect(() => {
     if (dataLoaded) return // Prevent re-loading if already done
-
-    const savedParticipants = localStorage.getItem(LOCAL_STORAGE_KEY)
-    let parsedData = null
-    let errorLoading = null
     
-    if (savedParticipants) {
-      try {
-        parsedData = JSON.parse(savedParticipants)
-        setParticipants(parsedData)
-      } catch (error) {
-        errorLoading = error
-        localStorage.removeItem(LOCAL_STORAGE_KEY)
-      }
-    }
+    const [loadedParticipants, errorParticipants] = loadDataFromStorage(LOCAL_STORAGE_KEY_PARTICIPANTS)
+    const [loadedTeams, errorTeams] = loadDataFromStorage(LOCAL_STORAGE_KEY_TEAMS)
+    const [loadedBench, errorBench] = loadDataFromStorage(LOCAl_STORAGE_KEY_BENCH)
+
+    // Combine any errors
+    const errorLoading = !!errorParticipants || !!errorTeams ? ({
+      [LOCAL_STORAGE_KEY_PARTICIPANTS]: errorParticipants?.message,
+      [LOCAL_STORAGE_KEY_TEAMS]: errorTeams?.message,
+      [LOCAl_STORAGE_KEY_BENCH]: errorBench?.message
+    }) : null
+
+    if (loadedParticipants) setParticipants(loadedParticipants)
+    if (loadedTeams) setTeams(loadedTeams)
+    if (loadedBench) setBenchPlayers(loadedBench)
 
     gtag('event', 'load_local_storage', {
-        'found_storage': !!savedParticipants,
-        'loaded_participant_count': parsedData ? parsedData.length : 0,
-        'error_loading': errorLoading ? errorLoading.message : null,
+        'found_storage': !!loadedParticipants || !!loadedTeams,
+        'loaded_participant_count': loadedParticipants ? loadedParticipants.length : 0,
+        'loaded_team_count': loadedTeams ? loadedTeams.length : 0,
+        'loaded_bench_count': loadedBench ? loadedBench.length : 0,
+        'error_loading': errorLoading ? JSON.stringify(errorLoading) : null,
     });
     
     // Mark that data has been loaded (or attempt was made)
     setDataLoaded(true)
   }, [])
+
+  const loadDataFromStorage = (key) => {
+    const savedData = localStorage.getItem(key)
+    let parsedData = null
+    let errorLoading = null
+    if (savedData) {
+      try {
+        parsedData = JSON.parse(savedData)
+      } catch (error) {
+        console.error(`❌ Error parsing ${key} from localStorage:`, error)
+        localStorage.removeItem(key)
+        errorLoading = error
+      }
+    }
+    return [parsedData, errorLoading]
+  }
+
+  const saveDataToStorage = (key, data) => {
+    try {
+      localStorage.setItem(key, JSON.stringify(data))
+    } catch (error) {
+      console.error(`❌ Error saving ${key} to localStorage:`, error)
+    }
+  }
+
+  const clearFromStorage = (key) => {
+    localStorage.removeItem(key)
+  }
+
+  const clearAllStorage = () => {
+    clearFromStorage(LOCAL_STORAGE_KEY_PARTICIPANTS)
+    clearFromStorage(LOCAL_STORAGE_KEY_TEAMS)
+    clearFromStorage(LOCAl_STORAGE_KEY_BENCH)
+  }
 
   // Save participants to localStorage whenever the list changes
   // BUT ONLY after initial data has been loaded
@@ -68,12 +108,8 @@ function App() {
     if (!dataLoaded) {
       return
     }
-    
-    try {
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(participants))
-    } catch (error) {
-      console.error('❌ Error saving to localStorage:', error)
-    }
+
+    saveDataToStorage(LOCAL_STORAGE_KEY_PARTICIPANTS, participants)
   }, [participants, dataLoaded])
 
   const clearError = () => {
@@ -137,8 +173,8 @@ function App() {
     setParticipants([])
     setTeams([])
     setBenchPlayers([])
-    localStorage.removeItem(LOCAL_STORAGE_KEY)
     clearError()
+    clearAllStorage()
   }
 
   const startEditing = (participant) => {
@@ -206,6 +242,10 @@ function App() {
     setTeams(formedTeams)
     setBenchPlayers(remainingPlayers)
     clearError()
+
+    // Save teams to localStorage
+    saveDataToStorage(LOCAL_STORAGE_KEY_TEAMS, formedTeams)
+    saveDataToStorage(LOCAl_STORAGE_KEY_BENCH, remainingPlayers)
   }
 
   const calculateTeams = () => {
@@ -261,6 +301,8 @@ function App() {
     setTeams([])
     setBenchPlayers([])
     clearError()
+    clearFromStorage(LOCAL_STORAGE_KEY_TEAMS)
+    clearFromStorage(LOCAl_STORAGE_KEY_BENCH)
   }
 
   return (
