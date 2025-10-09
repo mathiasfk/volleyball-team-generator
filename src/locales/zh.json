@@ -1,0 +1,46 @@
+{
+  "app": {
+    "title": "🏐 排球队伍生成器"
+  },
+  "participants": {
+    "manage": "管理参与者",
+    "add": "添加",
+    "clear_all": "清除全部",
+    "placeholder": "参与者姓名",
+    "total": "总计：{{count}} 名参与者",
+    "save": "保存",
+    "cancel": "取消",
+    "edit": "编辑",
+    "remove": "删除"
+  },
+  "actions": {
+    "draw_teams": "分配队伍",
+    "clear_draw": "清除分配"
+  },
+  "results": {
+    "title": "分队结果",
+    "team": "{{color}}队",
+    "players_count": "{{count}} 名球员",
+    "bench_title": "替补球员",
+    "bench_count": "替补席上有 {{count}} 人"
+  },
+  "colors": {
+    "red": "红队",
+    "blue": "蓝队",
+    "green": "绿队",
+    "purple": "紫队",
+    "orange": "橙队",
+    "pink": "粉队"
+  },
+  "errors": {
+    "empty_name": "请输入有效的姓名。",
+    "duplicate_name": "已存在同名参与者，请使用其他姓名。"
+  },
+  "language": {
+    "label": "语言",
+    "english": "English",
+    "portuguese": "Português",
+    "spanish": "Español",
+    "chinese": "中文"
+  }
+}

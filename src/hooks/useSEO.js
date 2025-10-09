@@ -30,6 +30,14 @@ const useSEO = () => {
           languageName: 'Español',
           locale: 'es_ES',
         },
+        zh: {
+          title: '排球队伍生成器 - 立即创建公平平衡的队伍',
+          description:
+            '免费的在线排球队伍生成器。自动从您的球员中创建公平、平衡的队伍。非常适合教练、娱乐联赛和即兴比赛。',
+          languageName: '中文',
+          locale: 'zh_CN',
+        },
+
       }
       // Update title and meta tags based on the selected language
       const { title, description, languageName, locale } = seoData[lang] || seoData.en
