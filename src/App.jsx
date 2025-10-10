@@ -5,10 +5,11 @@ import { Input } from '@/components/ui/input.jsx'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.jsx'
 import { Badge } from '@/components/ui/badge.jsx'
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx'
-import { Trash2, Edit2, Users, Shuffle, AlertCircle, Trash } from 'lucide-react'
+import { Trash2, Edit2, Users, Shuffle, AlertCircle, Trash, ListChevronsDownUp, ListChevronsUpDown } from 'lucide-react'
 import LanguageSelector from './components/LanguageSelector.jsx'
 import useSEO from './hooks/useSEO.js'
 import './App.css'
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './components/ui/collapsible.jsx'
 
 const LOCAL_STORAGE_KEY_PARTICIPANTS = 'volleyball-participants'
 const LOCAL_STORAGE_KEY_TEAMS = 'volleyball-teams'
@@ -26,6 +27,7 @@ function App() {
   const [benchPlayers, setBenchPlayers] = useState([])
   const [error, setError] = useState('')
   const [dataLoaded, setDataLoaded] = useState(false)
+  const [open, setOpen] = useState(true)
 
   // Vibrant colors for teams
   const teamColors = [
@@ -40,7 +42,7 @@ function App() {
   // Load data from localStorage on initialization
   useEffect(() => {
     if (dataLoaded) return // Prevent re-loading if already done
-    
+
     const [loadedParticipants, errorParticipants] = loadDataFromStorage(LOCAL_STORAGE_KEY_PARTICIPANTS)
     const [loadedTeams, errorTeams] = loadDataFromStorage(LOCAL_STORAGE_KEY_TEAMS)
     const [loadedBench, errorBench] = loadDataFromStorage(LOCAl_STORAGE_KEY_BENCH)
@@ -57,13 +59,13 @@ function App() {
     if (loadedBench) setBenchPlayers(loadedBench)
 
     gtag('event', 'load_local_storage', {
-        'found_storage': !!loadedParticipants || !!loadedTeams,
-        'loaded_participant_count': loadedParticipants ? loadedParticipants.length : 0,
-        'loaded_team_count': loadedTeams ? loadedTeams.length : 0,
-        'loaded_bench_count': loadedBench ? loadedBench.length : 0,
-        'error_loading': errorLoading ? JSON.stringify(errorLoading) : null,
+      'found_storage': !!loadedParticipants || !!loadedTeams,
+      'loaded_participant_count': loadedParticipants ? loadedParticipants.length : 0,
+      'loaded_team_count': loadedTeams ? loadedTeams.length : 0,
+      'loaded_bench_count': loadedBench ? loadedBench.length : 0,
+      'error_loading': errorLoading ? JSON.stringify(errorLoading) : null,
     });
-    
+
     // Mark that data has been loaded (or attempt was made)
     setDataLoaded(true)
   }, [])
@@ -117,8 +119,8 @@ function App() {
   }
 
   const isDuplicateName = (name, idToExclude = null) => {
-    return participants.some(p => 
-      p.nome.toLowerCase().trim() === name.toLowerCase().trim() && 
+    return participants.some(p =>
+      p.nome.toLowerCase().trim() === name.toLowerCase().trim() &&
       p.id !== idToExclude
     )
   }
@@ -130,12 +132,12 @@ function App() {
     const participantId = Date.now().toString()
 
     gtag('event', 'add_participant', {
-        'participant_name': formattedName,
-        'is_empty': isEmpty,
-        'is_duplicate': isDuplicate,
-        'id': participantId
+      'participant_name': formattedName,
+      'is_empty': isEmpty,
+      'is_duplicate': isDuplicate,
+      'id': participantId
     });
-    
+
     if (isEmpty) {
       setError(t('errors.empty_name'))
       return
@@ -157,7 +159,7 @@ function App() {
 
   const removeParticipant = (id) => {
     gtag('event', 'remove_participant', {
-        'id': id
+      'id': id
     });
     setParticipants(participants.filter(p => p.id !== id))
     clearError()
@@ -165,9 +167,9 @@ function App() {
 
   const clearAllParticipants = () => {
     gtag('event', 'clear_participants', {
-        'participant_count': participants.length,
-        'previous_team_count': teams.length,
-        'previous_bench_players_count': benchPlayers.length
+      'participant_count': participants.length,
+      'previous_team_count': teams.length,
+      'previous_bench_players_count': benchPlayers.length
     });
 
     setParticipants([])
@@ -179,10 +181,10 @@ function App() {
 
   const startEditing = (participant) => {
     gtag('event', 'edit_participant_start', {
-        'previous_name': participant.nome,
-        'id': participant.id
+      'previous_name': participant.nome,
+      'id': participant.id
     });
-    
+
     setEditingId(participant.id)
     setEditedName(participant.nome)
     clearError()
@@ -194,12 +196,12 @@ function App() {
     const isEmpty = formattedName === ''
 
     gtag('event', 'edit_participant_save', {
-        'new_name': formattedName,
-        'is_empty': isEmpty,
-        'is_duplicate': isDuplicate,
-        'id': editingId
+      'new_name': formattedName,
+      'is_empty': isEmpty,
+      'is_duplicate': isDuplicate,
+      'id': editingId
     });
-    
+
     if (isEmpty) {
       setError(t('errors.empty_name'))
       return
@@ -210,7 +212,7 @@ function App() {
       return
     }
 
-    setParticipants(participants.map(p => 
+    setParticipants(participants.map(p =>
       p.id === editingId ? { ...p, nome: formattedName } : p
     ))
     setEditingId(null)
@@ -220,7 +222,7 @@ function App() {
 
   const cancelEdit = () => {
     gtag('event', 'edit_participant_cancel', {
-        'id': editingId
+      'id': editingId
     });
 
     setEditingId(null)
@@ -232,11 +234,11 @@ function App() {
     const { formedTeams, remainingPlayers } = calculateTeams()
 
     gtag('event', 'draw_team', {
-        'participant_count': participants.length,
-        'new_teams_count': formedTeams.length,
-        'new_bench_players_count': remainingPlayers.length,
-        'previous_team_count': teams.length,
-        'previous_bench_players_count': benchPlayers.length
+      'participant_count': participants.length,
+      'new_teams_count': formedTeams.length,
+      'new_bench_players_count': remainingPlayers.length,
+      'previous_team_count': teams.length,
+      'previous_bench_players_count': benchPlayers.length
     });
 
     setTeams(formedTeams)
@@ -252,7 +254,7 @@ function App() {
     // Draw teams based on number of participants
     // Shuffle all participants randomly
     const shuffledParticipants = [...participants].sort(() => Math.random() - 0.5)
-    
+
     let formedTeams = []
     let remainingPlayers = []
 
@@ -266,7 +268,7 @@ function App() {
         const teamSize = Math.floor((participants.length - 1) / 2)
         formedTeams.push(shuffledParticipants.slice(0, teamSize))
         formedTeams.push(shuffledParticipants.slice(teamSize, teamSize * 2))
-        
+
         // If someone left, goes to bench
         if (shuffledParticipants.length > teamSize * 2) {
           remainingPlayers = shuffledParticipants.slice(teamSize * 2)
@@ -275,13 +277,13 @@ function App() {
     } else {
       // 12 or more people: teams of 6 + rest on bench
       const numberOfTeams = Math.floor(participants.length / 6)
-      
+
       for (let i = 0; i < numberOfTeams; i++) {
         const start = i * 6
         const end = start + 6
         formedTeams.push(shuffledParticipants.slice(start, end))
       }
-      
+
       // Remaining people go to bench
       const remaining = participants.length % 6
       if (remaining > 0) {
@@ -293,9 +295,9 @@ function App() {
 
   const clearDraw = () => {
     gtag('event', 'clear_draw', {
-        'participant_count': participants.length,
-        'previous_team_count': teams.length,
-        'previous_bench_players_count': benchPlayers.length
+      'participant_count': participants.length,
+      'previous_team_count': teams.length,
+      'previous_bench_players_count': benchPlayers.length
     });
 
     setTeams([])
@@ -326,14 +328,19 @@ function App() {
         )}
 
         {/* Add Participants Section */}
-        <Card className="mb-6 bg-gray-800 border-gray-700">
-          <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
-              <Users className="w-5 h-5" />
-              {t('participants.manage')}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
+        <Collapsible open={open} onOpenChange={setOpen}>
+          <Card className="mb-6 bg-gray-800 border-gray-700">
+            <CardHeader>
+              <CollapsibleTrigger className="mb-4 text-left w-full">
+                <CardTitle className="text-white flex items-center gap-2">
+                  <Users className="w-5 h-5" />
+                  {t('participants.manage')}
+                  {open ? <ListChevronsDownUp className="w-5 h-5 ms-auto" /> : <ListChevronsUpDown className="w-5 h-5 ms-auto" />}
+                </CardTitle>
+              </CollapsibleTrigger>
+            </CardHeader>
+            <CollapsibleContent className="mb-6">
+                <CardContent>
             <div className="flex gap-2 mb-4">
               <Input
                 type="text"
@@ -346,19 +353,19 @@ function App() {
                 onKeyPress={(e) => e.key === 'Enter' && addParticipant()}
                 className="bg-gray-700 border-gray-600 text-white placeholder-gray-400"
               />
-              <Button 
+              <Button
                 onClick={addParticipant}
                 className="bg-blue-600 hover:bg-blue-700"
               >
                 {t('participants.add')}
               </Button>
-              <Button 
+              <Button
                 onClick={clearAllParticipants}
                 variant="destructive"
                 className="bg-red-600 hover:bg-red-700"
                 disabled={participants.length === 0}
               >
-                <Trash className="w-4 h-4 mr-2" />
+                <Trash className="w-4 h-4 me-2" />
                 {t('participants.clear_all')}
               </Button>
             </div>
@@ -379,14 +386,14 @@ function App() {
                         onKeyPress={(e) => e.key === 'Enter' && saveEdit()}
                         className="bg-gray-600 border-gray-500 text-white"
                       />
-                      <Button 
+                      <Button
                         onClick={saveEdit}
                         size="sm"
                         className="bg-green-600 hover:bg-green-700"
                       >
                         {t('participants.save')}
                       </Button>
-                      <Button 
+                      <Button
                         onClick={cancelEdit}
                         size="sm"
                         variant="outline"
@@ -428,7 +435,9 @@ function App() {
               </Badge>
             </div>
           </CardContent>
-        </Card>
+            </CollapsibleContent>
+          </Card>
+        </Collapsible>
 
         {/* Action Buttons */}
         <div className="flex gap-4 justify-center mb-6">
@@ -437,7 +446,7 @@ function App() {
             disabled={participants.length === 0}
             className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg"
           >
-            <Shuffle className="w-5 h-5 mr-2" />
+            <Shuffle className="w-5 h-5 me-2" />
             {t('actions.draw_teams')}
           </Button>
           {teams.length > 0 && (
@@ -457,18 +466,18 @@ function App() {
             <h2 className="text-2xl font-bold text-center text-green-400">
               {t('results.title')}
             </h2>
-            
+
             {/* Teams */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {teams.map((team, index) => {
                 const teamColor = teamColors[index % teamColors.length]
                 return (
                   <Card key={index} className="bg-gray-800 border-gray-700">
-                    <CardHeader 
+                    <CardHeader
                       className="text-center"
                       style={{ backgroundColor: teamColor.color }}
                     >
-                      <CardTitle 
+                      <CardTitle
                         className="text-xl font-bold"
                         style={{ color: teamColor.textColor }}
                       >
@@ -478,8 +487,8 @@ function App() {
                     <CardContent className="pt-4">
                       <div className="space-y-2">
                         {team.map((participant, idx) => (
-                          <div 
-                            key={participant.id} 
+                          <div
+                            key={participant.id}
                             className="bg-gray-700 p-2 rounded text-center text-white"
                           >
                             {idx + 1}. {participant.nome}
@@ -487,7 +496,7 @@ function App() {
                         ))}
                       </div>
                       <div className="mt-3 text-center">
-                        <Badge 
+                        <Badge
                           className="text-white"
                           style={{ backgroundColor: teamColor.color }}
                         >
@@ -511,8 +520,8 @@ function App() {
                 <CardContent className="pt-4">
                   <div className="space-y-2">
                     {benchPlayers.map((participant) => (
-                      <div 
-                        key={participant.id} 
+                      <div
+                        key={participant.id}
                         className="bg-gray-700 p-2 rounded text-center text-white"
                       >
                         {participant.nome}
