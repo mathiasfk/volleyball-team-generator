@@ -340,101 +340,101 @@ function App() {
               </CollapsibleTrigger>
             </CardHeader>
             <CollapsibleContent className="mb-6">
-                <CardContent>
-            <div className="flex gap-2 mb-4">
-              <Input
-                type="text"
-                placeholder={t('participants.placeholder')}
-                value={newName}
-                onChange={(e) => {
-                  setNewName(e.target.value)
-                  clearError()
-                }}
-                onKeyPress={(e) => e.key === 'Enter' && addParticipant()}
-                className="bg-gray-700 border-gray-600 text-white placeholder-gray-400"
-              />
-              <Button
-                onClick={addParticipant}
-                className="bg-blue-600 hover:bg-blue-700"
-              >
-                {t('participants.add')}
-              </Button>
-              <Button
-                onClick={clearAllParticipants}
-                variant="destructive"
-                className="bg-red-600 hover:bg-red-700"
-                disabled={participants.length === 0}
-              >
-                <Trash className="w-4 h-4 me-2" />
-                {t('participants.clear_all')}
-              </Button>
-            </div>
-
-            {/* Participants List */}
-            <div className="space-y-2">
-              {participants.map((participant) => (
-                <div key={participant.id} className="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
-                  {editingId === participant.id ? (
-                    <div className="flex gap-2 flex-1">
-                      <Input
-                        type="text"
-                        value={editedName}
-                        onChange={(e) => {
-                          setEditedName(e.target.value)
-                          clearError()
-                        }}
-                        onKeyPress={(e) => e.key === 'Enter' && saveEdit()}
-                        className="bg-gray-600 border-gray-500 text-white"
-                      />
-                      <Button
-                        onClick={saveEdit}
-                        size="sm"
-                        className="bg-green-600 hover:bg-green-700"
-                      >
-                        {t('participants.save')}
-                      </Button>
-                      <Button
-                        onClick={cancelEdit}
-                        size="sm"
-                        variant="outline"
-                        className="border-gray-500 text-gray-300 hover:bg-gray-600"
-                      >
-                        {t('participants.cancel')}
-                      </Button>
-                    </div>
-                  ) : (
-                    <>
-                      <span className="text-white">{participant.nome}</span>
-                      <div className="flex gap-2">
-                        <Button
-                          onClick={() => startEditing(participant)}
-                          size="sm"
-                          variant="outline"
-                          className="border-gray-500 text-gray-300 hover:bg-gray-600"
-                        >
-                          <Edit2 className="w-4 h-4" />
-                        </Button>
-                        <Button
-                          onClick={() => removeParticipant(participant.id)}
-                          size="sm"
-                          variant="destructive"
-                          className="bg-red-600 hover:bg-red-700"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    </>
-                  )}
+              <CardContent>
+                <div className="flex gap-2 mb-4">
+                  <Input
+                    type="text"
+                    placeholder={t('participants.placeholder')}
+                    value={newName}
+                    onChange={(e) => {
+                      setNewName(e.target.value)
+                      clearError()
+                    }}
+                    onKeyPress={(e) => e.key === 'Enter' && addParticipant()}
+                    className="bg-gray-700 border-gray-600 text-white placeholder-gray-400"
+                  />
+                  <Button
+                    onClick={addParticipant}
+                    className="bg-blue-600 hover:bg-blue-700"
+                  >
+                    {t('participants.add')}
+                  </Button>
+                  <Button
+                    onClick={clearAllParticipants}
+                    variant="destructive"
+                    className="bg-red-600 hover:bg-red-700"
+                    disabled={participants.length === 0}
+                  >
+                    <Trash className="w-4 h-4 me-2" />
+                    {t('participants.clear_all')}
+                  </Button>
                 </div>
-              ))}
-            </div>
 
-            <div className="mt-4 text-center">
-              <Badge variant="secondary" className="bg-gray-700 text-white">
-                {t('participants.total', { count: participants.length })}
-              </Badge>
-            </div>
-          </CardContent>
+                {/* Participants List */}
+                <div className="space-y-2">
+                  {participants.map((participant) => (
+                    <div key={participant.id} className="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                      {editingId === participant.id ? (
+                        <div className="flex gap-2 flex-1">
+                          <Input
+                            type="text"
+                            value={editedName}
+                            onChange={(e) => {
+                              setEditedName(e.target.value)
+                              clearError()
+                            }}
+                            onKeyPress={(e) => e.key === 'Enter' && saveEdit()}
+                            className="bg-gray-600 border-gray-500 text-white"
+                          />
+                          <Button
+                            onClick={saveEdit}
+                            size="sm"
+                            className="bg-green-600 hover:bg-green-700"
+                          >
+                            {t('participants.save')}
+                          </Button>
+                          <Button
+                            onClick={cancelEdit}
+                            size="sm"
+                            variant="outline"
+                            className="border-gray-500 text-gray-300 hover:bg-gray-600"
+                          >
+                            {t('participants.cancel')}
+                          </Button>
+                        </div>
+                      ) : (
+                        <>
+                          <span className="text-white">{participant.nome}</span>
+                          <div className="flex gap-2">
+                            <Button
+                              onClick={() => startEditing(participant)}
+                              size="sm"
+                              variant="outline"
+                              className="border-gray-500 text-gray-300 hover:bg-gray-600"
+                            >
+                              <Edit2 className="w-4 h-4" />
+                            </Button>
+                            <Button
+                              onClick={() => removeParticipant(participant.id)}
+                              size="sm"
+                              variant="destructive"
+                              className="bg-red-600 hover:bg-red-700"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-4 text-center">
+                  <Badge variant="secondary" className="bg-gray-700 text-white">
+                    {t('participants.total', { count: participants.length })}
+                  </Badge>
+                </div>
+              </CardContent>
             </CollapsibleContent>
           </Card>
         </Collapsible>
