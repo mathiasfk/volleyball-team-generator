@@ -311,10 +311,12 @@ function App() {
     <div className="min-h-screen bg-gray-900 text-white p-4">
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl font-bold text-blue-400">
+          <h1 className="hidden sm:block text-4xl font-bold text-blue-400">
             {t('app.title')}
           </h1>
-          <LanguageSelector />
+          <div className="ms-auto">
+            <LanguageSelector />
+          </div>
         </div>
 
         {/* Error Alert */}
@@ -355,18 +357,21 @@ function App() {
                   />
                   <Button
                     onClick={addParticipant}
-                    className="bg-blue-600 hover:bg-blue-700"
+                    className="bg-blue-600 hover:bg-blue-700 flex items-center justify-center"
                   >
-                    {t('participants.add')}
+                    <span className="block sm:hidden text-xl">+</span>
+                    <span className="hidden sm:block">{t('participants.add')}</span>
                   </Button>
                   <Button
                     onClick={clearAllParticipants}
                     variant="destructive"
-                    className="bg-red-600 hover:bg-red-700"
+                    className="bg-red-600 hover:bg-red-700 flex items-center justify-center"
                     disabled={participants.length === 0}
                   >
-                    <Trash className="w-4 h-4 me-2" />
-                    {t('participants.clear_all')}
+                    <Trash className="w-4 h-4" />
+                    <span className="hidden md:inline ms-2">
+                      {t('participants.clear_all')}
+                    </span>
                   </Button>
                 </div>
 
