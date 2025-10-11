@@ -1,42 +1,44 @@
+const maxTeams = 2
+const maxTeamSize = 6
+
 export function calculateTeams(participants: string[]) {
-    // Draw teams based on number of participants
+    // Validate input to make sure we have the actual number of players we're claiming
+    const availablePlayers = participants.length
+    
+    // Initialize return values - always have 2 teams
+    let formedTeams = [[], []]
+    let remainingPlayers = []
+    
+    // Special case: if we have 0 or 1 player, they go to bench
+    if (availablePlayers <= 1) {
+      return { formedTeams, remainingPlayers: participants }
+    }
+    
     // Shuffle all participants randomly
     const shuffledParticipants = [...participants].sort(() => Math.random() - 0.5)
-
-    let formedTeams = []
-    let remainingPlayers = []
-
-    if (participants.length < 12) {
-      // Less than 12 people: split into 2 teams + 1 on bench
-      if (participants.length <= 2) {
-        // Very few participants, create only 1 team
-        formedTeams.push(shuffledParticipants)
-      } else {
-        // Split into 2 teams equally, leave 1 out if odd
-        const teamSize = Math.floor((participants.length - 1) / 2)
-        formedTeams.push(shuffledParticipants.slice(0, teamSize))
-        formedTeams.push(shuffledParticipants.slice(teamSize, teamSize * 2))
-
-        // If someone left, goes to bench
-        if (shuffledParticipants.length > teamSize * 2) {
-          remainingPlayers = shuffledParticipants.slice(teamSize * 2)
-        }
-      }
-    } else {
-      // 12 or more people: teams of 6 + rest on bench
-      const numberOfTeams = Math.floor(participants.length / 6)
-
-      for (let i = 0; i < numberOfTeams; i++) {
-        const start = i * 6
-        const end = start + 6
-        formedTeams.push(shuffledParticipants.slice(start, end))
-      }
-
-      // Remaining people go to bench
-      const remaining = participants.length % 6
-      if (remaining > 0) {
-        remainingPlayers = shuffledParticipants.slice(numberOfTeams * 6)
-      }
+    
+    // Calculate players per team - try to get as close to 6 as possible
+    // while keeping teams balanced
+    let playersPerTeam = Math.min(
+      maxTeamSize,
+      Math.floor(availablePlayers / maxTeams)
+    )
+    
+    // Must have at least 1 player per team
+    playersPerTeam = Math.max(1, playersPerTeam)
+    
+    // Calculate total players that will be playing (not on bench)
+    const totalPlayingPlayers = playersPerTeam * maxTeams
+    
+    // Everyone else goes to the bench
+    remainingPlayers = shuffledParticipants.slice(totalPlayingPlayers)
+    
+    // Distribute playing players into teams
+    const playingPlayers = shuffledParticipants.slice(0, totalPlayingPlayers)
+    for (let i = 0; i < playingPlayers.length; i++) {
+      const teamIndex = Math.floor(i / playersPerTeam)
+      formedTeams[teamIndex].push(playingPlayers[i])
     }
+    
     return { formedTeams, remainingPlayers }
   }
