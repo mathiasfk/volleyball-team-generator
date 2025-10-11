@@ -1,0 +1,54 @@
+{
+  "app": {
+    "title": "🏐 Generator Tim Voli"
+  },
+  "participants": {
+    "manage": "Kelola Peserta",
+    "add": "Tambah",
+    "clear_all": "Hapus Semua",
+    "placeholder": "Nama peserta",
+    "total": "Total: {{count}} peserta",
+    "save": "Simpan",
+    "cancel": "Batal",
+    "edit": "Edit",
+    "remove": "Hapus"
+  },
+  "actions": {
+    "draw_teams": "Buat Tim",
+    "clear_draw": "Hapus Hasil"
+  },
+  "results": {
+    "title": "Hasil Pembagian Tim",
+    "team": "Tim {{color}}",
+    "players_count": "{{count}} pemain",
+    "bench_title": "Cadangan",
+    "bench_count": "{{count}} orang di bangku cadangan"
+  },
+  "colors": {
+    "red": "Merah",
+    "blue": "Biru",
+    "green": "Hijau",
+    "purple": "Ungu",
+    "orange": "Oranye",
+    "pink": "Merah muda"
+  },
+  "errors": {
+    "empty_name": "Silakan masukkan nama yang valid.",
+    "duplicate_name": "Peserta dengan nama ini sudah ada. Silakan gunakan nama lain."
+  },
+  "language": {
+    "label": "Bahasa",
+    "english": "English",
+    "portuguese": "Português",
+    "spanish": "Español",
+    "chinese": "中文",
+    "hindi": "हिन्दी",
+    "arabic": "العربية",
+    "french" : "Français",
+    "german" : "Deutsch", 
+    "indonesian": "Bahasa Indonesia",
+    "turkish": "Türkçe",
+    "japanese": "日本語",
+    "russian": "Русский"
+  }
+}

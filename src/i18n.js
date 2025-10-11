@@ -1,33 +1,19 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 
-import en from './locales/en.json'
-import pt from './locales/pt.json'
-import es from './locales/es.json'
-import zh from './locales/zh.json'
-import hi from './locales/hi.json'
-import ar from './locales/ar.json'
+// Import all locale files dynamically
+const localeFiles = import.meta.glob('./locales/*.json', { eager: true })
 
-const resources = {
-  en: {
-    translation: en
-  },
-  pt: {
-    translation: pt
-  },
-  es: {
-    translation: es
-  },
-  zh: {
-    translation: zh
-  },
-  hi: {
-    translation: hi
-  },
-  ar: {
-    translation: ar
+// Transform the imports into the resources object
+const resources = Object.entries(localeFiles).reduce((acc, [path, module]) => {
+  // Extract the language code from the path (e.g., './locales/en.json' -> 'en')
+  const lang = path.match(/\.\/locales\/(.+)\.json/)[1]
+  
+  acc[lang] = {
+    translation: module.default || module
   }
-}
+  return acc
+}, {})
 
 // Function to detect language from URL or localStorage
 const detectLanguage = () => {

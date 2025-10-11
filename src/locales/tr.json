@@ -1,0 +1,54 @@
+{
+  "app": {
+    "title": "🏐 Voleybol Takımı Oluşturucu"
+  },
+  "participants": {
+    "manage": "Katılımcıları Yönet",
+    "add": "Ekle",
+    "clear_all": "Tümünü Sil",
+    "placeholder": "Katılımcı adı",
+    "total": "Toplam: {{count}} katılımcı",
+    "save": "Kaydet",
+    "cancel": "İptal",
+    "edit": "Düzenle",
+    "remove": "Kaldır"
+  },
+  "actions": {
+    "draw_teams": "Takımları Oluştur",
+    "clear_draw": "Sonuçları Temizle"
+  },
+  "results": {
+    "title": "Kura Sonuçları",
+    "team": "{{color}} Takımı",
+    "players_count": "{{count}} oyuncu",
+    "bench_title": "Yedek Oyuncular",
+    "bench_count": "Yedek kulübesinde {{count}} kişi"
+  },
+  "colors": {
+    "red": "Kırmızı",
+    "blue": "Mavi",
+    "green": "Yeşil",
+    "purple": "Mor",
+    "orange": "Turuncu",
+    "pink": "Pembe"
+  },
+  "errors": {
+    "empty_name": "Lütfen geçerli bir isim girin.",
+    "duplicate_name": "Bu isimde bir katılımcı zaten var. Lütfen farklı bir isim kullanın."
+  },
+  "language": {
+    "label": "Dil",
+    "english": "English",
+    "portuguese": "Português",
+    "spanish": "Español",
+    "chinese": "中文",
+    "hindi": "हिन्दी",
+    "arabic": "العربية",
+    "french" : "Français",
+    "german" : "Deutsch", 
+    "indonesian": "Bahasa Indonesia",
+    "turkish": "Türkçe",
+    "japanese": "日本語",
+    "russian": "Русский"
+  }
+}

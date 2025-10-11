@@ -15,6 +15,13 @@ const languages = [
   { code: 'zh', labelKey: 'language.chinese', emoji: '🇨🇳' },
   { code: 'hi', labelKey: 'language.hindi', emoji: '🇮🇳' },
   { code: 'ar', labelKey: 'language.arabic', emoji: '🇸🇦' },
+  { code: 'fr', labelKey: 'language.french', emoji: '🇫🇷' },
+  { code: 'de', labelKey: 'language.german', emoji: '🇩🇪' },
+  { code: 'id', labelKey: 'language.indonesian', emoji: '🇮🇩' },
+  { code: 'tr', labelKey: 'language.turkish', emoji: '🇹🇷' },
+  { code: 'ja', labelKey: 'language.japanese', emoji: '🇯🇵' },
+  { code: 'ru', labelKey: 'language.russian', emoji: '🇷🇺' },
+
 ]
 
 const LanguageSelector = () => {

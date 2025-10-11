@@ -3,7 +3,7 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://volleyball-team-generator.com/</loc>
-    <lastmod>2025-10-09T00:00:00+00:00</lastmod>
+    <lastmod>2025-10-11T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link
@@ -30,6 +30,30 @@
       rel="alternate"
       hreflang="zh"
       href="https://volleyball-team-generator.com/?lang=zh" />
+    <xhtml:link
+      rel="alternate"
+      hreflang="fr"
+      href="https://volleyball-team-generator.com/?lang=fr" />
+    <xhtml:link
+      rel="alternate"
+      hreflang="de"
+      href="https://volleyball-team-generator.com/?lang=de" />
+    <xhtml:link
+      rel="alternate"
+      hreflang="id"
+      href="https://volleyball-team-generator.com/?lang=id" />
+    <xhtml:link
+      rel="alternate"
+      hreflang="tr"
+      href="https://volleyball-team-generator.com/?lang=tr" />
+    <xhtml:link
+      rel="alternate"
+      hreflang="ja"
+      href="https://volleyball-team-generator.com/?lang=ja" />
+    <xhtml:link
+      rel="alternate"
+      hreflang="ru"
+      href="https://volleyball-team-generator.com/?lang=ru" />
     <xhtml:link
       rel="alternate"
       hreflang="x-default"

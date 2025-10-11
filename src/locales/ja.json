@@ -1,0 +1,54 @@
+{
+  "app": {
+    "title": "🏐 バレーボールチームジェネレーター"
+  },
+  "participants": {
+    "manage": "参加者を管理",
+    "add": "追加",
+    "clear_all": "すべて削除",
+    "placeholder": "参加者名",
+    "total": "合計: {{count}} 人",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "edit": "編集",
+    "remove": "削除"
+  },
+  "actions": {
+    "draw_teams": "チームを作成",
+    "clear_draw": "結果をリセット"
+  },
+  "results": {
+    "title": "チーム分けの結果",
+    "team": "{{color}}チーム",
+    "players_count": "{{count}} 人のプレイヤー",
+    "bench_title": "ベンチメンバー",
+    "bench_count": "ベンチに {{count}} 人"
+  },
+  "colors": {
+    "red": "赤",
+    "blue": "青",
+    "green": "緑",
+    "purple": "紫",
+    "orange": "オレンジ",
+    "pink": "ピンク"
+  },
+  "errors": {
+    "empty_name": "有効な名前を入力してください。",
+    "duplicate_name": "この名前の参加者はすでに存在します。別の名前を使用してください。"
+  },
+  "language": {
+    "label": "言語",
+    "english": "English",
+    "portuguese": "Português",
+    "spanish": "Español",
+    "chinese": "中文",
+    "hindi": "हिन्दी",
+    "arabic": "العربية",
+    "french" : "Français",
+    "german" : "Deutsch", 
+    "indonesian": "Bahasa Indonesia",
+    "turkish": "Türkçe",
+    "japanese": "日本語",
+    "russian": "Русский"
+  }
+}

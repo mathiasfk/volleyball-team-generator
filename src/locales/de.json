@@ -1,0 +1,54 @@
+{
+  "app": {
+    "title": "🏐 Volleyball-Teamgenerator"
+  },
+  "participants": {
+    "manage": "Teilnehmer verwalten",
+    "add": "Hinzufügen",
+    "clear_all": "Alles löschen",
+    "placeholder": "Name des Teilnehmers",
+    "total": "Gesamt: {{count}} Teilnehmer",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "edit": "Bearbeiten",
+    "remove": "Entfernen"
+  },
+  "actions": {
+    "draw_teams": "Teams bilden",
+    "clear_draw": "Auslosung zurücksetzen"
+  },
+  "results": {
+    "title": "Ergebnisse der Auslosung",
+    "team": "Team {{color}}",
+    "players_count": "{{count}} Spieler",
+    "bench_title": "Ersatzspieler",
+    "bench_count": "{{count}} Person(en) auf der Bank"
+  },
+  "colors": {
+    "red": "Rot",
+    "blue": "Blau",
+    "green": "Grün",
+    "purple": "Lila",
+    "orange": "Orange",
+    "pink": "Rosa"
+  },
+  "errors": {
+    "empty_name": "Bitte geben Sie einen gültigen Namen ein.",
+    "duplicate_name": "Ein Teilnehmer mit diesem Namen existiert bereits. Bitte wählen Sie einen anderen Namen."
+  },
+  "language": {
+    "label": "Sprache",
+    "english": "English",
+    "portuguese": "Português",
+    "spanish": "Español",
+    "chinese": "中文",
+    "hindi": "हिन्दी",
+    "arabic": "العربية",
+    "french" : "Français",
+    "german" : "Deutsch", 
+    "indonesian": "Bahasa Indonesia",
+    "turkish": "Türkçe",
+    "japanese": "日本語",
+    "russian": "Русский"
+  }
+}

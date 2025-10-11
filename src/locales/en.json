@@ -43,6 +43,12 @@
     "spanish": "Español",
     "chinese": "中文",
     "hindi": "हिन्दी",
-    "arabic": "العربية"
+    "arabic": "العربية",
+    "french" : "Français",
+    "german" : "Deutsch", 
+    "indonesian": "Bahasa Indonesia",
+    "turkish": "Türkçe",
+    "japanese": "日本語",
+    "russian": "Русский"
   }
 }
