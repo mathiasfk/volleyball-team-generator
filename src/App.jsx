@@ -11,6 +11,7 @@ import useSEO from './hooks/useSEO.js'
 import './App.css'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './components/ui/collapsible.jsx'
 import { calculateTeams } from './lib/calculateTeams.js'
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogHeader, AlertDialogTrigger } from './components/ui/alert-dialog.jsx'
 
 const LOCAL_STORAGE_KEY_PARTICIPANTS = 'volleyball-participants'
 const LOCAL_STORAGE_KEY_TEAMS = 'volleyball-teams'
@@ -28,7 +29,8 @@ function App() {
   const [benchPlayers, setBenchPlayers] = useState([])
   const [error, setError] = useState('')
   const [dataLoaded, setDataLoaded] = useState(false)
-  const [open, setOpen] = useState(true)
+  const [openParticipants, setOpenParticipants] = useState(true)
+  const [openClearDialog, setOpenClearDialog] = useState(false)
 
   // Vibrant colors for teams
   const teamColors = [
@@ -268,239 +270,249 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-900 text-white p-4">
       <div className="max-w-6xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="hidden sm:block text-4xl font-bold text-blue-400">
-            {t('app.title')}
-          </h1>
-          <div className="ms-auto">
-            <LanguageSelector />
+        <AlertDialog open={openClearDialog} onOpenChange={setOpenClearDialog}>
+          <div className="flex justify-between items-center mb-8">
+            <h1 className="hidden sm:block text-4xl font-bold text-blue-400">
+              {t('app.title')}
+            </h1>
+            <div className="ms-auto">
+              <LanguageSelector />
+            </div>
           </div>
-        </div>
 
-        {/* Error Alert */}
-        {error && (
-          <Alert className="mb-6 bg-red-900 border-red-700">
-            <AlertCircle className="h-4 w-4" />
-            <AlertDescription className="text-red-200">
-              {error}
-            </AlertDescription>
-          </Alert>
-        )}
+          {/* Error Alert */}
+          {error && (
+            <Alert className="mb-6 bg-red-900 border-red-700">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription className="text-red-200">
+                {error}
+              </AlertDescription>
+            </Alert>
+          )}
 
-        {/* Add Participants Section */}
-        <Collapsible open={open} onOpenChange={setOpen}>
-          <Card className="mb-6 bg-gray-800 border-gray-700">
-            <CardHeader>
-              <CollapsibleTrigger className="mb-4 text-left w-full">
-                <CardTitle className="text-white flex items-center gap-2">
-                  <Users className="w-5 h-5" />
-                  {t('participants.manage')}
-                  {open ? <ListChevronsDownUp className="w-5 h-5 ms-auto" /> : <ListChevronsUpDown className="w-5 h-5 ms-auto" />}
-                </CardTitle>
-              </CollapsibleTrigger>
-            </CardHeader>
-            <CollapsibleContent className="mb-6">
-              <CardContent>
-                <div className="flex gap-2 mb-4">
-                  <Input
-                    type="text"
-                    placeholder={t('participants.placeholder')}
-                    value={newName}
-                    onChange={(e) => {
-                      setNewName(e.target.value)
-                      clearError()
-                    }}
-                    onKeyPress={(e) => e.key === 'Enter' && addParticipant()}
-                    className="bg-gray-700 border-gray-600 text-white placeholder-gray-400"
-                  />
-                  <Button
-                    onClick={addParticipant}
-                    className="bg-blue-600 hover:bg-blue-700 flex items-center justify-center"
-                  >
-                    <span className="block sm:hidden text-xl">+</span>
-                    <span className="hidden sm:block">{t('participants.add')}</span>
-                  </Button>
-                  <Button
-                    onClick={clearAllParticipants}
-                    variant="destructive"
-                    className="bg-red-600 hover:bg-red-700 flex items-center justify-center"
-                    disabled={participants.length === 0}
-                  >
-                    <Trash className="w-4 h-4" />
-                    <span className="hidden md:inline ms-2">
-                      {t('participants.clear_all')}
-                    </span>
-                  </Button>
-                </div>
+          {/* Add Participants Section */}
+          <Collapsible open={openParticipants} onOpenChange={setOpenParticipants}>
+            <Card className="mb-6 bg-gray-800 border-gray-700">
+              <CardHeader>
+                <CollapsibleTrigger className="mb-4 text-left w-full">
+                  <CardTitle className="text-white flex items-center gap-2">
+                    <Users className="w-5 h-5" />
+                    {t('participants.manage')}
+                    {openParticipants ? <ListChevronsDownUp className="w-5 h-5 ms-auto" /> : <ListChevronsUpDown className="w-5 h-5 ms-auto" />}
+                  </CardTitle>
+                </CollapsibleTrigger>
+              </CardHeader>
+              <CollapsibleContent className="mb-6">
+                <CardContent>
+                  <div className="flex gap-2 mb-4">
+                    <Input
+                      type="text"
+                      placeholder={t('participants.placeholder')}
+                      value={newName}
+                      onChange={(e) => {
+                        setNewName(e.target.value)
+                        clearError()
+                      }}
+                      onKeyPress={(e) => e.key === 'Enter' && addParticipant()}
+                      className="bg-gray-700 border-gray-600 text-white placeholder-gray-400"
+                    />
+                    <Button
+                      onClick={addParticipant}
+                      className="bg-blue-600 hover:bg-blue-700 flex items-center justify-center"
+                    >
+                      <span className="block sm:hidden text-xl">+</span>
+                      <span className="hidden sm:block">{t('participants.add')}</span>
+                    </Button>
+                    <AlertDialogTrigger asChild>
+                      <Button
+                        variant="destructive"
+                        className="bg-red-600 hover:bg-red-700 flex items-center justify-center"
+                        disabled={participants.length === 0}
+                      >
+                        <Trash className="w-4 h-4" />
+                        <span className="hidden md:inline ms-2">
+                          {t('participants.clear_all')}
+                        </span>
+                      </Button>
+                    </AlertDialogTrigger>
+                  </div>
 
-                {/* Participants List */}
-                <div className="space-y-2">
-                  {participants.map((participant) => (
-                    <div key={participant.id} className="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
-                      {editingId === participant.id ? (
-                        <div className="flex gap-2 flex-1">
-                          <Input
-                            type="text"
-                            value={editedName}
-                            onChange={(e) => {
-                              setEditedName(e.target.value)
-                              clearError()
-                            }}
-                            onKeyPress={(e) => e.key === 'Enter' && saveEdit()}
-                            className="bg-gray-600 border-gray-500 text-white"
-                          />
-                          <Button
-                            onClick={saveEdit}
-                            size="sm"
-                            className="bg-green-600 hover:bg-green-700"
-                          >
-                            {t('participants.save')}
-                          </Button>
-                          <Button
-                            onClick={cancelEdit}
-                            size="sm"
-                            variant="outline"
-                            className="border-gray-500 text-gray-300 hover:bg-gray-600"
-                          >
-                            {t('participants.cancel')}
-                          </Button>
-                        </div>
-                      ) : (
-                        <>
-                          <span className="text-white">{participant.nome}</span>
-                          <div className="flex gap-2">
+                  <AlertDialogContent>
+                    <AlertDialogHeader>Atenção!</AlertDialogHeader>
+                    <AlertDialogDescription>Deseja remover todos os participantes?</AlertDialogDescription>
+                    <AlertDialogAction onClick={clearAllParticipants}>Remover</AlertDialogAction>
+                    <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                  </AlertDialogContent>
+
+                  {/* Participants List */}
+                  <div className="space-y-2">
+                    {participants.map((participant) => (
+                      <div key={participant.id} className="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                        {editingId === participant.id ? (
+                          <div className="flex gap-2 flex-1">
+                            <Input
+                              type="text"
+                              value={editedName}
+                              onChange={(e) => {
+                                setEditedName(e.target.value)
+                                clearError()
+                              }}
+                              onKeyPress={(e) => e.key === 'Enter' && saveEdit()}
+                              className="bg-gray-600 border-gray-500 text-white"
+                            />
                             <Button
-                              onClick={() => startEditing(participant)}
+                              onClick={saveEdit}
+                              size="sm"
+                              className="bg-green-600 hover:bg-green-700"
+                            >
+                              {t('participants.save')}
+                            </Button>
+                            <Button
+                              onClick={cancelEdit}
                               size="sm"
                               variant="outline"
                               className="border-gray-500 text-gray-300 hover:bg-gray-600"
                             >
-                              <Edit2 className="w-4 h-4" />
-                            </Button>
-                            <Button
-                              onClick={() => removeParticipant(participant.id)}
-                              size="sm"
-                              variant="destructive"
-                              className="bg-red-600 hover:bg-red-700"
-                            >
-                              <Trash2 className="w-4 h-4" />
+                              {t('participants.cancel')}
                             </Button>
                           </div>
-                        </>
-                      )}
-                    </div>
-                  ))}
-                </div>
-
-                <div className="mt-4 text-center">
-                  <Badge variant="secondary" className="bg-gray-700 text-white">
-                    {t('participants.total', { count: participants.length })}
-                  </Badge>
-                </div>
-              </CardContent>
-            </CollapsibleContent>
-          </Card>
-        </Collapsible>
-
-        {/* Action Buttons */}
-        <div className="flex gap-4 justify-center mb-6">
-          <Button
-            onClick={drawTeams}
-            disabled={participants.length === 0}
-            className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg"
-          >
-            <Shuffle className="w-5 h-5 me-2" />
-            {t('actions.draw_teams')}
-          </Button>
-          {teams.length > 0 && (
-            <Button
-              onClick={clearDraw}
-              variant="outline"
-              className="border-gray-500 text-gray-300 hover:bg-gray-600 px-8 py-3 text-lg"
-            >
-              {t('actions.clear_draw')}
-            </Button>
-          )}
-        </div>
-
-        {/* Draw Results */}
-        {teams.length > 0 && (
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-center text-green-400">
-              {t('results.title')}
-            </h2>
-
-            {/* Teams */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {teams.map((team, index) => {
-                const teamColor = teamColors[index % teamColors.length]
-                return (
-                  <Card key={index} className="bg-gray-800 border-gray-700">
-                    <CardHeader
-                      className="text-center"
-                      style={{ backgroundColor: teamColor.color }}
-                    >
-                      <CardTitle
-                        className="text-xl font-bold"
-                        style={{ color: teamColor.textColor }}
-                      >
-                        {t('results.team', { color: teamColor.name })}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="pt-4">
-                      <div className="space-y-2">
-                        {team.map((participant, idx) => (
-                          <div
-                            key={participant.id}
-                            className="bg-gray-700 p-2 rounded text-center text-white"
-                          >
-                            {idx + 1}. {participant.nome}
-                          </div>
-                        ))}
-                      </div>
-                      <div className="mt-3 text-center">
-                        <Badge
-                          className="text-white"
-                          style={{ backgroundColor: teamColor.color }}
-                        >
-                          {t('results.players_count', { count: team.length })}
-                        </Badge>
-                      </div>
-                    </CardContent>
-                  </Card>
-                )
-              })}
-            </div>
-
-            {/* Bench Players */}
-            {benchPlayers.length > 0 && (
-              <Card className="bg-gray-800 border-gray-700">
-                <CardHeader className="text-center bg-orange-600">
-                  <CardTitle className="text-xl font-bold text-white">
-                    {t('results.bench_title')}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="pt-4">
-                  <div className="space-y-2">
-                    {benchPlayers.map((participant) => (
-                      <div
-                        key={participant.id}
-                        className="bg-gray-700 p-2 rounded text-center text-white"
-                      >
-                        {participant.nome}
+                        ) : (
+                          <>
+                            <span className="text-white">{participant.nome}</span>
+                            <div className="flex gap-2">
+                              <Button
+                                onClick={() => startEditing(participant)}
+                                size="sm"
+                                variant="outline"
+                                className="border-gray-500 text-gray-300 hover:bg-gray-600"
+                              >
+                                <Edit2 className="w-4 h-4" />
+                              </Button>
+                              <Button
+                                onClick={() => removeParticipant(participant.id)}
+                                size="sm"
+                                variant="destructive"
+                                className="bg-red-600 hover:bg-red-700"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </Button>
+                            </div>
+                          </>
+                        )}
                       </div>
                     ))}
                   </div>
-                  <div className="mt-3 text-center">
-                    <Badge className="bg-orange-600 text-white">
-                      {t('results.bench_count', { count: benchPlayers.length })}
+
+                  <div className="mt-4 text-center">
+                    <Badge variant="secondary" className="bg-gray-700 text-white">
+                      {t('participants.total', { count: participants.length })}
                     </Badge>
                   </div>
                 </CardContent>
-              </Card>
+              </CollapsibleContent>
+            </Card>
+          </Collapsible>
+
+          {/* Action Buttons */}
+          <div className="flex gap-4 justify-center mb-6">
+            <Button
+              onClick={drawTeams}
+              disabled={participants.length === 0}
+              className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg"
+            >
+              <Shuffle className="w-5 h-5 me-2" />
+              {t('actions.draw_teams')}
+            </Button>
+            {teams.length > 0 && (
+              <Button
+                onClick={clearDraw}
+                variant="outline"
+                className="border-gray-500 text-gray-300 hover:bg-gray-600 px-8 py-3 text-lg"
+              >
+                {t('actions.clear_draw')}
+              </Button>
             )}
           </div>
-        )}
+
+          {/* Draw Results */}
+          {teams.length > 0 && (
+            <div className="space-y-6">
+              <h2 className="text-2xl font-bold text-center text-green-400">
+                {t('results.title')}
+              </h2>
+
+              {/* Teams */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {teams.map((team, index) => {
+                  const teamColor = teamColors[index % teamColors.length]
+                  return (
+                    <Card key={index} className="bg-gray-800 border-gray-700">
+                      <CardHeader
+                        className="text-center"
+                        style={{ backgroundColor: teamColor.color }}
+                      >
+                        <CardTitle
+                          className="text-xl font-bold"
+                          style={{ color: teamColor.textColor }}
+                        >
+                          {t('results.team', { color: teamColor.name })}
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="pt-4">
+                        <div className="space-y-2">
+                          {team.map((participant, idx) => (
+                            <div
+                              key={participant.id}
+                              className="bg-gray-700 p-2 rounded text-center text-white"
+                            >
+                              {idx + 1}. {participant.nome}
+                            </div>
+                          ))}
+                        </div>
+                        <div className="mt-3 text-center">
+                          <Badge
+                            className="text-white"
+                            style={{ backgroundColor: teamColor.color }}
+                          >
+                            {t('results.players_count', { count: team.length })}
+                          </Badge>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  )
+                })}
+              </div>
+
+              {/* Bench Players */}
+              {benchPlayers.length > 0 && (
+                <Card className="bg-gray-800 border-gray-700">
+                  <CardHeader className="text-center bg-orange-600">
+                    <CardTitle className="text-xl font-bold text-white">
+                      {t('results.bench_title')}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="pt-4">
+                    <div className="space-y-2">
+                      {benchPlayers.map((participant) => (
+                        <div
+                          key={participant.id}
+                          className="bg-gray-700 p-2 rounded text-center text-white"
+                        >
+                          {participant.nome}
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-3 text-center">
+                      <Badge className="bg-orange-600 text-white">
+                        {t('results.bench_count', { count: benchPlayers.length })}
+                      </Badge>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
+          )}
+        </AlertDialog>
       </div>
     </div>
   )
