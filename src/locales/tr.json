@@ -36,6 +36,14 @@
     "empty_name": "Lütfen geçerli bir isim girin.",
     "duplicate_name": "Bu isimde bir katılımcı zaten var. Lütfen farklı bir isim kullanın."
   },
+  "dialog": {
+    "clear_participants": {
+      "title": "Uyarı!",
+      "description": "Tüm katılımcıları silmek istiyor musunuz?",
+      "confirm": "Sil",
+      "cancel": "İptal"
+    }
+  },
   "language": {
     "label": "Dil",
     "english": "English",

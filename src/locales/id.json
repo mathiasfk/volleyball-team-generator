@@ -36,6 +36,14 @@
     "empty_name": "Silakan masukkan nama yang valid.",
     "duplicate_name": "Peserta dengan nama ini sudah ada. Silakan gunakan nama lain."
   },
+  "dialog": {
+    "clear_participants": {
+      "title": "Peringatan!",
+      "description": "Apakah Anda ingin menghapus semua peserta?",
+      "confirm": "Hapus",
+      "cancel": "Batal"
+    }
+  },
   "language": {
     "label": "Bahasa",
     "english": "English",

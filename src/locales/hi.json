@@ -36,6 +36,14 @@
     "empty_name": "कृपया एक मान्य नाम दर्ज करें।",
     "duplicate_name": "इस नाम का एक प्रतिभागी पहले से मौजूद है। कृपया एक अलग नाम का उपयोग करें।"
   },
+  "dialog": {
+    "clear_participants": {
+      "title": "चेतावनी!",
+      "description": "क्या आप सभी प्रतिभागियों को हटाना चाहते हैं?",
+      "confirm": "हटाएँ",
+      "cancel": "रद्द करें"
+    }
+  },
   "language": {
     "label": "भाषा",
     "english": "English",

@@ -36,6 +36,14 @@
     "empty_name": "Veuillez saisir un nom valide.",
     "duplicate_name": "Un participant avec ce nom existe déjà. Veuillez en choisir un autre."
   },
+  "dialog": {
+    "clear_participants": {
+      "title": "Attention !",
+      "description": "Voulez-vous supprimer tous les participants ?",
+      "confirm": "Supprimer",
+      "cancel": "Annuler"
+    }
+  },
   "language": {
     "label": "Langue",
     "english": "English",

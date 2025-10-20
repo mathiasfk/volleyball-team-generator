@@ -36,6 +36,14 @@
     "empty_name": "有効な名前を入力してください。",
     "duplicate_name": "この名前の参加者はすでに存在します。別の名前を使用してください。"
   },
+  "dialog": {
+    "clear_participants": {
+      "title": "警告！",
+      "description": "すべての参加者を削除しますか？",
+      "confirm": "削除",
+      "cancel": "キャンセル"
+    }
+  },
   "language": {
     "label": "言語",
     "english": "English",

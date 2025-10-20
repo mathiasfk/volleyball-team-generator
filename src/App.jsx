@@ -11,7 +11,7 @@ import useSEO from './hooks/useSEO.js'
 import './App.css'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './components/ui/collapsible.jsx'
 import { calculateTeams } from './lib/calculateTeams.js'
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogHeader, AlertDialogTrigger } from './components/ui/alert-dialog.jsx'
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from './components/ui/alert-dialog.jsx'
 import { gtag } from './lib/analytics.js'
 
 const LOCAL_STORAGE_KEY_PARTICIPANTS = 'volleyball-participants'
@@ -340,7 +340,7 @@ function App() {
 
                   <AlertDialogContent className="bg-gray-800 border-gray-700">
                     <AlertDialogHeader>
-                      <CardTitle className="text-white">{t('dialog.clear_participants.title')}</CardTitle>
+                      <AlertDialogTitle className="text-white">{t('dialog.clear_participants.title')}</AlertDialogTitle>
                     </AlertDialogHeader>
                     <AlertDialogDescription className="text-gray-300">
                       {t('dialog.clear_participants.description')}

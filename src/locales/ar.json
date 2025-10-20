@@ -36,6 +36,14 @@
     "empty_name": "الرجاء إدخال اسم صالح.",
     "duplicate_name": "يوجد مشارك بهذا الاسم بالفعل. الرجاء استخدام اسم مختلف."
   },
+  "dialog": {
+    "clear_participants": {
+      "title": "تحذير!",
+      "description": "هل تريد إزالة جميع المشاركين؟",
+      "confirm": "إزالة",
+      "cancel": "إلغاء"
+    }
+  },
   "language": {
     "label": "اللغة",
     "english": "English",

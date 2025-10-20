@@ -36,6 +36,14 @@
     "empty_name": "请输入有效的姓名。",
     "duplicate_name": "已存在同名参与者，请使用其他姓名。"
   },
+  "dialog": {
+    "clear_participants": {
+      "title": "警告！",
+      "description": "是否要删除所有参与者？",
+      "confirm": "删除",
+      "cancel": "取消"
+    }
+  },
   "language": {
     "label": "语言",
     "english": "English",
