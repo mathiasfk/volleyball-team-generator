@@ -12,6 +12,7 @@ import './App.css'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './components/ui/collapsible.jsx'
 import { calculateTeams } from './lib/calculateTeams.js'
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogHeader, AlertDialogTrigger } from './components/ui/alert-dialog.jsx'
+import { gtag } from './lib/analytics.js'
 
 const LOCAL_STORAGE_KEY_PARTICIPANTS = 'volleyball-participants'
 const LOCAL_STORAGE_KEY_TEAMS = 'volleyball-teams'
@@ -337,11 +338,19 @@ function App() {
                     </AlertDialogTrigger>
                   </div>
 
-                  <AlertDialogContent>
-                    <AlertDialogHeader>Atenção!</AlertDialogHeader>
-                    <AlertDialogDescription>Deseja remover todos os participantes?</AlertDialogDescription>
-                    <AlertDialogAction onClick={clearAllParticipants}>Remover</AlertDialogAction>
-                    <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                  <AlertDialogContent className="bg-gray-800 border-gray-700">
+                    <AlertDialogHeader>
+                      <CardTitle className="text-white">{t('dialog.clear_participants.title')}</CardTitle>
+                    </AlertDialogHeader>
+                    <AlertDialogDescription className="text-gray-300">
+                      {t('dialog.clear_participants.description')}
+                    </AlertDialogDescription>
+                    <AlertDialogAction onClick={clearAllParticipants} className="bg-red-600 hover:bg-red-700">
+                      {t('dialog.clear_participants.confirm')}
+                    </AlertDialogAction>
+                    <AlertDialogCancel className="border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white">
+                      {t('dialog.clear_participants.cancel')}
+                    </AlertDialogCancel>
                   </AlertDialogContent>
 
                   {/* Participants List */}
