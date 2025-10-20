@@ -169,8 +169,16 @@ function App() {
     clearError()
   }
 
+  const clearAllParticipantsStart = () => {
+    gtag('event', 'clear_participants_start');
+  }
+
+  const clearAllParticipantsCancel = () => {
+    gtag('event', 'clear_participants_cancel');
+  }
+
   const clearAllParticipants = () => {
-    gtag('event', 'clear_participants', {
+    gtag('event', 'clear_participants_confirm', {
       'participant_count': participants.length,
       'previous_team_count': teams.length,
       'previous_bench_players_count': benchPlayers.length
@@ -181,6 +189,14 @@ function App() {
     setBenchPlayers([])
     clearError()
     clearAllStorage()
+  }
+
+  const onCollapsibleToggle = () => {
+    gtag('event', 'toggle_participants_collapsible', {
+      'was_open': openParticipants
+    });
+    
+    setOpenParticipants(!openParticipants)
   }
 
   const startEditing = (participant) => {
@@ -292,7 +308,7 @@ function App() {
           )}
 
           {/* Add Participants Section */}
-          <Collapsible open={openParticipants} onOpenChange={setOpenParticipants}>
+          <Collapsible open={openParticipants} onOpenChange={onCollapsibleToggle}>
             <Card className="mb-6 bg-gray-800 border-gray-700">
               <CardHeader>
                 <CollapsibleTrigger className="mb-4 text-left w-full">
@@ -326,6 +342,7 @@ function App() {
                     </Button>
                     <AlertDialogTrigger asChild>
                       <Button
+                        onClick={clearAllParticipantsStart}
                         variant="destructive"
                         className="bg-red-600 hover:bg-red-700 flex items-center justify-center"
                         disabled={participants.length === 0}
@@ -348,7 +365,7 @@ function App() {
                     <AlertDialogAction onClick={clearAllParticipants} className="bg-red-600 hover:bg-red-700">
                       {t('dialog.clear_participants.confirm')}
                     </AlertDialogAction>
-                    <AlertDialogCancel className="border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white">
+                    <AlertDialogCancel onClick={clearAllParticipantsCancel} className="border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white">
                       {t('dialog.clear_participants.cancel')}
                     </AlertDialogCancel>
                   </AlertDialogContent>
