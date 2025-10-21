@@ -11,7 +11,7 @@ export const gtag = (...args) => {
     console.log('📊 Analytics (debug):', ...args);
     return;
   }
-  window.dataLayer.push(arguments);
+  window.dataLayer.push(...args);
 };
 
 // Initialize analytics only in production
