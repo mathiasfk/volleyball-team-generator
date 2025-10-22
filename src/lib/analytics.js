@@ -1,6 +1,6 @@
 // Initialize Google Analytics
 const GA_MEASUREMENT_ID = 'G-VCDCC5PG64';
-//const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 
 window.gtag = function() {
   window.dataLayer.push(arguments);
