@@ -186,6 +186,35 @@ describe('calculateTeams', () => {
       expect(remainingPlayers.every(player => !formedTeams[1].includes(player))).toBe(true)
     })
   })
+
+  describe('should always include all bench players in a new match', () => {
+    test.for([
+      [3, null], [3, 0], [3, 1],
+      [5, null], [5, 0], [5, 1],
+      [7, null], [7, 0], [7, 1],
+      [9, null], [9, 0], [9, 1],
+      [11, null], [11, 0], [11, 1],
+      [13, null], [13, 0], [13, 1],
+      [14, null], [14, 0], [14, 1],
+      [15, null], [15, 0], [15, 1],
+      [16, null], [16, 0], [16, 1],
+      [17, null], [17, 0], [17, 1],
+      [18, null], [18, 0], [18, 1],
+    ])('with %i participants, keep team %i', ([numberOfParticipants, keepTeamId]) => {
+      const participants = generateParticipants(numberOfParticipants)
+      const prevMatch = calculateTeams({participants})
+      const { formedTeams } = calculateTeams({
+        participants,
+        teams: prevMatch.formedTeams,
+        benchPlayers: prevMatch.remainingPlayers,
+        keepTeamId
+      })
+
+      
+      // all bench players should be in the new match (max of players should be respected)
+      expect(formedTeams.flat()).toEqual(expect.arrayContaining(prevMatch.remainingPlayers));
+    })
+  })
 })
 
 const generateParticipants = (count: number) => {

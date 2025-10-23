@@ -58,11 +58,19 @@ export function calculateTeams(options: {
     // Calculate how many players the other team should have
     const otherTeamSize = Math.min(maxTeamSize, Math.floor(availablePlayers / maxTeams))
     
-    // Fill the other team
-    formedTeams[1 - keepTeamId] = shuffledAvailable.slice(0, otherTeamSize)
+    // Ensure all bench players are included in the new teams
+    // First, add all bench players to the other team
+    const benchPlayersToInclude = benchPlayers.filter(bp => shuffledAvailable.includes(bp))
+    const nonBenchPlayers = shuffledAvailable.filter(p => !benchPlayers.includes(p))
+    
+    // Combine bench players first, then other players
+    const prioritizedPlayers = [...benchPlayersToInclude, ...nonBenchPlayers]
+    
+    // Fill the other team with prioritized players
+    formedTeams[1 - keepTeamId] = prioritizedPlayers.slice(0, otherTeamSize)
     
     // Remaining players go to bench
-    remainingPlayers = shuffledAvailable.slice(otherTeamSize)
+    remainingPlayers = prioritizedPlayers.slice(otherTeamSize)
     
     return { formedTeams, remainingPlayers }
   }
