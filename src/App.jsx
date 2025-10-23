@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useReducer, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button.jsx'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.jsx'
@@ -23,21 +23,169 @@ import { isDuplicateName, isEmptyName, formatParticipantName } from './utils/val
 import { loadFromStorage, saveToStorage, removeFromStorage, removeMultipleFromStorage } from './utils/localStorage.ts'
 import { participantsToNames, namesToParticipants, teamsToNames, namesToTeams } from './utils/participants.ts'
 
+// Action Types
+const ACTIONS = {
+  SET_NEW_NAME: 'SET_NEW_NAME',
+  SET_ERROR: 'SET_ERROR',
+  CLEAR_ERROR: 'CLEAR_ERROR',
+  ADD_PARTICIPANT: 'ADD_PARTICIPANT',
+  REMOVE_PARTICIPANT: 'REMOVE_PARTICIPANT',
+  CLEAR_ALL_PARTICIPANTS: 'CLEAR_ALL_PARTICIPANTS',
+  START_EDITING: 'START_EDITING',
+  SET_EDITED_NAME: 'SET_EDITED_NAME',
+  SAVE_EDIT: 'SAVE_EDIT',
+  CANCEL_EDIT: 'CANCEL_EDIT',
+  SET_TEAMS: 'SET_TEAMS',
+  CLEAR_DRAW: 'CLEAR_DRAW',
+  TOGGLE_PARTICIPANTS: 'TOGGLE_PARTICIPANTS',
+  SET_OPEN_CLEAR_DIALOG: 'SET_OPEN_CLEAR_DIALOG',
+  SET_OPEN_DRAW_DIALOG: 'SET_OPEN_DRAW_DIALOG',
+  LOAD_DATA: 'LOAD_DATA',
+  SET_DATA_LOADED: 'SET_DATA_LOADED',
+}
+
+// Estado inicial
+const initialState = {
+  participants: [],
+  newName: '',
+  editingId: null,
+  editedName: '',
+  teams: [],
+  benchPlayers: [],
+  error: '',
+  dataLoaded: false,
+  openParticipants: true,
+  openClearDialog: false,
+  openDrawDialog: false,
+}
+
+// Reducer function
+function appReducer(state, action) {
+  switch (action.type) {
+    case ACTIONS.SET_NEW_NAME:
+      return { ...state, newName: action.payload }
+    
+    case ACTIONS.SET_ERROR:
+      return { ...state, error: action.payload }
+    
+    case ACTIONS.CLEAR_ERROR:
+      return { ...state, error: '' }
+    
+    case ACTIONS.ADD_PARTICIPANT:
+      return {
+        ...state,
+        participants: [...state.participants, action.payload],
+        newName: '',
+        error: '',
+      }
+    
+    case ACTIONS.REMOVE_PARTICIPANT:
+      return {
+        ...state,
+        participants: state.participants.filter(p => p.id !== action.payload),
+        error: '',
+      }
+    
+    case ACTIONS.CLEAR_ALL_PARTICIPANTS:
+      return {
+        ...state,
+        participants: [],
+        teams: [],
+        benchPlayers: [],
+        error: '',
+      }
+    
+    case ACTIONS.START_EDITING:
+      return {
+        ...state,
+        editingId: action.payload.id,
+        editedName: action.payload.name,
+        error: '',
+      }
+    
+    case ACTIONS.SET_EDITED_NAME:
+      return { ...state, editedName: action.payload }
+    
+    case ACTIONS.SAVE_EDIT:
+      return {
+        ...state,
+        participants: state.participants.map(p =>
+          p.id === action.payload.id ? { ...p, nome: action.payload.name } : p
+        ),
+        editingId: null,
+        editedName: '',
+        error: '',
+      }
+    
+    case ACTIONS.CANCEL_EDIT:
+      return {
+        ...state,
+        editingId: null,
+        editedName: '',
+        error: '',
+      }
+    
+    case ACTIONS.SET_TEAMS:
+      return {
+        ...state,
+        teams: action.payload.teams,
+        benchPlayers: action.payload.benchPlayers,
+        error: '',
+        openDrawDialog: false,
+      }
+    
+    case ACTIONS.CLEAR_DRAW:
+      return {
+        ...state,
+        teams: [],
+        benchPlayers: [],
+        error: '',
+      }
+    
+    case ACTIONS.TOGGLE_PARTICIPANTS:
+      return { ...state, openParticipants: !state.openParticipants }
+    
+    case ACTIONS.SET_OPEN_CLEAR_DIALOG:
+      return { ...state, openClearDialog: action.payload }
+    
+    case ACTIONS.SET_OPEN_DRAW_DIALOG:
+      return { ...state, openDrawDialog: action.payload }
+    
+    case ACTIONS.LOAD_DATA:
+      return {
+        ...state,
+        participants: action.payload.participants || state.participants,
+        teams: action.payload.teams || state.teams,
+        benchPlayers: action.payload.benchPlayers || state.benchPlayers,
+      }
+    
+    case ACTIONS.SET_DATA_LOADED:
+      return { ...state, dataLoaded: true }
+    
+    default:
+      return state
+  }
+}
 
 function App() {
   const { t } = useTranslation()
   useSEO() // Initialize SEO management
-  const [participants, setParticipants] = useState([])
-  const [newName, setNewName] = useState('')
-  const [editingId, setEditingId] = useState(null)
-  const [editedName, setEditedName] = useState('')
-  const [teams, setTeams] = useState([])
-  const [benchPlayers, setBenchPlayers] = useState([])
-  const [error, setError] = useState('')
-  const [dataLoaded, setDataLoaded] = useState(false)
-  const [openParticipants, setOpenParticipants] = useState(true)
-  const [openClearDialog, setOpenClearDialog] = useState(false)
-  const [openDrawDialog, setOpenDrawDialog] = useState(false)
+  
+  const [state, dispatch] = useReducer(appReducer, initialState)
+  
+  const {
+    participants,
+    newName,
+    editingId,
+    editedName,
+    teams,
+    benchPlayers,
+    error,
+    dataLoaded,
+    openParticipants,
+    openClearDialog,
+    openDrawDialog,
+  } = state
 
   // Vibrant colors for teams
   const teamColors = getTeamColors(t)
@@ -57,9 +205,14 @@ function App() {
       [STORAGE_KEYS.BENCH]: errorBench?.message
     }) : null
 
-    if (loadedParticipants) setParticipants(loadedParticipants)
-    if (loadedTeams) setTeams(loadedTeams)
-    if (loadedBench) setBenchPlayers(loadedBench)
+    dispatch({
+      type: ACTIONS.LOAD_DATA,
+      payload: {
+        participants: loadedParticipants,
+        teams: loadedTeams,
+        benchPlayers: loadedBench,
+      }
+    })
 
     gtag('event', 'load_local_storage', {
       'found_storage': !!loadedParticipants || !!loadedTeams,
@@ -70,8 +223,8 @@ function App() {
     });
 
     // Mark that data has been loaded (or attempt was made)
-    setDataLoaded(true)
-  }, [])
+    dispatch({ type: ACTIONS.SET_DATA_LOADED })
+  }, [dataLoaded])
 
   const clearAllStorage = () => {
     removeMultipleFromStorage([
@@ -92,7 +245,7 @@ function App() {
   }, [participants, dataLoaded])
 
   const clearError = () => {
-    if (error) setError('')
+    if (error) dispatch({ type: ACTIONS.CLEAR_ERROR })
   }
 
   const addParticipant = () => {
@@ -109,12 +262,12 @@ function App() {
     });
 
     if (isEmpty) {
-      setError(t('errors.empty_name'))
+      dispatch({ type: ACTIONS.SET_ERROR, payload: t('errors.empty_name') })
       return
     }
 
     if (isDuplicate) {
-      setError(t('errors.duplicate_name'))
+      dispatch({ type: ACTIONS.SET_ERROR, payload: t('errors.duplicate_name') })
       return
     }
 
@@ -122,17 +275,14 @@ function App() {
       id: participantId,
       nome: formattedName
     }
-    setParticipants([...participants, newParticipant])
-    setNewName('')
-    clearError()
+    dispatch({ type: ACTIONS.ADD_PARTICIPANT, payload: newParticipant })
   }
 
   const removeParticipant = (id) => {
     gtag('event', 'remove_participant', {
       'id': id
     });
-    setParticipants(participants.filter(p => p.id !== id))
-    clearError()
+    dispatch({ type: ACTIONS.REMOVE_PARTICIPANT, payload: id })
   }
 
   const clearAllParticipantsStart = () => {
@@ -150,10 +300,7 @@ function App() {
       'previous_bench_players_count': benchPlayers.length
     });
 
-    setParticipants([])
-    setTeams([])
-    setBenchPlayers([])
-    clearError()
+    dispatch({ type: ACTIONS.CLEAR_ALL_PARTICIPANTS })
     clearAllStorage()
   }
 
@@ -162,7 +309,7 @@ function App() {
       'was_open': openParticipants
     });
     
-    setOpenParticipants(!openParticipants)
+    dispatch({ type: ACTIONS.TOGGLE_PARTICIPANTS })
   }
 
   const startEditing = (participant) => {
@@ -171,9 +318,10 @@ function App() {
       'id': participant.id
     });
 
-    setEditingId(participant.id)
-    setEditedName(participant.nome)
-    clearError()
+    dispatch({
+      type: ACTIONS.START_EDITING,
+      payload: { id: participant.id, name: participant.nome }
+    })
   }
 
   const saveEdit = () => {
@@ -189,21 +337,19 @@ function App() {
     });
 
     if (isEmpty) {
-      setError(t('errors.empty_name'))
+      dispatch({ type: ACTIONS.SET_ERROR, payload: t('errors.empty_name') })
       return
     }
 
     if (isDuplicate) {
-      setError(t('errors.duplicate_name'))
+      dispatch({ type: ACTIONS.SET_ERROR, payload: t('errors.duplicate_name') })
       return
     }
 
-    setParticipants(participants.map(p =>
-      p.id === editingId ? { ...p, nome: formattedName } : p
-    ))
-    setEditingId(null)
-    setEditedName('')
-    clearError()
+    dispatch({
+      type: ACTIONS.SAVE_EDIT,
+      payload: { id: editingId, name: formattedName }
+    })
   }
 
   const cancelEdit = () => {
@@ -211,9 +357,7 @@ function App() {
       'id': editingId
     });
 
-    setEditingId(null)
-    setEditedName('')
-    clearError()
+    dispatch({ type: ACTIONS.CANCEL_EDIT })
   }
 
   const openDrawTeamsDialog = () => {
@@ -226,12 +370,12 @@ function App() {
       'participant_count': participants.length,
       'has_existing_teams': true
     });
-    setOpenDrawDialog(true)
+    dispatch({ type: ACTIONS.SET_OPEN_DRAW_DIALOG, payload: true })
   }
 
   const cancelDrawTeams = () => {
     gtag('event', 'draw_teams_cancel');
-    setOpenDrawDialog(false)
+    dispatch({ type: ACTIONS.SET_OPEN_DRAW_DIALOG, payload: false })
   }
 
   const drawTeams = (keepTeamId = null) => {
@@ -262,10 +406,13 @@ function App() {
       'keep_team_action': keepTeamAction
     });
 
-    setTeams(formedTeamsWithIds)
-    setBenchPlayers(remainingPlayersWithIds)
-    clearError()
-    setOpenDrawDialog(false)
+    dispatch({
+      type: ACTIONS.SET_TEAMS,
+      payload: {
+        teams: formedTeamsWithIds,
+        benchPlayers: remainingPlayersWithIds
+      }
+    })
 
     // Save teams to localStorage
     saveToStorage(STORAGE_KEYS.TEAMS, formedTeamsWithIds)
@@ -279,9 +426,7 @@ function App() {
       'previous_bench_players_count': benchPlayers.length
     });
 
-    setTeams([])
-    setBenchPlayers([])
-    clearError()
+    dispatch({ type: ACTIONS.CLEAR_DRAW })
     removeFromStorage(STORAGE_KEYS.TEAMS)
     removeFromStorage(STORAGE_KEYS.BENCH)
   }
@@ -289,8 +434,8 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-900 text-white p-4">
       <div className="max-w-6xl mx-auto">
-        <AlertDialog open={openClearDialog} onOpenChange={setOpenClearDialog}>
-        <AlertDialog open={openDrawDialog} onOpenChange={setOpenDrawDialog}>
+        <AlertDialog open={openClearDialog} onOpenChange={(value) => dispatch({ type: ACTIONS.SET_OPEN_CLEAR_DIALOG, payload: value })}>
+        <AlertDialog open={openDrawDialog} onOpenChange={(value) => dispatch({ type: ACTIONS.SET_OPEN_DRAW_DIALOG, payload: value })}>
           <div className="flex justify-between items-center mb-8">
             <h1 className="hidden sm:block text-4xl font-bold text-blue-400">
               {t('app.title')}
@@ -327,7 +472,7 @@ function App() {
                   <ParticipantForm
                     newName={newName}
                     onNameChange={(value) => {
-                      setNewName(value)
+                      dispatch({ type: ACTIONS.SET_NEW_NAME, payload: value })
                       clearError()
                     }}
                     onAdd={addParticipant}
@@ -348,7 +493,7 @@ function App() {
                     onSaveEdit={saveEdit}
                     onCancelEdit={cancelEdit}
                     onEditNameChange={(value) => {
-                      setEditedName(value)
+                      dispatch({ type: ACTIONS.SET_EDITED_NAME, payload: value })
                       clearError()
                     }}
                     onRemove={removeParticipant}
