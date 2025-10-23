@@ -42,6 +42,14 @@
       "description": "¿Deseas eliminar todos los participantes?",
       "confirm": "Eliminar",
       "cancel": "Cancelar"
+    },
+    "draw_teams": {
+      "title": "¿Cómo te gustaría sortear los equipos?",
+      "description": "Elige una opción a continuación:",
+      "keep_red": "Mantener Equipo Rojo",
+      "keep_blue": "Mantener Equipo Azul",
+      "redraw_all": "Rehacer Todos los Equipos",
+      "cancel": "Cancelar"
     }
   },
   "language": {

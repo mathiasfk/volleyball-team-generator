@@ -42,6 +42,14 @@
       "description": "Möchten Sie alle Teilnehmer entfernen?",
       "confirm": "Entfernen",
       "cancel": "Abbrechen"
+    },
+    "draw_teams": {
+      "title": "Wie möchten Sie die Teams bilden?",
+      "description": "Wählen Sie eine Option unten:",
+      "keep_red": "Rotes Team behalten",
+      "keep_blue": "Blaues Team behalten",
+      "redraw_all": "Alle Teams neu bilden",
+      "cancel": "Abbrechen"
     }
   },
   "language": {

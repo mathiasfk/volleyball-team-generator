@@ -32,6 +32,7 @@ function App() {
   const [dataLoaded, setDataLoaded] = useState(false)
   const [openParticipants, setOpenParticipants] = useState(true)
   const [openClearDialog, setOpenClearDialog] = useState(false)
+  const [openDrawDialog, setOpenDrawDialog] = useState(false)
 
   // Vibrant colors for teams
   const teamColors = [
@@ -250,7 +251,20 @@ function App() {
     clearError()
   }
 
-  const drawTeams = () => {
+  const openDrawTeamsDialog = () => {
+    gtag('event', 'draw_teams_dialog_open', {
+      'participant_count': participants.length,
+      'has_existing_teams': teams.length > 0
+    });
+    setOpenDrawDialog(true)
+  }
+
+  const cancelDrawTeams = () => {
+    gtag('event', 'draw_teams_cancel');
+    setOpenDrawDialog(false)
+  }
+
+  const drawTeams = (keepTeamId = null) => {
     // Convert participants objects to strings for calculateTeams
     const participantNames = participants.map(p => p.nome)
     const teamNames = teams.map(team => team.map(p => p.nome))
@@ -260,7 +274,7 @@ function App() {
       participants: participantNames, 
       teams: teamNames, 
       benchPlayers: benchNames,
-      //keepTeamId: 0 // For debug purposes, keep team 0 intact
+      keepTeamId: keepTeamId
     })
 
     // Convert back to objects with IDs
@@ -271,17 +285,22 @@ function App() {
       participants.find(p => p.nome === name) || { id: Date.now().toString(), nome: name }
     )
 
+    const keepTeamAction = keepTeamId === 0 ? 'keep_red' : keepTeamId === 1 ? 'keep_blue' : 'redraw_all'
+    
     gtag('event', 'draw_team', {
       'participant_count': participants.length,
       'new_teams_count': formedTeamsWithIds.length,
       'new_bench_players_count': remainingPlayersWithIds.length,
       'previous_team_count': teams.length,
-      'previous_bench_players_count': benchPlayers.length
+      'previous_bench_players_count': benchPlayers.length,
+      'keep_team_action': keepTeamAction,
+      'keep_team_id': keepTeamId
     });
 
     setTeams(formedTeamsWithIds)
     setBenchPlayers(remainingPlayersWithIds)
     clearError()
+    setOpenDrawDialog(false)
 
     // Save teams to localStorage
     saveDataToStorage(LOCAL_STORAGE_KEY_TEAMS, formedTeamsWithIds)
@@ -306,6 +325,7 @@ function App() {
     <div className="min-h-screen bg-gray-900 text-white p-4">
       <div className="max-w-6xl mx-auto">
         <AlertDialog open={openClearDialog} onOpenChange={setOpenClearDialog}>
+        <AlertDialog open={openDrawDialog} onOpenChange={setOpenDrawDialog}>
           <div className="flex justify-between items-center mb-8">
             <h1 className="hidden sm:block text-4xl font-bold text-blue-400">
               {t('app.title')}
@@ -459,14 +479,16 @@ function App() {
 
           {/* Action Buttons */}
           <div className="flex gap-4 justify-center mb-6">
-            <Button
-              onClick={drawTeams}
-              disabled={participants.length === 0}
-              className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg"
-            >
-              <Shuffle className="w-5 h-5 me-2" />
-              {t('actions.draw_teams')}
-            </Button>
+            <AlertDialogTrigger asChild>
+              <Button
+                onClick={openDrawTeamsDialog}
+                disabled={participants.length === 0}
+                className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg"
+              >
+                <Shuffle className="w-5 h-5 me-2" />
+                {t('actions.draw_teams')}
+              </Button>
+            </AlertDialogTrigger>
             {teams.length > 0 && (
               <Button
                 onClick={clearDraw}
@@ -477,6 +499,48 @@ function App() {
               </Button>
             )}
           </div>
+
+          {/* Draw Teams Dialog */}
+          <AlertDialogContent className="bg-gray-800 border-gray-700">
+            <AlertDialogHeader>
+              <AlertDialogTitle className="text-white text-center text-xl">
+                {t('dialog.draw_teams.title')}
+              </AlertDialogTitle>
+            </AlertDialogHeader>
+            <AlertDialogDescription className="text-gray-300 text-center mb-4">
+              {t('dialog.draw_teams.description')}
+            </AlertDialogDescription>
+            <div className="flex flex-col gap-3">
+              {teams.length > 0 && (
+                <>
+                  <Button
+                    onClick={() => drawTeams(0)}
+                    className="bg-red-600 hover:bg-red-700 text-white w-full py-6 text-lg font-semibold"
+                  >
+                    {t('dialog.draw_teams.keep_red')}
+                  </Button>
+                  <Button
+                    onClick={() => drawTeams(1)}
+                    className="bg-blue-600 hover:bg-blue-700 text-white w-full py-6 text-lg font-semibold"
+                  >
+                    {t('dialog.draw_teams.keep_blue')}
+                  </Button>
+                </>
+              )}
+              <Button
+                onClick={() => drawTeams(null)}
+                className="bg-green-600 hover:bg-green-700 text-white w-full py-6 text-lg font-semibold"
+              >
+                {t('dialog.draw_teams.redraw_all')}
+              </Button>
+              <AlertDialogCancel 
+                onClick={cancelDrawTeams}
+                className="border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white w-full py-6 text-lg"
+              >
+                {t('dialog.draw_teams.cancel')}
+              </AlertDialogCancel>
+            </div>
+          </AlertDialogContent>
 
           {/* Draw Results */}
           {teams.length > 0 && (
@@ -556,6 +620,7 @@ function App() {
               )}
             </div>
           )}
+        </AlertDialog>
         </AlertDialog>
       </div>
     </div>

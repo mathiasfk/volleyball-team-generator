@@ -42,6 +42,14 @@
       "description": "Deseja remover todos os participantes?",
       "confirm": "Remover",
       "cancel": "Cancelar"
+    },
+    "draw_teams": {
+      "title": "Como deseja sortear os times?",
+      "description": "Escolha uma opção abaixo:",
+      "keep_red": "Manter Time Vermelho",
+      "keep_blue": "Manter Time Azul",
+      "redraw_all": "Refazer Todos os Times",
+      "cancel": "Cancelar"
     }
   },
   "language": {

@@ -42,6 +42,14 @@
       "description": "Apakah Anda ingin menghapus semua peserta?",
       "confirm": "Hapus",
       "cancel": "Batal"
+    },
+    "draw_teams": {
+      "title": "Bagaimana Anda ingin membuat tim?",
+      "description": "Pilih salah satu opsi di bawah ini:",
+      "keep_red": "Pertahankan Tim Merah",
+      "keep_blue": "Pertahankan Tim Biru",
+      "redraw_all": "Buat Ulang Semua Tim",
+      "cancel": "Batal"
     }
   },
   "language": {

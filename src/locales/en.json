@@ -42,6 +42,14 @@
       "description": "Do you want to remove all participants?",
       "confirm": "Remove",
       "cancel": "Cancel"
+    },
+    "draw_teams": {
+      "title": "How would you like to draw teams?",
+      "description": "Choose an option below:",
+      "keep_red": "Keep Red Team",
+      "keep_blue": "Keep Blue Team",
+      "redraw_all": "Redraw All Teams",
+      "cancel": "Cancel"
     }
   },
   "language": {

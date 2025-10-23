@@ -42,6 +42,14 @@
       "description": "Tüm katılımcıları silmek istiyor musunuz?",
       "confirm": "Sil",
       "cancel": "İptal"
+    },
+    "draw_teams": {
+      "title": "Takımları nasıl oluşturmak istersiniz?",
+      "description": "Aşağıdan bir seçenek seçin:",
+      "keep_red": "Kırmızı Takımı Koru",
+      "keep_blue": "Mavi Takımı Koru",
+      "redraw_all": "Tüm Takımları Yeniden Oluştur",
+      "cancel": "İptal"
     }
   },
   "language": {

@@ -42,6 +42,14 @@
       "description": "Voulez-vous supprimer tous les participants ?",
       "confirm": "Supprimer",
       "cancel": "Annuler"
+    },
+    "draw_teams": {
+      "title": "Comment souhaitez-vous former les équipes ?",
+      "description": "Choisissez une option ci-dessous :",
+      "keep_red": "Garder l'équipe rouge",
+      "keep_blue": "Garder l'équipe bleue",
+      "redraw_all": "Refaire toutes les équipes",
+      "cancel": "Annuler"
     }
   },
   "language": {

@@ -42,6 +42,14 @@
       "description": "是否要删除所有参与者？",
       "confirm": "删除",
       "cancel": "取消"
+    },
+    "draw_teams": {
+      "title": "您希望如何分配队伍？",
+      "description": "选择以下选项之一：",
+      "keep_red": "保留红队",
+      "keep_blue": "保留蓝队",
+      "redraw_all": "重新分配所有队伍",
+      "cancel": "取消"
     }
   },
   "language": {

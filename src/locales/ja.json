@@ -42,6 +42,14 @@
       "description": "すべての参加者を削除しますか？",
       "confirm": "削除",
       "cancel": "キャンセル"
+    },
+    "draw_teams": {
+      "title": "チーム分けの方法を選択してください",
+      "description": "以下のオプションから選択してください：",
+      "keep_red": "赤チームを維持",
+      "keep_blue": "青チームを維持",
+      "redraw_all": "すべてのチームを再作成",
+      "cancel": "キャンセル"
     }
   },
   "language": {
