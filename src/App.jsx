@@ -1,17 +1,21 @@
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button.jsx'
-import { Input } from '@/components/ui/input.jsx'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.jsx'
-import { Badge } from '@/components/ui/badge.jsx'
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx'
-import { Trash2, Edit2, Users, Shuffle, AlertCircle, Trash, ListChevronsDownUp, ListChevronsUpDown } from 'lucide-react'
+import { Users, Shuffle, AlertCircle, ListChevronsDownUp, ListChevronsUpDown } from 'lucide-react'
 import LanguageSelector from './components/LanguageSelector.jsx'
+import ParticipantForm from './components/ParticipantForm.jsx'
+import ParticipantList from './components/ParticipantList.jsx'
+import TeamCard from './components/TeamCard.jsx'
+import BenchCard from './components/BenchCard.jsx'
+import DrawTeamsDialog from './components/DrawTeamsDialog.jsx'
+import ClearParticipantsDialog from './components/ClearParticipantsDialog.jsx'
 import useSEO from './hooks/useSEO.js'
 import './App.css'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './components/ui/collapsible.jsx'
 import { calculateTeams } from './lib/calculateTeams.js'
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from './components/ui/alert-dialog.jsx'
+import { AlertDialog } from './components/ui/alert-dialog.jsx'
 import { gtag } from './lib/analytics.js'
 
 const LOCAL_STORAGE_KEY_PARTICIPANTS = 'volleyball-participants'
@@ -363,119 +367,35 @@ function App() {
               </CardHeader>
               <CollapsibleContent className="mb-6">
                 <CardContent>
-                  <div className="flex gap-2 mb-4">
-                    <Input
-                      type="text"
-                      placeholder={t('participants.placeholder')}
-                      value={newName}
-                      onChange={(e) => {
-                        setNewName(e.target.value)
-                        clearError()
-                      }}
-                      onKeyPress={(e) => e.key === 'Enter' && addParticipant()}
-                      className="bg-gray-700 border-gray-600 text-white placeholder-gray-400"
-                    />
-                    <Button
-                      onClick={addParticipant}
-                      className="bg-blue-600 hover:bg-blue-700 flex items-center justify-center"
-                    >
-                      <span className="block sm:hidden text-xl">+</span>
-                      <span className="hidden sm:block">{t('participants.add')}</span>
-                    </Button>
-                    <AlertDialogTrigger asChild>
-                      <Button
-                        onClick={clearAllParticipantsStart}
-                        variant="destructive"
-                        className="bg-red-600 hover:bg-red-700 flex items-center justify-center"
-                        disabled={participants.length === 0}
-                      >
-                        <Trash className="w-4 h-4" />
-                        <span className="hidden md:inline ms-2">
-                          {t('participants.clear_all')}
-                        </span>
-                      </Button>
-                    </AlertDialogTrigger>
-                  </div>
+                  <ParticipantForm
+                    newName={newName}
+                    onNameChange={(value) => {
+                      setNewName(value)
+                      clearError()
+                    }}
+                    onAdd={addParticipant}
+                    onClearStart={clearAllParticipantsStart}
+                    participantsCount={participants.length}
+                  />
 
-                  <AlertDialogContent className="bg-gray-800 border-gray-700">
-                    <AlertDialogHeader>
-                      <AlertDialogTitle className="text-white">{t('dialog.clear_participants.title')}</AlertDialogTitle>
-                    </AlertDialogHeader>
-                    <AlertDialogDescription className="text-gray-300">
-                      {t('dialog.clear_participants.description')}
-                    </AlertDialogDescription>
-                    <AlertDialogAction onClick={clearAllParticipants} className="bg-red-600 hover:bg-red-700">
-                      {t('dialog.clear_participants.confirm')}
-                    </AlertDialogAction>
-                    <AlertDialogCancel onClick={clearAllParticipantsCancel} className="border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white">
-                      {t('dialog.clear_participants.cancel')}
-                    </AlertDialogCancel>
-                  </AlertDialogContent>
+                  <ClearParticipantsDialog
+                    onConfirm={clearAllParticipants}
+                    onCancel={clearAllParticipantsCancel}
+                  />
 
-                  {/* Participants List */}
-                  <div className="space-y-2">
-                    {participants.map((participant) => (
-                      <div key={participant.id} className="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
-                        {editingId === participant.id ? (
-                          <div className="flex gap-2 flex-1">
-                            <Input
-                              type="text"
-                              value={editedName}
-                              onChange={(e) => {
-                                setEditedName(e.target.value)
-                                clearError()
-                              }}
-                              onKeyPress={(e) => e.key === 'Enter' && saveEdit()}
-                              className="bg-gray-600 border-gray-500 text-white"
-                            />
-                            <Button
-                              onClick={saveEdit}
-                              size="sm"
-                              className="bg-green-600 hover:bg-green-700"
-                            >
-                              {t('participants.save')}
-                            </Button>
-                            <Button
-                              onClick={cancelEdit}
-                              size="sm"
-                              variant="outline"
-                              className="border-gray-500 text-gray-300 hover:bg-gray-600"
-                            >
-                              {t('participants.cancel')}
-                            </Button>
-                          </div>
-                        ) : (
-                          <>
-                            <span className="text-white">{participant.nome}</span>
-                            <div className="flex gap-2">
-                              <Button
-                                onClick={() => startEditing(participant)}
-                                size="sm"
-                                variant="outline"
-                                className="border-gray-500 text-gray-300 hover:bg-gray-600"
-                              >
-                                <Edit2 className="w-4 h-4" />
-                              </Button>
-                              <Button
-                                onClick={() => removeParticipant(participant.id)}
-                                size="sm"
-                                variant="destructive"
-                                className="bg-red-600 hover:bg-red-700"
-                              >
-                                <Trash2 className="w-4 h-4" />
-                              </Button>
-                            </div>
-                          </>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="mt-4 text-center">
-                    <Badge variant="secondary" className="bg-gray-700 text-white">
-                      {t('participants.total', { count: participants.length })}
-                    </Badge>
-                  </div>
+                  <ParticipantList
+                    participants={participants}
+                    editingId={editingId}
+                    editedName={editedName}
+                    onStartEdit={startEditing}
+                    onSaveEdit={saveEdit}
+                    onCancelEdit={cancelEdit}
+                    onEditNameChange={(value) => {
+                      setEditedName(value)
+                      clearError()
+                    }}
+                    onRemove={removeParticipant}
+                  />
                 </CardContent>
               </CollapsibleContent>
             </Card>
@@ -503,46 +423,11 @@ function App() {
           </div>
 
           {/* Draw Teams Dialog */}
-          <AlertDialogContent className="bg-gray-800 border-gray-700">
-            <AlertDialogHeader>
-              <AlertDialogTitle className="text-white text-center text-xl">
-                {t('dialog.draw_teams.title')}
-              </AlertDialogTitle>
-            </AlertDialogHeader>
-            <AlertDialogDescription className="text-gray-300 text-center mb-4">
-              {t('dialog.draw_teams.description')}
-            </AlertDialogDescription>
-            <div className="flex flex-col gap-3">
-              {teams.length > 0 && (
-                <>
-                  <Button
-                    onClick={() => drawTeams(0)}
-                    className="bg-red-600 hover:bg-red-700 text-white w-full py-6 text-lg font-semibold"
-                  >
-                    {t('dialog.draw_teams.keep_red')}
-                  </Button>
-                  <Button
-                    onClick={() => drawTeams(1)}
-                    className="bg-blue-600 hover:bg-blue-700 text-white w-full py-6 text-lg font-semibold"
-                  >
-                    {t('dialog.draw_teams.keep_blue')}
-                  </Button>
-                </>
-              )}
-              <Button
-                onClick={() => drawTeams(null)}
-                className="bg-green-600 hover:bg-green-700 text-white w-full py-6 text-lg font-semibold"
-              >
-                {t('dialog.draw_teams.redraw_all')}
-              </Button>
-              <AlertDialogCancel 
-                onClick={cancelDrawTeams}
-                className="border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white w-full py-6 text-lg"
-              >
-                {t('dialog.draw_teams.cancel')}
-              </AlertDialogCancel>
-            </div>
-          </AlertDialogContent>
+          <DrawTeamsDialog
+            hasExistingTeams={teams.length > 0}
+            onDrawTeams={drawTeams}
+            onCancel={cancelDrawTeams}
+          />
 
           {/* Draw Results */}
           {teams.length > 0 && (
@@ -556,70 +441,18 @@ function App() {
                 {teams.map((team, index) => {
                   const teamColor = teamColors[index % teamColors.length]
                   return (
-                    <Card key={index} className="bg-gray-800 border-gray-700">
-                      <CardHeader
-                        className="text-center"
-                        style={{ backgroundColor: teamColor.color }}
-                      >
-                        <CardTitle
-                          className="text-xl font-bold"
-                          style={{ color: teamColor.textColor }}
-                        >
-                          {t('results.team', { color: teamColor.name })}
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent className="pt-4">
-                        <div className="space-y-2">
-                          {team.map((participant, idx) => (
-                            <div
-                              key={participant.id}
-                              className="bg-gray-700 p-2 rounded text-center text-white"
-                            >
-                              {idx + 1}. {participant.nome}
-                            </div>
-                          ))}
-                        </div>
-                        <div className="mt-3 text-center">
-                          <Badge
-                            className="text-white"
-                            style={{ backgroundColor: teamColor.color }}
-                          >
-                            {t('results.players_count', { count: team.length })}
-                          </Badge>
-                        </div>
-                      </CardContent>
-                    </Card>
+                    <TeamCard
+                      key={index}
+                      team={team}
+                      teamColor={teamColor}
+                      index={index}
+                    />
                   )
                 })}
               </div>
 
               {/* Bench Players */}
-              {benchPlayers.length > 0 && (
-                <Card className="bg-gray-800 border-gray-700">
-                  <CardHeader className="text-center bg-orange-600">
-                    <CardTitle className="text-xl font-bold text-white">
-                      {t('results.bench_title')}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="pt-4">
-                    <div className="space-y-2">
-                      {benchPlayers.map((participant) => (
-                        <div
-                          key={participant.id}
-                          className="bg-gray-700 p-2 rounded text-center text-white"
-                        >
-                          {participant.nome}
-                        </div>
-                      ))}
-                    </div>
-                    <div className="mt-3 text-center">
-                      <Badge className="bg-orange-600 text-white">
-                        {t('results.bench_count', { count: benchPlayers.length })}
-                      </Badge>
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
+              <BenchCard benchPlayers={benchPlayers} />
             </div>
           )}
         </AlertDialog>
