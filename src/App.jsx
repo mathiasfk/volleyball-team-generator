@@ -252,9 +252,14 @@ function App() {
   }
 
   const openDrawTeamsDialog = () => {
+    if (teams.length === 0) {
+      drawTeams(null)
+      return
+    }
+    
     gtag('event', 'draw_teams_dialog_open', {
       'participant_count': participants.length,
-      'has_existing_teams': teams.length > 0
+      'has_existing_teams': true
     });
     setOpenDrawDialog(true)
   }
@@ -293,8 +298,7 @@ function App() {
       'new_bench_players_count': remainingPlayersWithIds.length,
       'previous_team_count': teams.length,
       'previous_bench_players_count': benchPlayers.length,
-      'keep_team_action': keepTeamAction,
-      'keep_team_id': keepTeamId
+      'keep_team_action': keepTeamAction
     });
 
     setTeams(formedTeamsWithIds)
@@ -479,16 +483,14 @@ function App() {
 
           {/* Action Buttons */}
           <div className="flex gap-4 justify-center mb-6">
-            <AlertDialogTrigger asChild>
-              <Button
-                onClick={openDrawTeamsDialog}
-                disabled={participants.length === 0}
-                className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg"
-              >
-                <Shuffle className="w-5 h-5 me-2" />
-                {t('actions.draw_teams')}
-              </Button>
-            </AlertDialogTrigger>
+            <Button
+              onClick={openDrawTeamsDialog}
+              disabled={participants.length === 0}
+              className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg"
+            >
+              <Shuffle className="w-5 h-5 me-2" />
+              {t('actions.draw_teams')}
+            </Button>
             {teams.length > 0 && (
               <Button
                 onClick={clearDraw}
