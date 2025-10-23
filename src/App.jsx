@@ -17,10 +17,11 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './component
 import { calculateTeams } from './lib/calculateTeams.js'
 import { AlertDialog } from './components/ui/alert-dialog.jsx'
 import { gtag } from './lib/analytics.js'
-
-const LOCAL_STORAGE_KEY_PARTICIPANTS = 'volleyball-participants'
-const LOCAL_STORAGE_KEY_TEAMS = 'volleyball-teams'
-const LOCAl_STORAGE_KEY_BENCH = 'volleyball-bench'
+import { STORAGE_KEYS } from './constants/storageKeys.ts'
+import { getTeamColors } from './constants/teamColors.ts'
+import { isDuplicateName, isEmptyName, formatParticipantName } from './utils/validation.ts'
+import { loadFromStorage, saveToStorage, removeFromStorage, removeMultipleFromStorage } from './utils/localStorage.ts'
+import { participantsToNames, namesToParticipants, teamsToNames, namesToTeams } from './utils/participants.ts'
 
 
 function App() {
@@ -39,28 +40,21 @@ function App() {
   const [openDrawDialog, setOpenDrawDialog] = useState(false)
 
   // Vibrant colors for teams
-  const teamColors = [
-    { name: t('colors.red'), color: '#ef4444', textColor: '#ffffff' },
-    { name: t('colors.blue'), color: '#3b82f6', textColor: '#ffffff' },
-    { name: t('colors.green'), color: '#22c55e', textColor: '#ffffff' },
-    { name: t('colors.purple'), color: '#a855f7', textColor: '#ffffff' },
-    { name: t('colors.orange'), color: '#f97316', textColor: '#ffffff' },
-    { name: t('colors.pink'), color: '#ec4899', textColor: '#ffffff' }
-  ]
+  const teamColors = getTeamColors(t)
 
   // Load data from localStorage on initialization
   useEffect(() => {
     if (dataLoaded) return // Prevent re-loading if already done
 
-    const [loadedParticipants, errorParticipants] = loadDataFromStorage(LOCAL_STORAGE_KEY_PARTICIPANTS)
-    const [loadedTeams, errorTeams] = loadDataFromStorage(LOCAL_STORAGE_KEY_TEAMS)
-    const [loadedBench, errorBench] = loadDataFromStorage(LOCAl_STORAGE_KEY_BENCH)
+    const [loadedParticipants, errorParticipants] = loadFromStorage(STORAGE_KEYS.PARTICIPANTS)
+    const [loadedTeams, errorTeams] = loadFromStorage(STORAGE_KEYS.TEAMS)
+    const [loadedBench, errorBench] = loadFromStorage(STORAGE_KEYS.BENCH)
 
     // Combine any errors
     const errorLoading = !!errorParticipants || !!errorTeams ? ({
-      [LOCAL_STORAGE_KEY_PARTICIPANTS]: errorParticipants?.message,
-      [LOCAL_STORAGE_KEY_TEAMS]: errorTeams?.message,
-      [LOCAl_STORAGE_KEY_BENCH]: errorBench?.message
+      [STORAGE_KEYS.PARTICIPANTS]: errorParticipants?.message,
+      [STORAGE_KEYS.TEAMS]: errorTeams?.message,
+      [STORAGE_KEYS.BENCH]: errorBench?.message
     }) : null
 
     if (loadedParticipants) setParticipants(loadedParticipants)
@@ -79,38 +73,12 @@ function App() {
     setDataLoaded(true)
   }, [])
 
-  const loadDataFromStorage = (key) => {
-    const savedData = localStorage.getItem(key)
-    let parsedData = null
-    let errorLoading = null
-    if (savedData) {
-      try {
-        parsedData = JSON.parse(savedData)
-      } catch (error) {
-        console.error(`❌ Error parsing ${key} from localStorage:`, error)
-        localStorage.removeItem(key)
-        errorLoading = error
-      }
-    }
-    return [parsedData, errorLoading]
-  }
-
-  const saveDataToStorage = (key, data) => {
-    try {
-      localStorage.setItem(key, JSON.stringify(data))
-    } catch (error) {
-      console.error(`❌ Error saving ${key} to localStorage:`, error)
-    }
-  }
-
-  const clearFromStorage = (key) => {
-    localStorage.removeItem(key)
-  }
-
   const clearAllStorage = () => {
-    clearFromStorage(LOCAL_STORAGE_KEY_PARTICIPANTS)
-    clearFromStorage(LOCAL_STORAGE_KEY_TEAMS)
-    clearFromStorage(LOCAl_STORAGE_KEY_BENCH)
+    removeMultipleFromStorage([
+      STORAGE_KEYS.PARTICIPANTS,
+      STORAGE_KEYS.TEAMS,
+      STORAGE_KEYS.BENCH
+    ])
   }
 
   // Save participants to localStorage whenever the list changes
@@ -120,24 +88,17 @@ function App() {
       return
     }
 
-    saveDataToStorage(LOCAL_STORAGE_KEY_PARTICIPANTS, participants)
+    saveToStorage(STORAGE_KEYS.PARTICIPANTS, participants)
   }, [participants, dataLoaded])
 
   const clearError = () => {
     if (error) setError('')
   }
 
-  const isDuplicateName = (name, idToExclude = null) => {
-    return participants.some(p =>
-      p.nome.toLowerCase().trim() === name.toLowerCase().trim() &&
-      p.id !== idToExclude
-    )
-  }
-
   const addParticipant = () => {
-    const formattedName = newName.trim()
-    const isDuplicate = isDuplicateName(formattedName)
-    const isEmpty = formattedName === ''
+    const formattedName = formatParticipantName(newName)
+    const isDuplicate = isDuplicateName(formattedName, participants)
+    const isEmpty = isEmptyName(newName)
     const participantId = Date.now().toString()
 
     gtag('event', 'add_participant', {
@@ -216,9 +177,9 @@ function App() {
   }
 
   const saveEdit = () => {
-    const formattedName = editedName.trim()
-    const isDuplicate = isDuplicateName(formattedName, editingId)
-    const isEmpty = formattedName === ''
+    const formattedName = formatParticipantName(editedName)
+    const isDuplicate = isDuplicateName(formattedName, participants, editingId)
+    const isEmpty = isEmptyName(editedName)
 
     gtag('event', 'edit_participant_save', {
       'new_name': formattedName,
@@ -275,9 +236,9 @@ function App() {
 
   const drawTeams = (keepTeamId = null) => {
     // Convert participants objects to strings for calculateTeams
-    const participantNames = participants.map(p => p.nome)
-    const teamNames = teams.map(team => team.map(p => p.nome))
-    const benchNames = benchPlayers.map(p => p.nome)
+    const participantNames = participantsToNames(participants)
+    const teamNames = teamsToNames(teams)
+    const benchNames = participantsToNames(benchPlayers)
     
     const { formedTeams, remainingPlayers } = calculateTeams({
       participants: participantNames, 
@@ -287,12 +248,8 @@ function App() {
     })
 
     // Convert back to objects with IDs
-    const formedTeamsWithIds = formedTeams.map(team => 
-      team.map(name => participants.find(p => p.nome === name) || { id: Date.now().toString(), nome: name })
-    )
-    const remainingPlayersWithIds = remainingPlayers.map(name => 
-      participants.find(p => p.nome === name) || { id: Date.now().toString(), nome: name }
-    )
+    const formedTeamsWithIds = namesToTeams(formedTeams, participants)
+    const remainingPlayersWithIds = namesToParticipants(remainingPlayers, participants)
 
     const keepTeamAction = keepTeamId === 0 ? 'keep_red' : keepTeamId === 1 ? 'keep_blue' : 'redraw_all'
     
@@ -311,8 +268,8 @@ function App() {
     setOpenDrawDialog(false)
 
     // Save teams to localStorage
-    saveDataToStorage(LOCAL_STORAGE_KEY_TEAMS, formedTeamsWithIds)
-    saveDataToStorage(LOCAl_STORAGE_KEY_BENCH, remainingPlayersWithIds)
+    saveToStorage(STORAGE_KEYS.TEAMS, formedTeamsWithIds)
+    saveToStorage(STORAGE_KEYS.BENCH, remainingPlayersWithIds)
   }
 
   const clearDraw = () => {
@@ -325,8 +282,8 @@ function App() {
     setTeams([])
     setBenchPlayers([])
     clearError()
-    clearFromStorage(LOCAL_STORAGE_KEY_TEAMS)
-    clearFromStorage(LOCAl_STORAGE_KEY_BENCH)
+    removeFromStorage(STORAGE_KEYS.TEAMS)
+    removeFromStorage(STORAGE_KEYS.BENCH)
   }
 
   return (
