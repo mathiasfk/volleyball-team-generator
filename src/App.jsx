@@ -251,23 +251,41 @@ function App() {
   }
 
   const drawTeams = () => {
-    const { formedTeams, remainingPlayers } = calculateTeams(participants)
+    // Convert participants objects to strings for calculateTeams
+    const participantNames = participants.map(p => p.nome)
+    const teamNames = teams.map(team => team.map(p => p.nome))
+    const benchNames = benchPlayers.map(p => p.nome)
+    
+    const { formedTeams, remainingPlayers } = calculateTeams({
+      participants: participantNames, 
+      teams: teamNames, 
+      benchPlayers: benchNames,
+      //keepTeamId: 0 // For debug purposes, keep team 0 intact
+    })
+
+    // Convert back to objects with IDs
+    const formedTeamsWithIds = formedTeams.map(team => 
+      team.map(name => participants.find(p => p.nome === name) || { id: Date.now().toString(), nome: name })
+    )
+    const remainingPlayersWithIds = remainingPlayers.map(name => 
+      participants.find(p => p.nome === name) || { id: Date.now().toString(), nome: name }
+    )
 
     gtag('event', 'draw_team', {
       'participant_count': participants.length,
-      'new_teams_count': formedTeams.length,
-      'new_bench_players_count': remainingPlayers.length,
+      'new_teams_count': formedTeamsWithIds.length,
+      'new_bench_players_count': remainingPlayersWithIds.length,
       'previous_team_count': teams.length,
       'previous_bench_players_count': benchPlayers.length
     });
 
-    setTeams(formedTeams)
-    setBenchPlayers(remainingPlayers)
+    setTeams(formedTeamsWithIds)
+    setBenchPlayers(remainingPlayersWithIds)
     clearError()
 
     // Save teams to localStorage
-    saveDataToStorage(LOCAL_STORAGE_KEY_TEAMS, formedTeams)
-    saveDataToStorage(LOCAl_STORAGE_KEY_BENCH, remainingPlayers)
+    saveDataToStorage(LOCAL_STORAGE_KEY_TEAMS, formedTeamsWithIds)
+    saveDataToStorage(LOCAl_STORAGE_KEY_BENCH, remainingPlayersWithIds)
   }
 
   const clearDraw = () => {
