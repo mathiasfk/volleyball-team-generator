@@ -76,15 +76,7 @@ export function calculateTeams(options: {
   }
 
   // Priority: bench players from previous round should be included in new teams
-  let playersToDistribute = [...participants]
-  
-  // If we have previous bench players, ensure they are all included in teams
-  if (benchPlayers.length > 0) {
-    // Remove bench players from the main participants list to avoid duplicates
-    playersToDistribute = participants.filter(p => !benchPlayers.includes(p))
-    // Add bench players at the beginning (they'll be prioritized and included)
-    playersToDistribute = [...benchPlayers, ...playersToDistribute]
-  }
+  // (The shuffling logic below handles this by placing bench players at the front)
 
   // Shuffle all participants randomly, but keep bench players at the front
   const benchPlayersShuffled = benchPlayers.length > 0 ? [...benchPlayers].sort(() => Math.random() - 0.5) : []
