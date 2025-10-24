@@ -1,7 +1,4 @@
-export interface Participant {
-  id: string
-  nome: string
-}
+import { Participant } from '@/lib/types'
 
 /**
  * Converts an array of participant objects to an array of names

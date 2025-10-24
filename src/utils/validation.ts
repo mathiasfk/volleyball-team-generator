@@ -1,7 +1,4 @@
-export interface Participant {
-  id: string
-  nome: string
-}
+import { Participant } from '@/lib/types'
 
 /**
  * Checks if a participant name is duplicated in the list
