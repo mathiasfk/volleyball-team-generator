@@ -1,13 +1,14 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
-import {
-  participantsToNames,
-  namesToParticipants,
-  teamsToNames,
-  namesToTeams,
-  findParticipantByName,
-  createParticipant,
-} from './participants'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+
 import type { Participant } from './participants'
+import {
+  createParticipant,
+  findParticipantByName,
+  namesToParticipants,
+  namesToTeams,
+  participantsToNames,
+  teamsToNames,
+} from './participants'
 
 describe('participants utils', () => {
   const mockParticipants: Participant[] = [

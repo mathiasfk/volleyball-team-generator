@@ -1,8 +1,9 @@
-import { useTranslation } from 'react-i18next'
-import { Input } from '@/components/ui/input.jsx'
-import { Button } from '@/components/ui/button.jsx'
 import { Trash } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+
 import { AlertDialogTrigger } from '@/components/ui/alert-dialog.jsx'
+import { Button } from '@/components/ui/button.jsx'
+import { Input } from '@/components/ui/input.jsx'
 
 const ParticipantForm = ({ 
   newName, 

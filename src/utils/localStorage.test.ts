@@ -1,13 +1,14 @@
 /**
  * @vitest-environment happy-dom
  */
-import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+
 import {
+  existsInStorage,
   loadFromStorage,
-  saveToStorage,
   removeFromStorage,
   removeMultipleFromStorage,
-  existsInStorage,
+  saveToStorage,
 } from './localStorage'
 
 describe('localStorage utils', () => {

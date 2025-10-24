@@ -1,8 +1,9 @@
 import { useTranslation } from 'react-i18next'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.jsx'
-import { Badge } from '@/components/ui/badge.jsx'
 
-const TeamCard = ({ team, teamColor, index }) => {
+import { Badge } from '@/components/ui/badge.jsx'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.jsx'
+
+const TeamCard = ({ team, teamColor, _index }) => {
   const { t } = useTranslation()
 
   return (

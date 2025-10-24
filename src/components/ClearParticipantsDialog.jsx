@@ -1,11 +1,12 @@
 import { useTranslation } from 'react-i18next'
+
 import { 
-  AlertDialogContent, 
-  AlertDialogHeader, 
-  AlertDialogTitle, 
-  AlertDialogDescription,
   AlertDialogAction,
-  AlertDialogCancel 
+  AlertDialogCancel, 
+  AlertDialogContent, 
+  AlertDialogDescription,
+  AlertDialogHeader, 
+  AlertDialogTitle
 } from '@/components/ui/alert-dialog.jsx'
 
 const ClearParticipantsDialog = ({ onConfirm, onCancel }) => {

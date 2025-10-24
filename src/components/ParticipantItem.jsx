@@ -1,7 +1,8 @@
-import { useTranslation } from 'react-i18next'
-import { Input } from '@/components/ui/input.jsx'
-import { Button } from '@/components/ui/button.jsx'
 import { Edit2, Trash2 } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+
+import { Button } from '@/components/ui/button.jsx'
+import { Input } from '@/components/ui/input.jsx'
 
 const ParticipantItem = ({ 
   participant, 

@@ -1,10 +1,11 @@
-import { useTranslation } from 'react-i18next'
 import { Globe } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+
 import {
   Select,
-  SelectTrigger,
   SelectContent,
   SelectItem,
+  SelectTrigger,
   SelectValue,
 } from '@/components/ui/select.jsx'
 

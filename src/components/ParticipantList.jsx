@@ -1,5 +1,7 @@
 import { useTranslation } from 'react-i18next'
+
 import { Badge } from '@/components/ui/badge.jsx'
+
 import ParticipantItem from './ParticipantItem.jsx'
 
 const ParticipantList = ({ 

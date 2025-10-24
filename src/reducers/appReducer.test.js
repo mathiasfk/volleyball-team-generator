@@ -1,5 +1,6 @@
-import { describe, it, expect } from 'vitest'
-import { appReducer, initialState, ACTIONS } from './appReducer'
+import { describe, expect,it } from 'vitest'
+
+import { ACTIONS,appReducer, initialState } from './appReducer'
 
 describe('appReducer', () => {
   describe('initialState', () => {

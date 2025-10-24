@@ -1,0 +1,52 @@
+{
+  // ESLint - Organiza imports e corrige código automaticamente ao salvar
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  
+  // Habilita o ESLint para todos os tipos de arquivo suportados
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  
+  // Configurações do ESLint
+  "eslint.enable": true,
+  "eslint.run": "onType",
+  
+  // Configurações de formatação
+  "editor.formatOnSave": false,
+  "editor.formatOnPaste": false,
+  
+  // Configurações específicas por linguagem
+  "[javascript]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
+  },
+  "[javascriptreact]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
+  },
+  "[typescript]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
+  },
+  "[typescriptreact]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
+  },
+  
+  // Configurações de salvamento automático (opcional)
+  "files.autoSave": "onFocusChange",
+  
+  // Configurações de exibição
+  "editor.rulers": [100],
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true
+}

@@ -1,6 +1,7 @@
-import { describe, it, expect } from 'vitest'
-import { isDuplicateName, isEmptyName, formatParticipantName } from './validation'
+import { describe, expect,it } from 'vitest'
+
 import type { Participant } from './validation'
+import { formatParticipantName,isDuplicateName, isEmptyName } from './validation'
 
 describe('validation utils', () => {
   describe('isDuplicateName', () => {
