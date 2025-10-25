@@ -11,7 +11,15 @@
     "save": "Сохранить",
     "cancel": "Отмена",
     "edit": "Редактировать",
-    "remove": "Удалить"
+    "remove": "Удалить",
+    "edit_dialog_title": "Редактировать участника",
+    "edit_dialog_description": "Измените имя и уровень навыка участника"
+  },
+  "skill_levels": {
+    "beginner": "Начинающий",
+    "intermediate": "Средний",
+    "advanced": "Продвинутый",
+    "label": "Уровень навыка"
   },
   "actions": {
     "draw_teams": "Сформировать команды",

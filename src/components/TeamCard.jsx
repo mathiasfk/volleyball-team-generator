@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next'
 import { Badge } from '@/components/ui/badge.jsx'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.jsx'
 
+import SkillLevelIcon from './SkillLevelIcon.jsx'
+
 const TeamCard = ({ team, teamColor, _index, changedPlayerIds = [] }) => {
   const { t } = useTranslation()
 
@@ -30,7 +32,10 @@ const TeamCard = ({ team, teamColor, _index, changedPlayerIds = [] }) => {
                   isChanged ? 'player-changed' : ''
                 }`}
               >
-                {idx + 1}. {participant.name}
+                <div className="flex items-center justify-center gap-2">
+                  <span>{idx + 1}. {participant.name}</span>
+                  <SkillLevelIcon weight={participant.weight} size={14} />
+                </div>
               </div>
             )
           })}

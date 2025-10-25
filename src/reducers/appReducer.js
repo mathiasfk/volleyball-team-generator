@@ -6,6 +6,7 @@ export const ACTIONS = {
   ADD_PARTICIPANT: 'ADD_PARTICIPANT',
   REMOVE_PARTICIPANT: 'REMOVE_PARTICIPANT',
   CLEAR_ALL_PARTICIPANTS: 'CLEAR_ALL_PARTICIPANTS',
+  UPDATE_PARTICIPANT: 'UPDATE_PARTICIPANT',
   START_EDITING: 'START_EDITING',
   SET_EDITED_NAME: 'SET_EDITED_NAME',
   SAVE_EDIT: 'SAVE_EDIT',
@@ -98,6 +99,17 @@ export function appReducer(state, action) {
         ...state,
         editingId: null,
         editedName: '',
+        error: '',
+      }
+    
+    case ACTIONS.UPDATE_PARTICIPANT:
+      return {
+        ...state,
+        participants: state.participants.map(p =>
+          p.id === action.payload.id 
+            ? { ...p, ...action.payload } 
+            : p
+        ),
         error: '',
       }
     

@@ -11,7 +11,15 @@
     "save": "保存",
     "cancel": "キャンセル",
     "edit": "編集",
-    "remove": "削除"
+    "remove": "削除",
+    "edit_dialog_title": "参加者を編集",
+    "edit_dialog_description": "参加者の名前とスキルレベルを変更"
+  },
+  "skill_levels": {
+    "beginner": "初級",
+    "intermediate": "中級",
+    "advanced": "上級",
+    "label": "スキルレベル"
   },
   "actions": {
     "draw_teams": "チームを作成",

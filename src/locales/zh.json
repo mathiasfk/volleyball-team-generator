@@ -11,7 +11,15 @@
     "save": "保存",
     "cancel": "取消",
     "edit": "编辑",
-    "remove": "删除"
+    "remove": "删除",
+    "edit_dialog_title": "编辑参与者",
+    "edit_dialog_description": "更改参与者的姓名和技能水平"
+  },
+  "skill_levels": {
+    "beginner": "初级",
+    "intermediate": "中级",
+    "advanced": "高级",
+    "label": "技能水平"
   },
   "actions": {
     "draw_teams": "分配队伍",

@@ -1,7 +1,7 @@
 import './App.css'
 
 import { AlertCircle, ListChevronsDownUp, ListChevronsUpDown,Shuffle, Users } from 'lucide-react'
-import { useEffect, useReducer, useRef } from 'react'
+import { useEffect, useReducer, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx'
@@ -11,6 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.j
 import BenchCard from './components/BenchCard.jsx'
 import ClearParticipantsDialog from './components/ClearParticipantsDialog.jsx'
 import DrawTeamsDialog from './components/DrawTeamsDialog.jsx'
+import EditParticipantDialog from './components/EditParticipantDialog.jsx'
 import LanguageSelector from './components/LanguageSelector.jsx'
 import ParticipantForm from './components/ParticipantForm.jsx'
 import ParticipantList from './components/ParticipantList.jsx'
@@ -37,8 +38,6 @@ function App() {
   const {
     participants,
     newName,
-    editingId,
-    editedName,
     teams,
     benchPlayers,
     error,
@@ -48,6 +47,9 @@ function App() {
     changedPlayerIds,
     previousPlayerPositions,
   } = state
+  
+  const [editDialogOpen, setEditDialogOpen] = useState(false)
+  const [editingParticipant, setEditingParticipant] = useState(null)
 
   // Vibrant colors for teams
   const teamColors = getTeamColors(t)
@@ -175,28 +177,27 @@ function App() {
     dispatch({ type: ACTIONS.TOGGLE_PARTICIPANTS })
   }
 
-  const startEditing = (participant) => {
+  const openEditDialog = (participant) => {
     gtag('event', 'edit_participant_start', {
       'previous_name': participant.name,
       'id': participant.id
     });
 
-    dispatch({
-      type: ACTIONS.START_EDITING,
-      payload: { id: participant.id, name: participant.name }
-    })
+    setEditingParticipant(participant)
+    setEditDialogOpen(true)
   }
 
-  const saveEdit = () => {
-    const formattedName = formatParticipantName(editedName)
-    const isDuplicate = isDuplicateName(formattedName, participants, editingId)
-    const isEmpty = isEmptyName(editedName)
+  const saveParticipantEdit = (updates) => {
+    const formattedName = formatParticipantName(updates.name)
+    const isDuplicate = isDuplicateName(formattedName, participants, updates.id)
+    const isEmpty = isEmptyName(updates.name)
 
     gtag('event', 'edit_participant_save', {
       'new_name': formattedName,
+      'new_weight': updates.weight,
       'is_empty': isEmpty,
       'is_duplicate': isDuplicate,
-      'id': editingId
+      'id': updates.id
     });
 
     if (isEmpty) {
@@ -210,17 +211,12 @@ function App() {
     }
 
     dispatch({
-      type: ACTIONS.SAVE_EDIT,
-      payload: { id: editingId, name: formattedName }
+      type: ACTIONS.UPDATE_PARTICIPANT,
+      payload: { id: updates.id, name: formattedName, weight: updates.weight }
     })
-  }
-
-  const cancelEdit = () => {
-    gtag('event', 'edit_participant_cancel', {
-      'id': editingId
-    });
-
-    dispatch({ type: ACTIONS.CANCEL_EDIT })
+    
+    setEditDialogOpen(false)
+    setEditingParticipant(null)
   }
 
   const openDrawTeamsDialog = () => {
@@ -385,16 +381,16 @@ function App() {
 
                   <ParticipantList
                     participants={participants}
-                    editingId={editingId}
-                    editedName={editedName}
-                    onStartEdit={startEditing}
-                    onSaveEdit={saveEdit}
-                    onCancelEdit={cancelEdit}
-                    onEditNameChange={(value) => {
-                      dispatch({ type: ACTIONS.SET_EDITED_NAME, payload: value })
-                      clearError()
-                    }}
+                    onEdit={openEditDialog}
                     onRemove={removeParticipant}
+                  />
+                  
+                  {/* Edit Participant Dialog */}
+                  <EditParticipantDialog
+                    open={editDialogOpen}
+                    onOpenChange={setEditDialogOpen}
+                    participant={editingParticipant}
+                    onSave={saveParticipantEdit}
                   />
                 </CardContent>
               </CollapsibleContent>

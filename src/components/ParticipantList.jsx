@@ -6,12 +6,7 @@ import ParticipantItem from './ParticipantItem.jsx'
 
 const ParticipantList = ({ 
   participants,
-  editingId,
-  editedName,
-  onStartEdit,
-  onSaveEdit,
-  onCancelEdit,
-  onEditNameChange,
+  onEdit,
   onRemove
 }) => {
   const { t } = useTranslation()
@@ -23,12 +18,7 @@ const ParticipantList = ({
           <ParticipantItem
             key={participant.id}
             participant={participant}
-            isEditing={editingId === participant.id}
-            editedName={editedName}
-            onStartEdit={() => onStartEdit(participant)}
-            onSaveEdit={onSaveEdit}
-            onCancelEdit={onCancelEdit}
-            onEditNameChange={onEditNameChange}
+            onEdit={() => onEdit(participant)}
             onRemove={() => onRemove(participant.id)}
           />
         ))}

@@ -11,7 +11,15 @@
     "save": "सहेजें",
     "cancel": "रद्द करें",
     "edit": "संपादित करें",
-    "remove": "हटाएँ"
+    "remove": "हटाएँ",
+    "edit_dialog_title": "प्रतिभागी संपादित करें",
+    "edit_dialog_description": "प्रतिभागी का नाम और कौशल स्तर बदलें"
+  },
+  "skill_levels": {
+    "beginner": "शुरुआती",
+    "intermediate": "मध्यवर्ती",
+    "advanced": "उन्नत",
+    "label": "कौशल स्तर"
   },
   "actions": {
     "draw_teams": "टीम बनाएं",

@@ -11,7 +11,15 @@
     "save": "Enregistrer",
     "cancel": "Annuler",
     "edit": "Modifier",
-    "remove": "Supprimer"
+    "remove": "Supprimer",
+    "edit_dialog_title": "Modifier le participant",
+    "edit_dialog_description": "Modifiez le nom et le niveau du participant"
+  },
+  "skill_levels": {
+    "beginner": "Débutant",
+    "intermediate": "Intermédiaire",
+    "advanced": "Avancé",
+    "label": "Niveau de compétence"
   },
   "actions": {
     "draw_teams": "Former les équipes",

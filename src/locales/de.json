@@ -11,7 +11,15 @@
     "save": "Speichern",
     "cancel": "Abbrechen",
     "edit": "Bearbeiten",
-    "remove": "Entfernen"
+    "remove": "Entfernen",
+    "edit_dialog_title": "Teilnehmer bearbeiten",
+    "edit_dialog_description": "Namen und Fähigkeitsstufe des Teilnehmers ändern"
+  },
+  "skill_levels": {
+    "beginner": "Anfänger",
+    "intermediate": "Fortgeschritten",
+    "advanced": "Experte",
+    "label": "Fähigkeitsstufe"
   },
   "actions": {
     "draw_teams": "Teams bilden",

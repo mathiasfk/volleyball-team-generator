@@ -11,7 +11,15 @@
     "save": "Kaydet",
     "cancel": "İptal",
     "edit": "Düzenle",
-    "remove": "Kaldır"
+    "remove": "Kaldır",
+    "edit_dialog_title": "Katılımcıyı Düzenle",
+    "edit_dialog_description": "Katılımcının adını ve yetenek seviyesini değiştirin"
+  },
+  "skill_levels": {
+    "beginner": "Başlangıç",
+    "intermediate": "Orta",
+    "advanced": "İleri",
+    "label": "Yetenek Seviyesi"
   },
   "actions": {
     "draw_teams": "Takımları Oluştur",

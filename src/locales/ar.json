@@ -11,7 +11,15 @@
     "save": "حفظ",
     "cancel": "إلغاء",
     "edit": "تعديل",
-    "remove": "إزالة"
+    "remove": "إزالة",
+    "edit_dialog_title": "تعديل المشارك",
+    "edit_dialog_description": "تغيير اسم ومستوى مهارة المشارك"
+  },
+  "skill_levels": {
+    "beginner": "مبتدئ",
+    "intermediate": "متوسط",
+    "advanced": "متقدم",
+    "label": "مستوى المهارة"
   },
   "actions": {
     "draw_teams": "إنشاء الفرق",

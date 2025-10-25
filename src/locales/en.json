@@ -11,7 +11,15 @@
     "save": "Save",
     "cancel": "Cancel",
     "edit": "Edit",
-    "remove": "Remove"
+    "remove": "Remove",
+    "edit_dialog_title": "Edit Participant",
+    "edit_dialog_description": "Change the participant's name and skill level"
+  },
+  "skill_levels": {
+    "beginner": "Beginner",
+    "intermediate": "Intermediate",
+    "advanced": "Advanced",
+    "label": "Skill Level"
   },
   "actions": {
     "draw_teams": "Draw Teams",
