@@ -286,6 +286,249 @@ describe('calculateTeams', () => {
       expect(newMatchPlayerIds).toEqual(expect.arrayContaining(benchPlayerIds));
     })
   })
+
+  describe('should balance teams by experience weight', () => {
+    test('should create balanced teams with different skill levels', () => {
+      const participants: Participant[] = [
+        { id: '1', name: 'Beginner1', weight: 0.5 },
+        { id: '2', name: 'Beginner2', weight: 0.5 },
+        { id: '3', name: 'Intermediate1', weight: 1 },
+        { id: '4', name: 'Intermediate2', weight: 1 },
+        { id: '5', name: 'Advanced1', weight: 1.5 }, 
+        { id: '6', name: 'Advanced2', weight: 1.5 },
+      ]
+
+      const { formedTeams } = calculateTeams({ participants })
+
+      const team0Weight = formedTeams[0].reduce((sum, p) => sum + (p.weight || 1), 0)
+      const team1Weight = formedTeams[1].reduce((sum, p) => sum + (p.weight || 1), 0)
+
+      // Teams should have equal total weight (both should be 3.0)
+      expect(team0Weight).toBe(team1Weight)
+      expect(team0Weight).toBe(3)
+    })
+
+    test('should balance teams with mixed skill levels - scenario 1', () => {
+      const participants: Participant[] = [
+        { id: '1', name: 'Beginner1', weight: 0.5 },
+        { id: '2', name: 'Beginner2', weight: 0.5 },
+        { id: '3', name: 'Intermediate1', weight: 1 },
+        { id: '4', name: 'Intermediate2', weight: 1 },
+        { id: '5', name: 'Intermediate3', weight: 1 },
+        { id: '6', name: 'Intermediate4', weight: 1 },
+        { id: '7', name: 'Advanced1', weight: 1.5 },
+        { id: '8', name: 'Advanced2', weight: 1.5 },
+      ]
+
+      const { formedTeams } = calculateTeams({ participants })
+
+      const team0Weight = formedTeams[0].reduce((sum, p) => sum + (p.weight || 1), 0)
+      const team1Weight = formedTeams[1].reduce((sum, p) => sum + (p.weight || 1), 0)
+
+      // Total weight is 8, so each team should have 4
+      expect(team0Weight).toBe(4)
+      expect(team1Weight).toBe(4)
+    })
+
+    test('should balance teams as close as possible when perfect balance is impossible', () => {
+      const participants: Participant[] = [
+        { id: '1', name: 'Beginner', weight: 0.5 },
+        { id: '2', name: 'Intermediate1', weight: 1 },
+        { id: '3', name: 'Intermediate2', weight: 1 },
+        { id: '4', name: 'Advanced', weight: 1.5 },
+      ]
+
+      const { formedTeams } = calculateTeams({ participants })
+
+      const team0Weight = formedTeams[0].reduce((sum, p) => sum + (p.weight || 1), 0)
+      const team1Weight = formedTeams[1].reduce((sum, p) => sum + (p.weight || 1), 0)
+
+      // Total weight is 4, ideal is 2 per team
+      // Best possible: 2.0 vs 2.0 or close difference
+      const difference = Math.abs(team0Weight - team1Weight)
+      expect(difference).toBeLessThanOrEqual(0.5)
+    })
+
+    test('should handle participants without weight (default to 1)', () => {
+      const participants: Participant[] = [
+        { id: '1', name: 'Player1' }, // No weight, should default to 1
+        { id: '2', name: 'Player2', weight: 1 },
+        { id: '3', name: 'Player3' }, // No weight, should default to 1
+        { id: '4', name: 'Player4', weight: 1 },
+      ]
+
+      const { formedTeams } = calculateTeams({ participants })
+
+      const team0Weight = formedTeams[0].reduce((sum, p) => sum + (p.weight || 1), 0)
+      const team1Weight = formedTeams[1].reduce((sum, p) => sum + (p.weight || 1), 0)
+
+      // All players effectively have weight 1, so teams should be 2 vs 2
+      expect(team0Weight).toBe(2)
+      expect(team1Weight).toBe(2)
+    })
+
+    test('should balance teams with larger groups', () => {
+      const participants: Participant[] = [
+        { id: '1', name: 'Beginner1', weight: 0.5 },
+        { id: '2', name: 'Beginner2', weight: 0.5 },
+        { id: '3', name: 'Beginner3', weight: 0.5 },
+        { id: '4', name: 'Beginner4', weight: 0.5 },
+        { id: '5', name: 'Intermediate1', weight: 1 },
+        { id: '6', name: 'Intermediate2', weight: 1 },
+        { id: '7', name: 'Intermediate3', weight: 1 },
+        { id: '8', name: 'Intermediate4', weight: 1 },
+        { id: '9', name: 'Advanced1', weight: 1.5 },
+        { id: '10', name: 'Advanced2', weight: 1.5 },
+        { id: '11', name: 'Advanced3', weight: 1.5 },
+        { id: '12', name: 'Advanced4', weight: 1.5 },
+      ]
+
+      const { formedTeams } = calculateTeams({ participants })
+
+      const team0Weight = formedTeams[0].reduce((sum, p) => sum + (p.weight || 1), 0)
+      const team1Weight = formedTeams[1].reduce((sum, p) => sum + (p.weight || 1), 0)
+
+      // Total weight is 12, so each team should have 6
+      expect(team0Weight).toBe(6)
+      expect(team1Weight).toBe(6)
+    })
+
+    test('should maintain balance when keeping one team', () => {
+      const participants: Participant[] = [
+        { id: '1', name: 'Beginner1', weight: 0.5 },
+        { id: '2', name: 'Beginner2', weight: 0.5 },
+        { id: '3', name: 'Intermediate1', weight: 1 },
+        { id: '4', name: 'Intermediate2', weight: 1 },
+        { id: '5', name: 'Advanced1', weight: 1.5 },
+        { id: '6', name: 'Advanced2', weight: 1.5 },
+        { id: '7', name: 'Intermediate3', weight: 1 },
+        { id: '8', name: 'Intermediate4', weight: 1 },
+      ]
+
+      const firstMatch = calculateTeams({ participants })
+      const { formedTeams } = calculateTeams({
+        participants,
+        teams: firstMatch.formedTeams,
+        benchPlayers: firstMatch.remainingPlayers,
+        keepTeamId: 0,
+      })
+
+      const team0Weight = formedTeams[0].reduce((sum, p) => sum + (p.weight || 1), 0)
+      const team1Weight = formedTeams[1].reduce((sum, p) => sum + (p.weight || 1), 0)
+
+      // The other team should be balanced against the kept team as much as possible
+      const difference = Math.abs(team0Weight - team1Weight)
+      expect(difference).toBeLessThanOrEqual(1.5) // Allow some tolerance
+    })
+
+    test('should create best possible balance with 12 participants when perfect balance is impossible', () => {
+      // Scenario: 12 players with uneven weight distribution
+      // Total weight: 11.5, so each team should ideally have 5.75
+      // Since we can't split perfectly, algorithm should minimize difference
+      const participants: Participant[] = [
+        { id: '1', name: 'Advanced1', weight: 1.5 },
+        { id: '2', name: 'Advanced2', weight: 1.5 },
+        { id: '3', name: 'Advanced3', weight: 1.5 },
+        { id: '4', name: 'Intermediate1', weight: 1 },
+        { id: '5', name: 'Intermediate2', weight: 1 },
+        { id: '6', name: 'Intermediate3', weight: 1 },
+        { id: '7', name: 'Intermediate4', weight: 1 },
+        { id: '8', name: 'Intermediate5', weight: 1 },
+        { id: '9', name: 'Beginner1', weight: 0.5 },
+        { id: '10', name: 'Beginner2', weight: 0.5 },
+        { id: '11', name: 'Beginner3', weight: 0.5 },
+        { id: '12', name: 'Beginner4', weight: 0.5 },
+      ]
+
+      const { formedTeams } = calculateTeams({ participants })
+
+      // Verify both teams have 6 players
+      expect(formedTeams[0].length).toBe(6)
+      expect(formedTeams[1].length).toBe(6)
+
+      const team0Weight = formedTeams[0].reduce((sum, p) => sum + (p.weight || 1), 0)
+      const team1Weight = formedTeams[1].reduce((sum, p) => sum + (p.weight || 1), 0)
+      const totalWeight = team0Weight + team1Weight
+
+      // Total weight should be 11.5
+      expect(totalWeight).toBe(11.5)
+
+      // With this distribution, perfect balance (5.75 each) is impossible
+      // Algorithm should minimize the difference
+      const difference = Math.abs(team0Weight - team1Weight)
+      
+      // The difference should be minimal (best possible balance)
+      expect(difference).toBeLessThanOrEqual(0.5)
+
+      // Both teams should be relatively close to the ideal weight
+      expect(team0Weight).toBeGreaterThanOrEqual(5.5)
+      expect(team0Weight).toBeLessThanOrEqual(6)
+      expect(team1Weight).toBeGreaterThanOrEqual(5.5)
+      expect(team1Weight).toBeLessThanOrEqual(6)
+    })
+
+    test('should create best possible balance with 15 participants leaving some on bench when perfect balance is impossible', () => {
+      // Scenario: 15 players with uneven weight distribution
+      // 12 will play (6 per team), 3 will be on bench
+      // Total weight of all 15: 14.5 (4×1.5 + 6×1.0 + 5×0.5)
+      const participants: Participant[] = [
+        { id: '1', name: 'Advanced1', weight: 1.5 },
+        { id: '2', name: 'Advanced2', weight: 1.5 },
+        { id: '3', name: 'Advanced3', weight: 1.5 },
+        { id: '4', name: 'Advanced4', weight: 1.5 },
+        { id: '5', name: 'Intermediate1', weight: 1 },
+        { id: '6', name: 'Intermediate2', weight: 1 },
+        { id: '7', name: 'Intermediate3', weight: 1 },
+        { id: '8', name: 'Intermediate4', weight: 1 },
+        { id: '9', name: 'Intermediate5', weight: 1 },
+        { id: '10', name: 'Intermediate6', weight: 1 },
+        { id: '11', name: 'Beginner1', weight: 0.5 },
+        { id: '12', name: 'Beginner2', weight: 0.5 },
+        { id: '13', name: 'Beginner3', weight: 0.5 },
+        { id: '14', name: 'Beginner4', weight: 0.5 },
+        { id: '15', name: 'Beginner5', weight: 0.5 },
+      ]
+
+      const { formedTeams, remainingPlayers } = calculateTeams({ participants })
+
+      // Verify team sizes
+      expect(formedTeams[0].length).toBe(6)
+      expect(formedTeams[1].length).toBe(6)
+      expect(remainingPlayers.length).toBe(3)
+
+      // Verify all players are accounted for
+      const allPlayerIds = [
+        ...formedTeams[0].map(p => p.id),
+        ...formedTeams[1].map(p => p.id),
+        ...remainingPlayers.map(p => p.id),
+      ].sort()
+      const originalIds = participants.map(p => p.id).sort()
+      expect(allPlayerIds).toEqual(originalIds)
+
+      // Calculate weights
+      const team0Weight = formedTeams[0].reduce((sum, p) => sum + (p.weight || 1), 0)
+      const team1Weight = formedTeams[1].reduce((sum, p) => sum + (p.weight || 1), 0)
+      const benchWeight = remainingPlayers.reduce((sum, p) => sum + (p.weight || 1), 0)
+      const totalWeight = team0Weight + team1Weight + benchWeight
+
+      // Total weight should be 14.5
+      expect(totalWeight).toBe(14.5)
+
+      // Teams should be relatively balanced despite uneven distribution
+      const difference = Math.abs(team0Weight - team1Weight)
+      
+      // The difference should be minimal (best possible balance)
+      expect(difference).toBeLessThanOrEqual(1)
+
+      // Both teams should have reasonable weights
+      // The 12 playing spots have total weight that varies based on who's on bench
+      // But each team should be relatively balanced
+      expect(team0Weight).toBeGreaterThanOrEqual(4.5)
+      expect(team0Weight).toBeLessThanOrEqual(7.5)
+      expect(team1Weight).toBeGreaterThanOrEqual(4.5)
+      expect(team1Weight).toBeLessThanOrEqual(7.5)
+    })
+  })
 })
 
 const generateParticipants = (count: number): Participant[] => {

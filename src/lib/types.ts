@@ -8,6 +8,14 @@
 export interface Participant {
   id: string
   name: string
-  weight?: number // Optional experience level for team balancing
+  /**
+   * Experience weight for team balancing
+   * - 0.5: Beginner (Iniciante)
+   * - 1.0: Intermediate (Intermediário) - default
+   * - 1.5: Advanced (Avançado)
+   * 
+   * When undefined, defaults to 1.0 (Intermediate)
+   */
+  weight?: number
 }
 

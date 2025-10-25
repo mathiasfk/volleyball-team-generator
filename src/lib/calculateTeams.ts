@@ -3,6 +3,19 @@ import { Participant } from './types'
 const maxTeams = 2
 const maxTeamSize = 6
 
+/**
+ * Team Balancing Algorithm
+ * 
+ * This module creates balanced volleyball teams based on player experience levels.
+ * Each participant has a weight that represents their skill level:
+ * - Beginner (Iniciante): 0.5
+ * - Intermediate (Intermediário): 1.0 (default)
+ * - Advanced (Avançado): 1.5
+ * 
+ * The algorithm distributes players to create teams with similar total weight,
+ * ensuring fair and competitive matches.
+ */
+
 // Helper functions for better code organization
 
 /**
@@ -37,7 +50,14 @@ function removeDuplicates(participants: Participant[]): Participant[] {
 }
 
 /**
- * Distributes players into teams evenly
+ * Calculates the total weight/experience of a team
+ */
+function calculateTeamWeight(team: Participant[]): number {
+  return team.reduce((sum, player) => sum + (player.weight || 1), 0)
+}
+
+/**
+ * Distributes players into teams balancing by experience weight
  */
 function distributePlayersIntoTeams(
   players: Participant[],
@@ -45,9 +65,33 @@ function distributePlayersIntoTeams(
 ): Participant[][] {
   const teams: Participant[][] = [[], []]
   
-  for (let i = 0; i < players.length; i++) {
-    const teamIndex = Math.floor(i / playersPerTeam)
-    teams[teamIndex].push(players[i])
+  // Sort players by weight (descending) to better balance teams
+  const sortedPlayers = [...players].sort((a, b) => {
+    const weightA = a.weight || 1
+    const weightB = b.weight || 1
+    return weightB - weightA
+  })
+  
+  // Distribute players using a greedy algorithm:
+  // Always add the next player to the team with lower total weight
+  for (const player of sortedPlayers) {
+    const weight0 = calculateTeamWeight(teams[0])
+    const weight1 = calculateTeamWeight(teams[1])
+    
+    // Add to team with lower weight, or to team with fewer players if weights are equal
+    if (weight0 < weight1 || (weight0 === weight1 && teams[0].length < teams[1].length)) {
+      if (teams[0].length < playersPerTeam) {
+        teams[0].push(player)
+      } else {
+        teams[1].push(player)
+      }
+    } else {
+      if (teams[1].length < playersPerTeam) {
+        teams[1].push(player)
+      } else {
+        teams[0].push(player)
+      }
+    }
   }
   
   return teams
@@ -84,6 +128,7 @@ function redistributeWithKeptTeam(
   
   // Keep the specified team intact
   formedTeams[keepTeamId] = [...teams[keepTeamId]]
+  const keptTeamWeight = calculateTeamWeight(formedTeams[keepTeamId])
   
   // Get players available for redistribution
   const otherTeamPlayers = teams[1 - keepTeamId] || []
@@ -99,20 +144,57 @@ function redistributeWithKeptTeam(
     ...participants.filter(p => !alreadyAssigned.has(p.id))
   ]
   
-  // Remove duplicates and shuffle
+  // Remove duplicates
   const uniquePlayers = removeDuplicates(availableForRedistribution)
-  const shuffledPlayers = shuffle(uniquePlayers)
   
   // Prioritize bench players
   const benchPlayerIds = new Set(benchPlayers.map(bp => bp.id))
-  const benchPlayersFirst = shuffledPlayers.filter(p => benchPlayerIds.has(p.id))
-  const otherPlayers = shuffledPlayers.filter(p => !benchPlayerIds.has(p.id))
-  const prioritizedPlayers = [...benchPlayersFirst, ...otherPlayers]
+  const benchPlayersFirst = uniquePlayers.filter(p => benchPlayerIds.has(p.id))
+  const otherPlayers = uniquePlayers.filter(p => !benchPlayerIds.has(p.id))
   
-  // Calculate team size and distribute
+  // Sort each group by weight (descending) for better balancing
+  const sortedBench = benchPlayersFirst.sort((a, b) => (b.weight || 1) - (a.weight || 1))
+  const sortedOthers = otherPlayers.sort((a, b) => (b.weight || 1) - (a.weight || 1))
+  
+  // Shuffle within each weight group to add some randomness
+  const shuffledBench = shuffle(sortedBench)
+  const shuffledOthers = shuffle(sortedOthers)
+  const prioritizedPlayers = [...shuffledBench, ...shuffledOthers]
+  
+  // Calculate team size
   const otherTeamSize = calculateTeamSize(participants.length)
-  formedTeams[1 - keepTeamId] = prioritizedPlayers.slice(0, otherTeamSize)
-  const remainingPlayers = prioritizedPlayers.slice(otherTeamSize)
+  const otherTeamIndex = 1 - keepTeamId
+  
+  // Build the other team by selecting players that balance against the kept team
+  // Use greedy approach: try to get as close as possible to the kept team's weight
+  const selectedPlayers: Participant[] = []
+  const remainingPool = [...prioritizedPlayers]
+  
+  while (selectedPlayers.length < otherTeamSize && remainingPool.length > 0) {
+    const currentWeight = calculateTeamWeight(selectedPlayers)
+    const targetWeight = keptTeamWeight
+    const remainingSlots = otherTeamSize - selectedPlayers.length
+    
+    // Find the best player to add (one that gets us closest to target weight)
+    let bestIndex = 0
+    let bestDifference = Math.abs(targetWeight - (currentWeight + (remainingPool[0].weight || 1)))
+    
+    for (let i = 1; i < Math.min(remainingPool.length, remainingSlots * 2); i++) {
+      const playerWeight = remainingPool[i].weight || 1
+      const newDifference = Math.abs(targetWeight - (currentWeight + playerWeight))
+      
+      if (newDifference < bestDifference) {
+        bestDifference = newDifference
+        bestIndex = i
+      }
+    }
+    
+    selectedPlayers.push(remainingPool[bestIndex])
+    remainingPool.splice(bestIndex, 1)
+  }
+  
+  formedTeams[otherTeamIndex] = selectedPlayers
+  const remainingPlayers = remainingPool
   
   return { formedTeams, remainingPlayers }
 }
