@@ -34,16 +34,16 @@ const EditParticipantDialog = ({
     if (open && participant) {
       setName(participant.name || '')
       const weight = participant.weight || 1.0
-      // Map weight to slider position: 0.5 -> 2, 1.0 -> 1, 1.5 -> 0 (inverted)
-      if (weight <= 0.5) setSkillLevel(2)
-      else if (weight >= 1.5) setSkillLevel(0)
+      // Map weight to slider position: 0.5 -> 0, 1.0 -> 1, 1.5 -> 2
+      if (weight <= 0.5) setSkillLevel(0)
+      else if (weight >= 1.5) setSkillLevel(2)
       else setSkillLevel(1)
     }
   }, [open, participant])
 
   const handleSave = () => {
-    // Map slider position to weight: 0 -> 1.5, 1 -> 1.0, 2 -> 0.5 (inverted)
-    const weightMap = [1.5, 1.0, 0.5]
+    // Map slider position to weight: 0 -> 0.5, 1 -> 1.0, 2 -> 1.5
+    const weightMap = [0.5, 1.0, 1.5]
     const weight = weightMap[skillLevel]
     
     onSave({
@@ -63,13 +63,13 @@ const EditParticipantDialog = ({
     switch (skillLevel) {
       case 0:
         return {
-          label: t('skill_levels.advanced'),
-          weight: 1.5
+          label: t('skill_levels.beginner'),
+          weight: 0.5
         }
       case 2:
         return {
-          label: t('skill_levels.beginner'),
-          weight: 0.5
+          label: t('skill_levels.advanced'),
+          weight: 1.5
         }
       case 1:
       default:
@@ -85,6 +85,18 @@ const EditParticipantDialog = ({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="bg-gray-800 border-gray-700 text-white">
+        <style>{`
+          [data-slot="slider-track"] {
+            background-color: rgb(17, 24, 39) !important;
+          }
+          [data-slot="slider-range"] {
+            background-color: white !important;
+          }
+          [data-slot="slider-thumb"] {
+            background-color: white !important;
+            border-color: white !important;
+          }
+        `}</style>
         <DialogHeader>
           <DialogTitle>{t('participants.edit_dialog_title')}</DialogTitle>
           <DialogDescription className="text-gray-400">
@@ -114,21 +126,21 @@ const EditParticipantDialog = ({
               {t('skill_levels.label')}
             </Label>
             <div className="space-y-3">
-              <Slider
-                id="skill-level"
-                min={0}
-                max={2}
-                step={1}
-                value={[skillLevel]}
-                onValueChange={(value) => setSkillLevel(value[0])}
-                className="cursor-pointer"
-              />
+                <Slider
+                  id="skill-level"
+                  min={0}
+                  max={2}
+                  step={1}
+                  value={[skillLevel]}
+                  onValueChange={(value) => setSkillLevel(value[0])}
+                  className="cursor-pointer"
+                />
               
               {/* Skill Level Labels */}
               <div className="flex justify-between text-xs text-gray-400">
-                <span>{t('skill_levels.advanced')}</span>
-                <span>{t('skill_levels.intermediate')}</span>
                 <span>{t('skill_levels.beginner')}</span>
+                <span>{t('skill_levels.intermediate')}</span>
+                <span>{t('skill_levels.advanced')}</span>
               </div>
 
               {/* Current Selection Preview */}
