@@ -6,9 +6,9 @@ import { formatParticipantName,isDuplicateName, isEmptyName } from '@/utils/vali
 describe('validation utils', () => {
   describe('isDuplicateName', () => {
     const participants: Participant[] = [
-      { id: '1', nome: 'João' },
-      { id: '2', nome: 'Maria' },
-      { id: '3', nome: 'Pedro' },
+      { id: '1', name: 'João' },
+      { id: '2', name: 'Maria' },
+      { id: '3', name: 'Pedro' },
     ]
 
     it('should return true when name is duplicate', () => {

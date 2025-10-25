@@ -31,11 +31,11 @@ describe('appReducer', () => {
     })
 
     it('should not mutate other state properties', () => {
-      const state = { ...initialState, participants: [{ id: '1', nome: 'Maria' }] }
+      const state = { ...initialState, participants: [{ id: '1', name: 'Maria' }] }
       const action = { type: ACTIONS.SET_NEW_NAME, payload: 'João' }
       const newState = appReducer(state, action)
       
-      expect(newState.participants).toEqual([{ id: '1', nome: 'Maria' }])
+      expect(newState.participants).toEqual([{ id: '1', name: 'Maria' }])
     })
   })
 
@@ -60,7 +60,7 @@ describe('appReducer', () => {
 
   describe('ADD_PARTICIPANT', () => {
     it('should add participant to list', () => {
-      const participant = { id: '1', nome: 'João' }
+      const participant = { id: '1', name: 'João' }
       const action = { type: ACTIONS.ADD_PARTICIPANT, payload: participant }
       const newState = appReducer(initialState, action)
       
@@ -70,7 +70,7 @@ describe('appReducer', () => {
 
     it('should clear newName and error when adding participant', () => {
       const state = { ...initialState, newName: 'João', error: 'Some error' }
-      const participant = { id: '1', nome: 'João' }
+      const participant = { id: '1', name: 'João' }
       const action = { type: ACTIONS.ADD_PARTICIPANT, payload: participant }
       const newState = appReducer(state, action)
       
@@ -79,40 +79,40 @@ describe('appReducer', () => {
     })
 
     it('should not mutate existing participants array', () => {
-      const existingParticipants = [{ id: '1', nome: 'Maria' }]
+      const existingParticipants = [{ id: '1', name: 'Maria' }]
       const state = { ...initialState, participants: existingParticipants }
-      const participant = { id: '2', nome: 'João' }
+      const participant = { id: '2', name: 'João' }
       const action = { type: ACTIONS.ADD_PARTICIPANT, payload: participant }
       const newState = appReducer(state, action)
       
       expect(newState.participants).not.toBe(existingParticipants)
       expect(newState.participants).toHaveLength(2)
-      expect(newState.participants).toContainEqual({ id: '1', nome: 'Maria' })
-      expect(newState.participants).toContainEqual({ id: '2', nome: 'João' })
+      expect(newState.participants).toContainEqual({ id: '1', name: 'Maria' })
+      expect(newState.participants).toContainEqual({ id: '2', name: 'João' })
     })
   })
 
   describe('REMOVE_PARTICIPANT', () => {
     it('should remove participant by id', () => {
       const participants = [
-        { id: '1', nome: 'João' },
-        { id: '2', nome: 'Maria' },
-        { id: '3', nome: 'Pedro' },
+        { id: '1', name: 'João' },
+        { id: '2', name: 'Maria' },
+        { id: '3', name: 'Pedro' },
       ]
       const state = { ...initialState, participants }
       const action = { type: ACTIONS.REMOVE_PARTICIPANT, payload: '2' }
       const newState = appReducer(state, action)
       
       expect(newState.participants).toHaveLength(2)
-      expect(newState.participants).not.toContainEqual({ id: '2', nome: 'Maria' })
-      expect(newState.participants).toContainEqual({ id: '1', nome: 'João' })
-      expect(newState.participants).toContainEqual({ id: '3', nome: 'Pedro' })
+      expect(newState.participants).not.toContainEqual({ id: '2', name: 'Maria' })
+      expect(newState.participants).toContainEqual({ id: '1', name: 'João' })
+      expect(newState.participants).toContainEqual({ id: '3', name: 'Pedro' })
     })
 
     it('should clear error when removing participant', () => {
       const state = {
         ...initialState,
-        participants: [{ id: '1', nome: 'João' }],
+        participants: [{ id: '1', name: 'João' }],
         error: 'Some error'
       }
       const action = { type: ACTIONS.REMOVE_PARTICIPANT, payload: '1' }
@@ -122,7 +122,7 @@ describe('appReducer', () => {
     })
 
     it('should handle removing non-existent participant', () => {
-      const participants = [{ id: '1', nome: 'João' }]
+      const participants = [{ id: '1', name: 'João' }]
       const state = { ...initialState, participants }
       const action = { type: ACTIONS.REMOVE_PARTICIPANT, payload: '999' }
       const newState = appReducer(state, action)
@@ -135,9 +135,9 @@ describe('appReducer', () => {
     it('should clear all participants, teams, and bench players', () => {
       const state = {
         ...initialState,
-        participants: [{ id: '1', nome: 'João' }],
+        participants: [{ id: '1', name: 'João' }],
         teams: [{ color: 'red', players: [] }],
-        benchPlayers: [{ id: '2', nome: 'Maria' }],
+        benchPlayers: [{ id: '2', name: 'Maria' }],
         error: 'Some error'
       }
       const action = { type: ACTIONS.CLEAR_ALL_PARTICIPANTS }
@@ -187,8 +187,8 @@ describe('appReducer', () => {
   describe('SAVE_EDIT', () => {
     it('should update participant name', () => {
       const participants = [
-        { id: '1', nome: 'João' },
-        { id: '2', nome: 'Maria' },
+        { id: '1', name: 'João' },
+        { id: '2', name: 'Maria' },
       ]
       const state = {
         ...initialState,
@@ -202,15 +202,15 @@ describe('appReducer', () => {
       }
       const newState = appReducer(state, action)
       
-      expect(newState.participants[0].nome).toBe('João Silva')
-      expect(newState.participants[1].nome).toBe('Maria')
+      expect(newState.participants[0].name).toBe('João Silva')
+      expect(newState.participants[1].name).toBe('Maria')
       expect(newState.editingId).toBeNull()
       expect(newState.editedName).toBe('')
       expect(newState.error).toBe('')
     })
 
     it('should not mutate participants array', () => {
-      const participants = [{ id: '1', nome: 'João' }]
+      const participants = [{ id: '1', name: 'João' }]
       const state = { ...initialState, participants, editingId: '1' }
       const action = {
         type: ACTIONS.SAVE_EDIT,
@@ -242,10 +242,10 @@ describe('appReducer', () => {
   describe('SET_TEAMS', () => {
     it('should set teams and bench players', () => {
       const teams = [
-        { color: 'red', players: [{ id: '1', nome: 'João' }] },
-        { color: 'blue', players: [{ id: '2', nome: 'Maria' }] },
+        { color: 'red', players: [{ id: '1', name: 'João' }] },
+        { color: 'blue', players: [{ id: '2', name: 'Maria' }] },
       ]
-      const benchPlayers = [{ id: '3', nome: 'Pedro' }]
+      const benchPlayers = [{ id: '3', name: 'Pedro' }]
       const action = {
         type: ACTIONS.SET_TEAMS,
         payload: { teams, benchPlayers }
@@ -280,7 +280,7 @@ describe('appReducer', () => {
       const state = {
         ...initialState,
         teams: [{ color: 'red', players: [] }],
-        benchPlayers: [{ id: '1', nome: 'João' }],
+        benchPlayers: [{ id: '1', name: 'João' }],
         error: 'Some error'
       }
       const action = { type: ACTIONS.CLEAR_DRAW }
@@ -346,9 +346,9 @@ describe('appReducer', () => {
 
   describe('LOAD_DATA', () => {
     it('should load participants, teams, and bench players', () => {
-      const participants = [{ id: '1', nome: 'João' }]
+      const participants = [{ id: '1', name: 'João' }]
       const teams = [{ color: 'red', players: [] }]
-      const benchPlayers = [{ id: '2', nome: 'Maria' }]
+      const benchPlayers = [{ id: '2', name: 'Maria' }]
       const action = {
         type: ACTIONS.LOAD_DATA,
         payload: { participants, teams, benchPlayers }
@@ -373,7 +373,7 @@ describe('appReducer', () => {
     })
 
     it('should only load provided data', () => {
-      const participants = [{ id: '1', nome: 'João' }]
+      const participants = [{ id: '1', name: 'João' }]
       const action = {
         type: ACTIONS.LOAD_DATA,
         payload: { participants }
@@ -404,7 +404,7 @@ describe('appReducer', () => {
     })
 
     it('should not mutate state for unknown action', () => {
-      const state = { ...initialState, participants: [{ id: '1', nome: 'João' }] }
+      const state = { ...initialState, participants: [{ id: '1', name: 'João' }] }
       const action = { type: 'UNKNOWN_ACTION' }
       const newState = appReducer(state, action)
       
@@ -417,14 +417,14 @@ describe('appReducer', () => {
     it('should never mutate the original state', () => {
       const state = {
         ...initialState,
-        participants: [{ id: '1', nome: 'João' }],
+        participants: [{ id: '1', name: 'João' }],
         teams: [{ color: 'red', players: [] }],
       }
       const stateCopy = JSON.parse(JSON.stringify(state))
       
       // Test multiple actions
       appReducer(state, { type: ACTIONS.SET_NEW_NAME, payload: 'Maria' })
-      appReducer(state, { type: ACTIONS.ADD_PARTICIPANT, payload: { id: '2', nome: 'Pedro' } })
+      appReducer(state, { type: ACTIONS.ADD_PARTICIPANT, payload: { id: '2', name: 'Pedro' } })
       appReducer(state, { type: ACTIONS.REMOVE_PARTICIPANT, payload: '1' })
       
       expect(state).toEqual(stateCopy)

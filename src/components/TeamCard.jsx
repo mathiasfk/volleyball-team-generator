@@ -26,7 +26,7 @@ const TeamCard = ({ team, teamColor, _index }) => {
               key={participant.id}
               className="bg-gray-700 p-2 rounded text-center text-white"
             >
-              {idx + 1}. {participant.nome}
+              {idx + 1}. {participant.name}
             </div>
           ))}
         </div>

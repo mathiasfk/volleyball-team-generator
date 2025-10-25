@@ -53,8 +53,8 @@ describe('localStorage utils', () => {
 
     it('should load arrays correctly', () => {
       const testData = [
-        { id: '1', nome: 'João' },
-        { id: '2', nome: 'Maria' },
+        { id: '1', name: 'João' },
+        { id: '2', name: 'Maria' },
       ]
       localStorage.setItem('test-key', JSON.stringify(testData))
 

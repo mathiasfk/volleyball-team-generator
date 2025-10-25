@@ -1,6 +1,7 @@
 import { describe, expect, test } from 'vitest'
 
 import { calculateTeams } from './calculateTeams'
+import { Participant } from './types'
 
 describe('calculateTeams', () => {
 
@@ -133,8 +134,10 @@ describe('calculateTeams', () => {
         benchPlayers: prevMatch.remainingPlayers
       })
       
-      expect(newMatch.formedTeams.flat()).toEqual(
-        expect.arrayContaining(prevMatch.remainingPlayers)
+      const newMatchPlayerIds = newMatch.formedTeams.flat().map(p => p.id)
+      const benchPlayerIds = prevMatch.remainingPlayers.map(p => p.id)
+      expect(newMatchPlayerIds).toEqual(
+        expect.arrayContaining(benchPlayerIds)
       )
     })
   })
@@ -164,9 +167,9 @@ describe('calculateTeams', () => {
         keepTeamId
       })
 
-      expect(newMatch.formedTeams[keepTeamId]).toEqual(
-        prevMatch.formedTeams[keepTeamId]
-      )
+      const newTeamIds = newMatch.formedTeams[keepTeamId].map(p => p.id)
+      const prevTeamIds = prevMatch.formedTeams[keepTeamId].map(p => p.id)
+      expect(newTeamIds).toEqual(prevTeamIds)
     })
   })
 
@@ -177,24 +180,27 @@ describe('calculateTeams', () => {
       const participants = generateParticipants(numberOfParticipants)
       const { formedTeams, remainingPlayers } = calculateTeams({participants})
 
+      const team0Ids = formedTeams[0].map(p => p.id)
+      const team1Ids = formedTeams[1].map(p => p.id)
+      const benchIds = remainingPlayers.map(p => p.id)
       
       // participants in team 0 should not be in team 1
-      expect(formedTeams[0].every(player => !formedTeams[1].includes(player))).toBe(true)
+      expect(team0Ids.every(id => !team1Ids.includes(id))).toBe(true)
 
       // participants in team 1 should not be in team 0
-      expect(formedTeams[1].every(player => !formedTeams[0].includes(player))).toBe(true)
+      expect(team1Ids.every(id => !team0Ids.includes(id))).toBe(true)
 
       // participants in team 0 should not be in remaining players
-      expect(formedTeams[0].every(player => !remainingPlayers.includes(player))).toBe(true)
+      expect(team0Ids.every(id => !benchIds.includes(id))).toBe(true)
       
       // participants in team 1 should not be in remaining players
-      expect(formedTeams[1].every(player => !remainingPlayers.includes(player))).toBe(true)
+      expect(team1Ids.every(id => !benchIds.includes(id))).toBe(true)
 
       // remaining players should not be in team 0
-      expect(remainingPlayers.every(player => !formedTeams[0].includes(player))).toBe(true)
+      expect(benchIds.every(id => !team0Ids.includes(id))).toBe(true)
 
       // remaining players should not be in team 1
-      expect(remainingPlayers.every(player => !formedTeams[1].includes(player))).toBe(true)
+      expect(benchIds.every(id => !team1Ids.includes(id))).toBe(true)
     })
   })
 
@@ -227,24 +233,27 @@ describe('calculateTeams', () => {
         keepTeamId
       })
 
+      const team0Ids = formedTeams[0].map(p => p.id)
+      const team1Ids = formedTeams[1].map(p => p.id)
+      const benchIds = remainingPlayers.map(p => p.id)
       
       // participants in team 0 should not be in team 1
-      expect(formedTeams[0].every(player => !formedTeams[1].includes(player))).toBe(true)
+      expect(team0Ids.every(id => !team1Ids.includes(id))).toBe(true)
 
       // participants in team 1 should not be in team 0
-      expect(formedTeams[1].every(player => !formedTeams[0].includes(player))).toBe(true)
+      expect(team1Ids.every(id => !team0Ids.includes(id))).toBe(true)
 
       // participants in team 0 should not be in remaining players
-      expect(formedTeams[0].every(player => !remainingPlayers.includes(player))).toBe(true)
+      expect(team0Ids.every(id => !benchIds.includes(id))).toBe(true)
       
       // participants in team 1 should not be in remaining players
-      expect(formedTeams[1].every(player => !remainingPlayers.includes(player))).toBe(true)
+      expect(team1Ids.every(id => !benchIds.includes(id))).toBe(true)
 
       // remaining players should not be in team 0
-      expect(remainingPlayers.every(player => !formedTeams[0].includes(player))).toBe(true)
+      expect(benchIds.every(id => !team0Ids.includes(id))).toBe(true)
 
       // remaining players should not be in team 1
-      expect(remainingPlayers.every(player => !formedTeams[1].includes(player))).toBe(true)
+      expect(benchIds.every(id => !team1Ids.includes(id))).toBe(true)
     })
   })
 
@@ -271,14 +280,15 @@ describe('calculateTeams', () => {
         keepTeamId
       })
 
-      
       // all bench players should be in the new match (max of players should be respected)
-      expect(formedTeams.flat()).toEqual(expect.arrayContaining(prevMatch.remainingPlayers));
+      const newMatchPlayerIds = formedTeams.flat().map(p => p.id)
+      const benchPlayerIds = prevMatch.remainingPlayers.map(p => p.id)
+      expect(newMatchPlayerIds).toEqual(expect.arrayContaining(benchPlayerIds));
     })
   })
 })
 
-const generateParticipants = (count: number) => {
+const generateParticipants = (count: number): Participant[] => {
   // Base list of names
   const baseNames = [
     'Alice', 'Bob', 'Charlie', 'David', 'Eve', 'Frank', 'Grace', 'Heidi', 
@@ -287,11 +297,15 @@ const generateParticipants = (count: number) => {
   ]
   
   // If we need more names than we have, append numbers to reuse names
-  const result = []
+  const result: Participant[] = []
   for (let i = 0; i < count; i++) {
     const baseName = baseNames[i % baseNames.length]
     const nameWithNumber = i >= baseNames.length ? `${baseName}${Math.floor(i / baseNames.length) + 1}` : baseName
-    result.push(nameWithNumber)
+    result.push({
+      id: `player-${i}`,
+      name: nameWithNumber,
+      weight: 1,
+    })
   }
   return result
 }

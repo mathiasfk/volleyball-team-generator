@@ -85,7 +85,7 @@ export function appReducer(state, action) {
       return {
         ...state,
         participants: state.participants.map(p =>
-          p.id === action.payload.id ? { ...p, nome: action.payload.name } : p
+          p.id === action.payload.id ? { ...p, name: action.payload.name } : p
         ),
         editingId: null,
         editedName: '',

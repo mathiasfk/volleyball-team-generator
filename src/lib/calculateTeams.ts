@@ -1,10 +1,12 @@
+import { Participant } from './types'
+
 const maxTeams = 2
 const maxTeamSize = 6
 
 export function calculateTeams(options: {
-  participants: string[]
-  teams?: string[][]
-  benchPlayers?: string[]
+  participants: Participant[]
+  teams?: Participant[][]
+  benchPlayers?: Participant[]
   keepTeamId?: number
 }) {
   const {
@@ -18,8 +20,8 @@ export function calculateTeams(options: {
   const availablePlayers = participants.length
 
   // Initialize return values - always have 2 teams
-  let formedTeams = [[], []]
-  let remainingPlayers = []
+  let formedTeams: Participant[][] = [[], []]
+  let remainingPlayers: Participant[] = []
 
   // Special case: if we have 0 or 1 player, they go to bench
   if (availablePlayers <= 1) {
@@ -32,25 +34,26 @@ export function calculateTeams(options: {
     formedTeams[keepTeamId] = [...teams[keepTeamId]]
     
     // Get all players that are NOT in the kept team
-    const keptTeamPlayers = new Set(teams[keepTeamId])
     const otherTeamPlayers = teams[1 - keepTeamId] || []
     
     // Create a set of all players that are already assigned (kept team + other team + bench)
     const alreadyAssigned = new Set([
-      ...Array.from(keptTeamPlayers),
-      ...otherTeamPlayers,
-      ...benchPlayers
+      ...teams[keepTeamId].map(p => p.id),
+      ...otherTeamPlayers.map(p => p.id),
+      ...benchPlayers.map(p => p.id)
     ])
     
     // Get all available players for redistribution (excluding those already assigned)
     const availableForRedistribution = [
       ...otherTeamPlayers,
       ...benchPlayers,
-      ...participants.filter(p => !alreadyAssigned.has(p))
+      ...participants.filter(p => !alreadyAssigned.has(p.id))
     ]
     
     // Remove duplicates while preserving order
-    const uniqueAvailablePlayers = Array.from(new Set(availableForRedistribution))
+    const uniqueAvailablePlayers = availableForRedistribution.filter(
+      (player, index, self) => self.findIndex(p => p.id === player.id) === index
+    )
     
     // Shuffle available players for redistribution
     const shuffledAvailable = [...uniqueAvailablePlayers].sort(() => Math.random() - 0.5)
@@ -60,8 +63,9 @@ export function calculateTeams(options: {
     
     // Ensure all bench players are included in the new teams
     // First, add all bench players to the other team
-    const benchPlayersToInclude = benchPlayers.filter(bp => shuffledAvailable.includes(bp))
-    const nonBenchPlayers = shuffledAvailable.filter(p => !benchPlayers.includes(p))
+    const benchPlayerIds = new Set(benchPlayers.map(bp => bp.id))
+    const benchPlayersToInclude = shuffledAvailable.filter(p => benchPlayerIds.has(p.id))
+    const nonBenchPlayers = shuffledAvailable.filter(p => !benchPlayerIds.has(p.id))
     
     // Combine bench players first, then other players
     const prioritizedPlayers = [...benchPlayersToInclude, ...nonBenchPlayers]
@@ -79,9 +83,10 @@ export function calculateTeams(options: {
   // (The shuffling logic below handles this by placing bench players at the front)
 
   // Shuffle all participants randomly, but keep bench players at the front
+  const benchPlayerIds = new Set(benchPlayers.map(bp => bp.id))
   const benchPlayersShuffled = benchPlayers.length > 0 ? [...benchPlayers].sort(() => Math.random() - 0.5) : []
   const otherPlayersShuffled = benchPlayers.length > 0 
-    ? [...participants.filter(p => !benchPlayers.includes(p))].sort(() => Math.random() - 0.5)
+    ? [...participants.filter(p => !benchPlayerIds.has(p.id))].sort(() => Math.random() - 0.5)
     : [...participants].sort(() => Math.random() - 0.5)
   
   const shuffledParticipants = [...benchPlayersShuffled, ...otherPlayersShuffled]

@@ -24,7 +24,7 @@ const BenchCard = ({ benchPlayers }) => {
               key={participant.id}
               className="bg-gray-700 p-2 rounded text-center text-white"
             >
-              {participant.nome}
+              {participant.name}
             </div>
           ))}
         </div>

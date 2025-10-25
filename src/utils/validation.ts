@@ -14,7 +14,7 @@ export const isDuplicateName = (
 ): boolean => {
   return participants.some(
     (p) =>
-      p.nome.toLowerCase().trim() === name.toLowerCase().trim() &&
+      p.name.toLowerCase().trim() === name.toLowerCase().trim() &&
       p.id !== idToExclude
   )
 }

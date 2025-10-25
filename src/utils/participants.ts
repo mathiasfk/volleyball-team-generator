@@ -6,7 +6,7 @@ import { Participant } from '@/lib/types'
  * @returns Array of participant names
  */
 export const participantsToNames = (participants: Participant[]): string[] => {
-  return participants.map((p) => p.nome)
+  return participants.map((p) => p.name)
 }
 
 /**
@@ -20,8 +20,8 @@ export const namesToParticipants = (
   existingParticipants: Participant[] = []
 ): Participant[] => {
   return names.map((name) => {
-    const existing = existingParticipants.find((p) => p.nome === name)
-    return existing || { id: Date.now().toString() + Math.random(), nome: name }
+    const existing = existingParticipants.find((p) => p.name === name)
+    return existing || { id: Date.now().toString() + Math.random(), name: name }
   })
 }
 
@@ -60,20 +60,23 @@ export const findParticipantByName = (
   participants: Participant[]
 ): Participant | undefined => {
   return participants.find(
-    (p) => p.nome.toLowerCase() === name.toLowerCase()
+    (p) => p.name.toLowerCase() === name.toLowerCase()
   )
 }
 
 /**
  * Creates a new participant object
  * @param name - Participant name
+ * @param weight - Optional weight/skill level
  * @returns New participant object with generated ID
  */
-export const createParticipant = (name: string): Participant => {
+export const createParticipant = (name: string, weight?: number): Participant => {
   return {
     id: Date.now().toString() + Math.random(),
-    nome: name,
+    name: name,
+    ...(weight !== undefined && { weight }),
   }
 }
+
 
 

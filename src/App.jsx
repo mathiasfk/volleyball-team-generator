@@ -24,7 +24,6 @@ import { calculateTeams } from './lib/calculateTeams.js'
 import { ACTIONS,appReducer, initialState } from './reducers/appReducer.js'
 import { gtag } from './services/analytics.js'
 import { loadFromStorage, removeFromStorage, removeMultipleFromStorage,saveToStorage } from './utils/localStorage.ts'
-import { namesToParticipants, namesToTeams,participantsToNames, teamsToNames } from './utils/participants.ts'
 import { formatParticipantName,isDuplicateName, isEmptyName } from './utils/validation.ts'
 
 function App() {
@@ -133,7 +132,8 @@ function App() {
 
     const newParticipant = {
       id: participantId,
-      nome: formattedName
+      name: formattedName,
+      weight: 1,
     }
     dispatch({ type: ACTIONS.ADD_PARTICIPANT, payload: newParticipant })
   }
@@ -174,13 +174,13 @@ function App() {
 
   const startEditing = (participant) => {
     gtag('event', 'edit_participant_start', {
-      'previous_name': participant.nome,
+      'previous_name': participant.name,
       'id': participant.id
     });
 
     dispatch({
       type: ACTIONS.START_EDITING,
-      payload: { id: participant.id, name: participant.nome }
+      payload: { id: participant.id, name: participant.name }
     })
   }
 
@@ -239,28 +239,20 @@ function App() {
   }
 
   const drawTeams = (keepTeamId = null) => {
-    // Convert participants objects to strings for calculateTeams
-    const participantNames = participantsToNames(participants)
-    const teamNames = teamsToNames(teams)
-    const benchNames = participantsToNames(benchPlayers)
-    
+    // calculateTeams now works directly with Participant objects
     const { formedTeams, remainingPlayers } = calculateTeams({
-      participants: participantNames, 
-      teams: teamNames, 
-      benchPlayers: benchNames,
+      participants: participants, 
+      teams: teams, 
+      benchPlayers: benchPlayers,
       keepTeamId: keepTeamId
     })
-
-    // Convert back to objects with IDs
-    const formedTeamsWithIds = namesToTeams(formedTeams, participants)
-    const remainingPlayersWithIds = namesToParticipants(remainingPlayers, participants)
 
     const keepTeamAction = keepTeamId === 0 ? 'keep_red' : keepTeamId === 1 ? 'keep_blue' : 'redraw_all'
     
     gtag('event', 'draw_team', {
       'participant_count': participants.length,
-      'new_teams_count': formedTeamsWithIds.length,
-      'new_bench_players_count': remainingPlayersWithIds.length,
+      'new_teams_count': formedTeams.length,
+      'new_bench_players_count': remainingPlayers.length,
       'previous_team_count': teams.length,
       'previous_bench_players_count': benchPlayers.length,
       'keep_team_action': keepTeamAction
@@ -269,14 +261,14 @@ function App() {
     dispatch({
       type: ACTIONS.SET_TEAMS,
       payload: {
-        teams: formedTeamsWithIds,
-        benchPlayers: remainingPlayersWithIds
+        teams: formedTeams,
+        benchPlayers: remainingPlayers
       }
     })
 
     // Save teams to localStorage
-    saveToStorage(STORAGE_KEYS.TEAMS, formedTeamsWithIds)
-    saveToStorage(STORAGE_KEYS.BENCH, remainingPlayersWithIds)
+    saveToStorage(STORAGE_KEYS.TEAMS, formedTeams)
+    saveToStorage(STORAGE_KEYS.BENCH, remainingPlayers)
   }
 
   const clearDraw = () => {

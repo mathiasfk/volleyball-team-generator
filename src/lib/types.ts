@@ -7,6 +7,7 @@
  */
 export interface Participant {
   id: string
-  nome: string
+  name: string
+  weight?: number // Optional experience level for team balancing
 }
 

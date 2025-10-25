@@ -49,7 +49,7 @@ const ParticipantItem = ({
 
   return (
     <div className="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
-      <span className="text-white">{participant.nome}</span>
+      <span className="text-white">{participant.name}</span>
       <div className="flex gap-2">
         <Button
           onClick={onStartEdit}

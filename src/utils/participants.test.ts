@@ -12,9 +12,9 @@ import {
 
 describe('participants utils', () => {
   const mockParticipants: Participant[] = [
-    { id: '1', nome: 'João' },
-    { id: '2', nome: 'Maria' },
-    { id: '3', nome: 'Pedro' },
+    { id: '1', name: 'João' },
+    { id: '2', name: 'Maria' },
+    { id: '3', name: 'Pedro' },
   ]
 
   describe('participantsToNames', () => {
@@ -32,9 +32,9 @@ describe('participants utils', () => {
 
     it('should preserve order', () => {
       const participants = [
-        { id: '1', nome: 'C' },
-        { id: '2', nome: 'A' },
-        { id: '3', nome: 'B' },
+        { id: '1', name: 'C' },
+        { id: '2', name: 'A' },
+        { id: '3', name: 'B' },
       ]
 
       const result = participantsToNames(participants)
@@ -58,8 +58,8 @@ describe('participants utils', () => {
       const result = namesToParticipants(names, mockParticipants)
 
       expect(result).toHaveLength(2)
-      expect(result[0].nome).toBe('Carlos')
-      expect(result[1].nome).toBe('Ana')
+      expect(result[0].name).toBe('Carlos')
+      expect(result[1].name).toBe('Ana')
       expect(result[0].id).toBeTruthy()
       expect(result[1].id).toBeTruthy()
     })
@@ -70,10 +70,10 @@ describe('participants utils', () => {
       const result = namesToParticipants(names, mockParticipants)
 
       expect(result).toHaveLength(3)
-      expect(result[0]).toEqual({ id: '1', nome: 'João' })
-      expect(result[1].nome).toBe('Carlos')
+      expect(result[0]).toEqual({ id: '1', name: 'João' })
+      expect(result[1].name).toBe('Carlos')
       expect(result[1].id).toBeTruthy()
-      expect(result[2]).toEqual({ id: '2', nome: 'Maria' })
+      expect(result[2]).toEqual({ id: '2', name: 'Maria' })
     })
 
     it('should handle empty names array', () => {
@@ -88,8 +88,8 @@ describe('participants utils', () => {
       const result = namesToParticipants(names, [])
 
       expect(result).toHaveLength(2)
-      expect(result[0].nome).toBe('João')
-      expect(result[1].nome).toBe('Maria')
+      expect(result[0].name).toBe('João')
+      expect(result[1].name).toBe('Maria')
       expect(result[0].id).toBeTruthy()
       expect(result[1].id).toBeTruthy()
     })
@@ -151,10 +151,10 @@ describe('participants utils', () => {
       const result = namesToTeams(teamNames, mockParticipants)
 
       expect(result).toHaveLength(2)
-      expect(result[0][0]).toEqual({ id: '1', nome: 'João' })
-      expect(result[0][1].nome).toBe('Carlos')
+      expect(result[0][0]).toEqual({ id: '1', name: 'João' })
+      expect(result[0][1].name).toBe('Carlos')
       expect(result[0][1].id).toBeTruthy()
-      expect(result[1][0]).toEqual({ id: '2', nome: 'Maria' })
+      expect(result[1][0]).toEqual({ id: '2', name: 'Maria' })
     })
   })
 
@@ -162,21 +162,21 @@ describe('participants utils', () => {
     it('should find participant by exact name', () => {
       const result = findParticipantByName('João', mockParticipants)
 
-      expect(result).toEqual({ id: '1', nome: 'João' })
+      expect(result).toEqual({ id: '1', name: 'João' })
     })
 
     it('should find participant case insensitively', () => {
       expect(findParticipantByName('joão', mockParticipants)).toEqual({
         id: '1',
-        nome: 'João',
+        name: 'João',
       })
       expect(findParticipantByName('MARIA', mockParticipants)).toEqual({
         id: '2',
-        nome: 'Maria',
+        name: 'Maria',
       })
       expect(findParticipantByName('PeDrO', mockParticipants)).toEqual({
         id: '3',
-        nome: 'Pedro',
+        name: 'Pedro',
       })
     })
 
@@ -207,7 +207,7 @@ describe('participants utils', () => {
 
       const result = createParticipant('João')
 
-      expect(result.nome).toBe('João')
+      expect(result.name).toBe('João')
       expect(result.id).toBeTruthy()
       expect(typeof result.id).toBe('string')
     })
@@ -222,7 +222,7 @@ describe('participants utils', () => {
     it('should handle special characters in name', () => {
       const result = createParticipant('José María')
 
-      expect(result.nome).toBe('José María')
+      expect(result.name).toBe('José María')
       expect(result.id).toBeTruthy()
     })
   })
