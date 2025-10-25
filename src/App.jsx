@@ -42,7 +42,6 @@ function App() {
     error,
     dataLoaded,
     openParticipants,
-    openClearDialog,
     openDrawDialog,
   } = state
 
@@ -286,16 +285,14 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-900 text-white p-4">
       <div className="max-w-6xl mx-auto">
-        <AlertDialog open={openClearDialog} onOpenChange={(value) => dispatch({ type: ACTIONS.SET_OPEN_CLEAR_DIALOG, payload: value })}>
-        <AlertDialog open={openDrawDialog} onOpenChange={(value) => dispatch({ type: ACTIONS.SET_OPEN_DRAW_DIALOG, payload: value })}>
-          <div className="flex justify-between items-center mb-8">
-            <h1 className="hidden sm:block text-4xl font-bold text-blue-400">
-              {t('app.title')}
-            </h1>
-            <div className="ms-auto">
-              <LanguageSelector />
-            </div>
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="hidden sm:block text-4xl font-bold text-blue-400">
+            {t('app.title')}
+          </h1>
+          <div className="ms-auto">
+            <LanguageSelector />
           </div>
+        </div>
 
           {/* Error Alert */}
           {error && (
@@ -321,21 +318,23 @@ function App() {
               </CardHeader>
               <CollapsibleContent className="mb-6">
                 <CardContent>
-                  <ParticipantForm
-                    newName={newName}
-                    onNameChange={(value) => {
-                      dispatch({ type: ACTIONS.SET_NEW_NAME, payload: value })
-                      clearError()
-                    }}
-                    onAdd={addParticipant}
-                    onClearStart={clearAllParticipantsStart}
-                    participantsCount={participants.length}
-                  />
+                  <AlertDialog>
+                    <ParticipantForm
+                      newName={newName}
+                      onNameChange={(value) => {
+                        dispatch({ type: ACTIONS.SET_NEW_NAME, payload: value })
+                        clearError()
+                      }}
+                      onAdd={addParticipant}
+                      onClearStart={clearAllParticipantsStart}
+                      participantsCount={participants.length}
+                    />
 
-                  <ClearParticipantsDialog
-                    onConfirm={clearAllParticipants}
-                    onCancel={clearAllParticipantsCancel}
-                  />
+                    <ClearParticipantsDialog
+                      onConfirm={clearAllParticipants}
+                      onCancel={clearAllParticipantsCancel}
+                    />
+                  </AlertDialog>
 
                   <ParticipantList
                     participants={participants}
@@ -377,11 +376,13 @@ function App() {
           </div>
 
           {/* Draw Teams Dialog */}
-          <DrawTeamsDialog
-            hasExistingTeams={teams.length > 0}
-            onDrawTeams={drawTeams}
-            onCancel={cancelDrawTeams}
-          />
+          <AlertDialog open={openDrawDialog} onOpenChange={(value) => dispatch({ type: ACTIONS.SET_OPEN_DRAW_DIALOG, payload: value })}>
+            <DrawTeamsDialog
+              hasExistingTeams={teams.length > 0}
+              onDrawTeams={drawTeams}
+              onCancel={cancelDrawTeams}
+            />
+          </AlertDialog>
 
           {/* Draw Results */}
           {teams.length > 0 && (
@@ -409,8 +410,6 @@ function App() {
               <BenchCard benchPlayers={benchPlayers} />
             </div>
           )}
-        </AlertDialog>
-        </AlertDialog>
       </div>
     </div>
   )

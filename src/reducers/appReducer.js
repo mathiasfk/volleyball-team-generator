@@ -13,7 +13,6 @@ export const ACTIONS = {
   SET_TEAMS: 'SET_TEAMS',
   CLEAR_DRAW: 'CLEAR_DRAW',
   TOGGLE_PARTICIPANTS: 'TOGGLE_PARTICIPANTS',
-  SET_OPEN_CLEAR_DIALOG: 'SET_OPEN_CLEAR_DIALOG',
   SET_OPEN_DRAW_DIALOG: 'SET_OPEN_DRAW_DIALOG',
   LOAD_DATA: 'LOAD_DATA',
   SET_DATA_LOADED: 'SET_DATA_LOADED',
@@ -30,7 +29,6 @@ export const initialState = {
   error: '',
   dataLoaded: false,
   openParticipants: true,
-  openClearDialog: false,
   openDrawDialog: false,
 }
 
@@ -119,9 +117,6 @@ export function appReducer(state, action) {
     
     case ACTIONS.TOGGLE_PARTICIPANTS:
       return { ...state, openParticipants: !state.openParticipants }
-    
-    case ACTIONS.SET_OPEN_CLEAR_DIALOG:
-      return { ...state, openClearDialog: action.payload }
     
     case ACTIONS.SET_OPEN_DRAW_DIALOG:
       return { ...state, openDrawDialog: action.payload }

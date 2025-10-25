@@ -15,7 +15,6 @@ describe('appReducer', () => {
         error: '',
         dataLoaded: false,
         openParticipants: true,
-        openClearDialog: false,
         openDrawDialog: false,
       })
     })
@@ -310,23 +309,6 @@ describe('appReducer', () => {
     })
   })
 
-  describe('SET_OPEN_CLEAR_DIALOG', () => {
-    it('should set openClearDialog to true', () => {
-      const action = { type: ACTIONS.SET_OPEN_CLEAR_DIALOG, payload: true }
-      const newState = appReducer(initialState, action)
-      
-      expect(newState.openClearDialog).toBe(true)
-    })
-
-    it('should set openClearDialog to false', () => {
-      const state = { ...initialState, openClearDialog: true }
-      const action = { type: ACTIONS.SET_OPEN_CLEAR_DIALOG, payload: false }
-      const newState = appReducer(state, action)
-      
-      expect(newState.openClearDialog).toBe(false)
-    })
-  })
-
   describe('SET_OPEN_DRAW_DIALOG', () => {
     it('should set openDrawDialog to true', () => {
       const action = { type: ACTIONS.SET_OPEN_DRAW_DIALOG, payload: true }
@@ -446,7 +428,6 @@ describe('appReducer', () => {
       expect(ACTIONS.SET_TEAMS).toBe('SET_TEAMS')
       expect(ACTIONS.CLEAR_DRAW).toBe('CLEAR_DRAW')
       expect(ACTIONS.TOGGLE_PARTICIPANTS).toBe('TOGGLE_PARTICIPANTS')
-      expect(ACTIONS.SET_OPEN_CLEAR_DIALOG).toBe('SET_OPEN_CLEAR_DIALOG')
       expect(ACTIONS.SET_OPEN_DRAW_DIALOG).toBe('SET_OPEN_DRAW_DIALOG')
       expect(ACTIONS.LOAD_DATA).toBe('LOAD_DATA')
       expect(ACTIONS.SET_DATA_LOADED).toBe('SET_DATA_LOADED')
