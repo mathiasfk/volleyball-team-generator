@@ -118,3 +118,24 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Animation for players that changed position after draw */
+@keyframes highlightFade {
+  0% {
+    background-color: rgb(75 85 99); /* gray-600 - slightly lighter than gray-700 */
+    box-shadow: 0 0 12px rgb(255, 255, 255);
+  }
+  50% {
+    background-color: rgb(75 85 99);
+    box-shadow: 0 0 12px rgb(255, 255, 255);
+  }
+  100% {
+    background-color: rgb(55 65 81); /* gray-700 */
+    transform: scale(1);
+    box-shadow: none;
+  }
+}
+
+.player-changed {
+  animation: highlightFade 4s ease-in-out forwards;
+}

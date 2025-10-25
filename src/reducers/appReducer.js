@@ -16,6 +16,7 @@ export const ACTIONS = {
   SET_OPEN_DRAW_DIALOG: 'SET_OPEN_DRAW_DIALOG',
   LOAD_DATA: 'LOAD_DATA',
   SET_DATA_LOADED: 'SET_DATA_LOADED',
+  CLEAR_CHANGED_PLAYERS: 'CLEAR_CHANGED_PLAYERS',
 }
 
 // Estado inicial
@@ -30,6 +31,8 @@ export const initialState = {
   dataLoaded: false,
   openParticipants: true,
   openDrawDialog: false,
+  changedPlayerIds: [], // Array of player IDs that changed position
+  previousPlayerPositions: null, // Map of player positions before last draw (not serializable, reset on page load)
 }
 
 // Reducer function
@@ -103,6 +106,8 @@ export function appReducer(state, action) {
         ...state,
         teams: action.payload.teams,
         benchPlayers: action.payload.benchPlayers,
+        changedPlayerIds: action.payload.changedPlayerIds || [],
+        previousPlayerPositions: action.payload.newPlayerPositions || null,
         error: '',
         openDrawDialog: false,
       }
@@ -112,6 +117,8 @@ export function appReducer(state, action) {
         ...state,
         teams: [],
         benchPlayers: [],
+        changedPlayerIds: [],
+        previousPlayerPositions: null,
         error: '',
       }
     
@@ -131,6 +138,9 @@ export function appReducer(state, action) {
     
     case ACTIONS.SET_DATA_LOADED:
       return { ...state, dataLoaded: true }
+    
+    case ACTIONS.CLEAR_CHANGED_PLAYERS:
+      return { ...state, changedPlayerIds: [] }
     
     default:
       return state

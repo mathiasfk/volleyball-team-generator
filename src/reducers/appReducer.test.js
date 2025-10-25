@@ -16,6 +16,8 @@ describe('appReducer', () => {
         dataLoaded: false,
         openParticipants: true,
         openDrawDialog: false,
+        changedPlayerIds: [],
+        previousPlayerPositions: null,
       })
     })
   })
@@ -431,6 +433,7 @@ describe('appReducer', () => {
       expect(ACTIONS.SET_OPEN_DRAW_DIALOG).toBe('SET_OPEN_DRAW_DIALOG')
       expect(ACTIONS.LOAD_DATA).toBe('LOAD_DATA')
       expect(ACTIONS.SET_DATA_LOADED).toBe('SET_DATA_LOADED')
+      expect(ACTIONS.CLEAR_CHANGED_PLAYERS).toBe('CLEAR_CHANGED_PLAYERS')
     })
   })
 })

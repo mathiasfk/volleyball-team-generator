@@ -24,6 +24,7 @@ import { calculateTeams } from './lib/calculateTeams.js'
 import { ACTIONS,appReducer, initialState } from './reducers/appReducer.js'
 import { gtag } from './services/analytics.js'
 import { loadFromStorage, removeFromStorage, removeMultipleFromStorage,saveToStorage } from './utils/localStorage.ts'
+import { createPlayerPositionMap, detectPlayerChanges } from './utils/playerChanges.ts'
 import { formatParticipantName,isDuplicateName, isEmptyName } from './utils/validation.ts'
 
 function App() {
@@ -43,6 +44,8 @@ function App() {
     dataLoaded,
     openParticipants,
     openDrawDialog,
+    changedPlayerIds,
+    previousPlayerPositions,
   } = state
 
   // Vibrant colors for teams
@@ -246,6 +249,19 @@ function App() {
       keepTeamId: keepTeamId
     })
 
+    // Detect which players changed positions
+    const changedPlayersSet = detectPlayerChanges(
+      previousPlayerPositions,
+      formedTeams,
+      remainingPlayers
+    )
+
+    // Convert Set to Array for immutable state
+    const changedPlayersArray = Array.from(changedPlayersSet)
+
+    // Create new position map for next comparison
+    const newPlayerPositions = createPlayerPositionMap(formedTeams, remainingPlayers)
+
     const keepTeamAction = keepTeamId === 0 ? 'keep_red' : keepTeamId === 1 ? 'keep_blue' : 'redraw_all'
     
     gtag('event', 'draw_team', {
@@ -254,20 +270,28 @@ function App() {
       'new_bench_players_count': remainingPlayers.length,
       'previous_team_count': teams.length,
       'previous_bench_players_count': benchPlayers.length,
-      'keep_team_action': keepTeamAction
+      'keep_team_action': keepTeamAction,
+      'changed_players_count': changedPlayersArray.length
     });
 
     dispatch({
       type: ACTIONS.SET_TEAMS,
       payload: {
         teams: formedTeams,
-        benchPlayers: remainingPlayers
+        benchPlayers: remainingPlayers,
+        changedPlayerIds: changedPlayersArray,
+        newPlayerPositions: newPlayerPositions
       }
     })
 
     // Save teams to localStorage
     saveToStorage(STORAGE_KEYS.TEAMS, formedTeams)
     saveToStorage(STORAGE_KEYS.BENCH, remainingPlayers)
+
+    // Clear the highlight after animation completes (4 seconds)
+    setTimeout(() => {
+      dispatch({ type: ACTIONS.CLEAR_CHANGED_PLAYERS })
+    }, 4000)
   }
 
   const clearDraw = () => {
@@ -401,13 +425,17 @@ function App() {
                       team={team}
                       teamColor={teamColor}
                       index={index}
+                      changedPlayerIds={changedPlayerIds}
                     />
                   )
                 })}
               </div>
 
               {/* Bench Players */}
-              <BenchCard benchPlayers={benchPlayers} />
+              <BenchCard 
+                benchPlayers={benchPlayers} 
+                changedPlayerIds={changedPlayerIds}
+              />
             </div>
           )}
       </div>

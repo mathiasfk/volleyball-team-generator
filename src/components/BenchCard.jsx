@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Badge } from '@/components/ui/badge.jsx'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.jsx'
 
-const BenchCard = ({ benchPlayers }) => {
+const BenchCard = ({ benchPlayers, changedPlayerIds = [] }) => {
   const { t } = useTranslation()
 
   if (benchPlayers.length === 0) {
@@ -19,14 +19,19 @@ const BenchCard = ({ benchPlayers }) => {
       </CardHeader>
       <CardContent className="pt-4">
         <div className="space-y-2">
-          {benchPlayers.map((participant) => (
-            <div
-              key={participant.id}
-              className="bg-gray-700 p-2 rounded text-center text-white"
-            >
-              {participant.name}
-            </div>
-          ))}
+          {benchPlayers.map((participant) => {
+            const isChanged = changedPlayerIds.includes(participant.id)
+            return (
+              <div
+                key={participant.id}
+                className={`bg-gray-700 p-2 rounded text-center text-white transition-all duration-300 ${
+                  isChanged ? 'player-changed' : ''
+                }`}
+              >
+                {participant.name}
+              </div>
+            )
+          })}
         </div>
         <div className="mt-3 text-center">
           <Badge className="bg-orange-600 text-white">
