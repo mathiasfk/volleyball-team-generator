@@ -41,15 +41,6 @@ function calculateTeamSize(totalPlayers: number): number {
 }
 
 /**
- * Removes duplicate participants based on their ID
- */
-function removeDuplicates(participants: Participant[]): Participant[] {
-  return participants.filter(
-    (player, index, self) => self.findIndex(p => p.id === player.id) === index
-  )
-}
-
-/**
  * Calculates the total weight/experience of a team
  */
 function calculateTeamWeight(team: Participant[]): number {
@@ -121,26 +112,9 @@ function distributePlayersIntoTeams(
 }
 
 /**
- * Prioritizes bench players by placing them first in the list
- */
-function prioritizeBenchPlayers(
-  allPlayers: Participant[],
-  benchPlayers: Participant[]
-): Participant[] {
-  if (benchPlayers.length === 0) {
-    return shuffle(allPlayers)
-  }
-  
-  const benchPlayerIds = new Set(benchPlayers.map(bp => bp.id))
-  const benchShuffled = shuffle(benchPlayers)
-  const othersShuffled = shuffle(allPlayers.filter(p => !benchPlayerIds.has(p.id)))
-  
-  return [...benchShuffled, ...othersShuffled]
-}
-
-/**
  * Handles the case where one team is kept and the other is redistributed
  * Enforces the constraint: max 1 libero per team
+ * Priority: ALL bench players MUST play if possible
  */
 function redistributeWithKeptTeam(
   participants: Participant[],
@@ -152,95 +126,64 @@ function redistributeWithKeptTeam(
   
   // Keep the specified team intact
   formedTeams[keepTeamId] = [...teams[keepTeamId]]
-  const keptTeamWeight = calculateTeamWeight(formedTeams[keepTeamId])
   const keptTeamHasLibero = hasLibero(formedTeams[keepTeamId])
-  
-  // Get players available for redistribution
-  const otherTeamPlayers = teams[1 - keepTeamId] || []
-  const alreadyAssigned = new Set([
-    ...teams[keepTeamId].map(p => p.id),
-    ...otherTeamPlayers.map(p => p.id),
-    ...benchPlayers.map(p => p.id)
-  ])
-  
-  const availableForRedistribution = [
-    ...otherTeamPlayers,
-    ...benchPlayers,
-    ...participants.filter(p => !alreadyAssigned.has(p.id))
-  ]
-  
-  // Remove duplicates
-  const uniquePlayers = removeDuplicates(availableForRedistribution)
-  
-  // Separate liberos and regular players
-  const availableLiberos = uniquePlayers.filter(isLibero)
-  const availableRegularPlayers = uniquePlayers.filter(p => !isLibero(p))
-  
-  // Prioritize bench players within each group
-  const benchPlayerIds = new Set(benchPlayers.map(bp => bp.id))
-  
-  // Sort liberos and regular players
-  const sortedLiberos = availableLiberos.sort((a, b) => {
-    const aIsBench = benchPlayerIds.has(a.id)
-    const bIsBench = benchPlayerIds.has(b.id)
-    if (aIsBench && !bIsBench) return -1
-    if (!aIsBench && bIsBench) return 1
-    return (b.weight || 1) - (a.weight || 1)
-  })
-  
-  const sortedRegularPlayers = availableRegularPlayers.sort((a, b) => {
-    const aIsBench = benchPlayerIds.has(a.id)
-    const bIsBench = benchPlayerIds.has(b.id)
-    if (aIsBench && !bIsBench) return -1
-    if (!aIsBench && bIsBench) return 1
-    return (b.weight || 1) - (a.weight || 1)
-  })
-  
-  // Add some randomness
-  const shuffledLiberos = shuffle(sortedLiberos)
-  const shuffledRegularPlayers = shuffle(sortedRegularPlayers)
   
   // Calculate team size
   const otherTeamSize = calculateTeamSize(participants.length)
   const otherTeamIndex = 1 - keepTeamId
   
-  // Build the other team by selecting players that balance against the kept team
-  const selectedPlayers: Participant[] = []
-  let remainingLiberos = [...shuffledLiberos]
-  let remainingRegularPlayers = [...shuffledRegularPlayers]
+  // Get players from the other team
+  const otherTeamPlayers = teams[1 - keepTeamId] || []
   
-  // Try to add a libero to the new team (max 1 libero per team)
-  if (remainingLiberos.length > 0 && selectedPlayers.length < otherTeamSize) {
-    selectedPlayers.push(remainingLiberos[0])
-    remainingLiberos = remainingLiberos.slice(1)
+  // Separate bench players by role
+  const benchLiberos = benchPlayers.filter(isLibero)
+  const benchRegular = benchPlayers.filter(p => !isLibero(p))
+  
+  // Separate other team players by role
+  const otherTeamLiberos = otherTeamPlayers.filter(isLibero)
+  const otherTeamRegular = otherTeamPlayers.filter(p => !isLibero(p))
+  
+  // Build the new team
+  const selectedPlayers: Participant[] = []
+  
+  // PRIORITY 1: Add ALL bench players first (respecting libero constraint)
+  // Start with bench liberos (max 1 if kept team doesn't have one, or 0 if it does)
+  if (benchLiberos.length > 0 && !keptTeamHasLibero && selectedPlayers.length < otherTeamSize) {
+    selectedPlayers.push(benchLiberos[0])
   }
   
-  // Fill the rest of the team with regular players
-  while (selectedPlayers.length < otherTeamSize && remainingRegularPlayers.length > 0) {
-    const currentWeight = calculateTeamWeight(selectedPlayers)
-    const targetWeight = keptTeamWeight
-    const remainingSlots = otherTeamSize - selectedPlayers.length
-    
-    // Find the best player to add (one that gets us closest to target weight)
-    let bestIndex = 0
-    let bestDifference = Math.abs(targetWeight - (currentWeight + (remainingRegularPlayers[0].weight || 1)))
-    
-    for (let i = 1; i < Math.min(remainingRegularPlayers.length, remainingSlots * 2); i++) {
-      const playerWeight = remainingRegularPlayers[i].weight || 1
-      const newDifference = Math.abs(targetWeight - (currentWeight + playerWeight))
-      
-      if (newDifference < bestDifference) {
-        bestDifference = newDifference
-        bestIndex = i
-      }
+  // Add all bench regular players (as many as possible)
+  for (const player of benchRegular) {
+    if (selectedPlayers.length < otherTeamSize) {
+      selectedPlayers.push(player)
     }
-    
-    selectedPlayers.push(remainingRegularPlayers[bestIndex])
-    remainingRegularPlayers.splice(bestIndex, 1)
+  }
+  
+  // PRIORITY 2: Fill remaining slots from the other team
+  // Add libero from other team if we don't have one yet and kept team doesn't have one
+  if (otherTeamLiberos.length > 0 && !hasLibero(selectedPlayers) && !keptTeamHasLibero && selectedPlayers.length < otherTeamSize) {
+    selectedPlayers.push(otherTeamLiberos[0])
+  }
+  
+  // Fill remaining slots with regular players from other team
+  // Sort by weight (descending) to try to balance against the kept team
+  const sortedOtherRegular = [...otherTeamRegular].sort((a, b) => (b.weight || 1) - (a.weight || 1))
+  
+  for (const player of sortedOtherRegular) {
+    if (selectedPlayers.length < otherTeamSize) {
+      selectedPlayers.push(player)
+    }
   }
   
   formedTeams[otherTeamIndex] = selectedPlayers
-  const remainingPlayers = [...remainingLiberos, ...remainingRegularPlayers]
+  
+  // Calculate remaining players (those who didn't make it into the teams)
+  const playingIds = new Set([
+    ...formedTeams[0].map(p => p.id),
+    ...formedTeams[1].map(p => p.id)
+  ])
+  
+  const remainingPlayers = participants.filter(p => !playingIds.has(p.id))
   
   return { formedTeams, remainingPlayers }
 }
@@ -336,14 +279,6 @@ export function calculateTeams(options: {
   // Always sort participants by name before returning
   formedTeams = formedTeams.map(team => sortByName(team))
   remainingPlayers = sortByName(remainingPlayers)
-
-  // Debug stats:
-  // 1. Sum of weights of all player for each team
-  const team0Weight = calculateTeamWeight(formedTeams[0])
-  const team1Weight = calculateTeamWeight(formedTeams[1])
-  console.log('Team 0 weight:', team0Weight)
-  console.log('Team 1 weight:', team1Weight)
-  console.log('Difference:', Math.abs(team0Weight - team1Weight))
 
   return { formedTeams, remainingPlayers }
 }
