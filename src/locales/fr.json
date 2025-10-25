@@ -21,6 +21,11 @@
     "advanced": "Avancé",
     "label": "Niveau de compétence"
   },
+  "role": {
+    "label": "Position",
+    "any": "N'importe quelle",
+    "libero": "Libéro"
+  },
   "actions": {
     "draw_teams": "Former les équipes",
     "clear_draw": "Réinitialiser le tirage"

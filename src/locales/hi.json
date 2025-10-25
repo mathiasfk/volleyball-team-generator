@@ -21,6 +21,11 @@
     "advanced": "उन्नत",
     "label": "कौशल स्तर"
   },
+  "role": {
+    "label": "स्थिति",
+    "any": "कोई भी",
+    "libero": "लिबेरो"
+  },
   "actions": {
     "draw_teams": "टीम बनाएं",
     "clear_draw": "ड्रॉ साफ़ करें"

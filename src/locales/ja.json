@@ -21,6 +21,11 @@
     "advanced": "上級",
     "label": "スキルレベル"
   },
+  "role": {
+    "label": "ポジション",
+    "any": "任意",
+    "libero": "リベロ"
+  },
   "actions": {
     "draw_teams": "チームを作成",
     "clear_draw": "結果をリセット"

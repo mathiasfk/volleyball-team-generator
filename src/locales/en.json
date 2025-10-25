@@ -21,6 +21,11 @@
     "advanced": "Advanced",
     "label": "Skill Level"
   },
+  "role": {
+    "label": "Position",
+    "any": "Any",
+    "libero": "Libero"
+  },
   "actions": {
     "draw_teams": "Draw Teams",
     "clear_draw": "Clear Draw"

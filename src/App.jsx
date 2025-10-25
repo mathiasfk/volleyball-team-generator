@@ -139,6 +139,7 @@ function App() {
       id: participantId,
       name: formattedName,
       weight: 1,
+      role: 'any',
     }
     dispatch({ type: ACTIONS.ADD_PARTICIPANT, payload: newParticipant })
   }
@@ -195,6 +196,7 @@ function App() {
     gtag('event', 'edit_participant_save', {
       'new_name': formattedName,
       'new_weight': updates.weight,
+      'new_role': updates.role,
       'is_empty': isEmpty,
       'is_duplicate': isDuplicate,
       'id': updates.id
@@ -212,7 +214,7 @@ function App() {
 
     dispatch({
       type: ACTIONS.UPDATE_PARTICIPANT,
-      payload: { id: updates.id, name: formattedName, weight: updates.weight }
+      payload: { id: updates.id, name: formattedName, weight: updates.weight, role: updates.role }
     })
     
     setEditDialogOpen(false)

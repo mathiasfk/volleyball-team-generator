@@ -1,3 +1,4 @@
+import { Shield } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -12,6 +13,7 @@ import {
 } from '@/components/ui/dialog.jsx'
 import { Input } from '@/components/ui/input.jsx'
 import { Label } from '@/components/ui/label.jsx'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group.jsx'
 import { Slider } from '@/components/ui/slider.jsx'
 
 import SkillLevelIcon from './SkillLevelIcon.jsx'
@@ -28,6 +30,7 @@ const EditParticipantDialog = ({
   const { t } = useTranslation()
   const [name, setName] = useState('')
   const [skillLevel, setSkillLevel] = useState(1)
+  const [role, setRole] = useState('any')
 
   // Update local state when participant changes or dialog opens
   useEffect(() => {
@@ -38,6 +41,8 @@ const EditParticipantDialog = ({
       if (weight <= 0.5) setSkillLevel(0)
       else if (weight >= 1.5) setSkillLevel(2)
       else setSkillLevel(1)
+      // Set role, default to 'any' if not specified
+      setRole(participant.role || 'any')
     }
   }, [open, participant])
 
@@ -49,7 +54,8 @@ const EditParticipantDialog = ({
     onSave({
       id: participant.id,
       name: name.trim(),
-      weight
+      weight,
+      role
     })
     onOpenChange(false)
   }
@@ -149,6 +155,28 @@ const EditParticipantDialog = ({
                 <span className="font-semibold">{currentSkillInfo.label}</span>
               </div>
             </div>
+          </div>
+
+          {/* Role Selector */}
+          <div className="space-y-4">
+            <Label htmlFor="role" className="text-white">
+              {t('role.label')}
+            </Label>
+            <RadioGroup value={role} onValueChange={setRole}>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="any" id="role-any" className="border-white text-white" />
+                <Label htmlFor="role-any" className="text-white cursor-pointer">
+                  {t('role.any')}
+                </Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="libero" id="role-libero" className="border-white text-white" />
+                <Label htmlFor="role-libero" className="text-white cursor-pointer flex items-center gap-2">
+                  <Shield className="w-4 h-4" />
+                  {t('role.libero')}
+                </Label>
+              </div>
+            </RadioGroup>
           </div>
         </div>
 

@@ -529,6 +529,309 @@ describe('calculateTeams', () => {
       expect(team1Weight).toBeLessThanOrEqual(7.5)
     })
   })
+
+  describe('Libero role constraint', () => {
+    test('should not assign more than one libero per team', () => {
+      const participants: Participant[] = [
+        { id: '1', name: 'Libero1', weight: 1, role: 'libero' },
+        { id: '2', name: 'Libero2', weight: 1, role: 'libero' },
+        { id: '3', name: 'Libero3', weight: 1, role: 'libero' },
+        { id: '4', name: 'Libero4', weight: 1, role: 'libero' },
+        { id: '5', name: 'Player1', weight: 1, role: 'any' },
+        { id: '6', name: 'Player2', weight: 1, role: 'any' },
+        { id: '7', name: 'Player3', weight: 1, role: 'any' },
+        { id: '8', name: 'Player4', weight: 1, role: 'any' },
+        { id: '9', name: 'Player5', weight: 1, role: 'any' },
+        { id: '10', name: 'Player6', weight: 1, role: 'any' },
+        { id: '11', name: 'Player7', weight: 1, role: 'any' },
+        { id: '12', name: 'Player8', weight: 1, role: 'any' },
+      ]
+
+      const { formedTeams, remainingPlayers } = calculateTeams({ participants })
+
+      // Count liberos in each team
+      const team0Liberos = formedTeams[0].filter(p => p.role === 'libero')
+      const team1Liberos = formedTeams[1].filter(p => p.role === 'libero')
+      const benchLiberos = remainingPlayers.filter(p => p.role === 'libero')
+
+      // Each team should have at most 1 libero
+      expect(team0Liberos.length).toBeLessThanOrEqual(1)
+      expect(team1Liberos.length).toBeLessThanOrEqual(1)
+
+      // Extra liberos should be on bench (we have 4 liberos, only 2 can play)
+      expect(benchLiberos.length).toBeGreaterThanOrEqual(2)
+    })
+
+    test('should distribute teams correctly when there is only 1 libero', () => {
+      const participants: Participant[] = [
+        { id: '1', name: 'Libero1', weight: 1, role: 'libero' },
+        { id: '2', name: 'Player1', weight: 1, role: 'any' },
+        { id: '3', name: 'Player2', weight: 1, role: 'any' },
+        { id: '4', name: 'Player3', weight: 1, role: 'any' },
+        { id: '5', name: 'Player4', weight: 1, role: 'any' },
+        { id: '6', name: 'Player5', weight: 1, role: 'any' },
+        { id: '7', name: 'Player6', weight: 1, role: 'any' },
+        { id: '8', name: 'Player7', weight: 1, role: 'any' },
+        { id: '9', name: 'Player8', weight: 1, role: 'any' },
+        { id: '10', name: 'Player9', weight: 1, role: 'any' },
+        { id: '11', name: 'Player10', weight: 1, role: 'any' },
+        { id: '12', name: 'Player11', weight: 1, role: 'any' },
+      ]
+
+      const { formedTeams } = calculateTeams({ participants })
+
+      // Count liberos in each team
+      const team0Liberos = formedTeams[0].filter(p => p.role === 'libero')
+      const team1Liberos = formedTeams[1].filter(p => p.role === 'libero')
+
+      // Only one team should have the libero
+      const totalLiberos = team0Liberos.length + team1Liberos.length
+      expect(totalLiberos).toBe(1)
+
+      // Teams should still be balanced
+      expect(formedTeams[0].length).toBe(6)
+      expect(formedTeams[1].length).toBe(6)
+    })
+
+    test('should handle teams with no liberos', () => {
+      const participants: Participant[] = [
+        { id: '1', name: 'Player1', weight: 1, role: 'any' },
+        { id: '2', name: 'Player2', weight: 1, role: 'any' },
+        { id: '3', name: 'Player3', weight: 1, role: 'any' },
+        { id: '4', name: 'Player4', weight: 1, role: 'any' },
+        { id: '5', name: 'Player5', weight: 1, role: 'any' },
+        { id: '6', name: 'Player6', weight: 1, role: 'any' },
+      ]
+
+      const { formedTeams } = calculateTeams({ participants })
+
+      // Count liberos in each team (should be 0)
+      const team0Liberos = formedTeams[0].filter(p => p.role === 'libero')
+      const team1Liberos = formedTeams[1].filter(p => p.role === 'libero')
+
+      expect(team0Liberos.length).toBe(0)
+      expect(team1Liberos.length).toBe(0)
+
+      // Teams should still be balanced
+      expect(formedTeams[0].length).toBe(3)
+      expect(formedTeams[1].length).toBe(3)
+    })
+
+    test('should handle participants without role defined (defaults to any)', () => {
+      const participants: Participant[] = [
+        { id: '1', name: 'Player1', weight: 1 }, // No role defined
+        { id: '2', name: 'Player2', weight: 1 }, // No role defined
+        { id: '3', name: 'Player3', weight: 1, role: 'any' },
+        { id: '4', name: 'Player4', weight: 1, role: 'any' },
+      ]
+
+      const { formedTeams } = calculateTeams({ participants })
+
+      // Should work fine, no liberos
+      const team0Liberos = formedTeams[0].filter(p => p.role === 'libero')
+      const team1Liberos = formedTeams[1].filter(p => p.role === 'libero')
+
+      expect(team0Liberos.length).toBe(0)
+      expect(team1Liberos.length).toBe(0)
+      expect(formedTeams[0].length).toBe(2)
+      expect(formedTeams[1].length).toBe(2)
+    })
+
+    test('should respect libero constraint when keeping a team with a libero', () => {
+      const participants: Participant[] = [
+        { id: '1', name: 'Libero1', weight: 1, role: 'libero' },
+        { id: '2', name: 'Libero2', weight: 1, role: 'libero' },
+        { id: '3', name: 'Player1', weight: 1, role: 'any' },
+        { id: '4', name: 'Player2', weight: 1, role: 'any' },
+        { id: '5', name: 'Player3', weight: 1, role: 'any' },
+        { id: '6', name: 'Player4', weight: 1, role: 'any' },
+        { id: '7', name: 'Player5', weight: 1, role: 'any' },
+        { id: '8', name: 'Player6', weight: 1, role: 'any' },
+        { id: '9', name: 'Player7', weight: 1, role: 'any' },
+        { id: '10', name: 'Player8', weight: 1, role: 'any' },
+      ]
+
+      // First match
+      const firstMatch = calculateTeams({ participants })
+      
+      // Ensure at least one team has a libero
+      const team0HasLibero = firstMatch.formedTeams[0].some(p => p.role === 'libero')
+      const team1HasLibero = firstMatch.formedTeams[1].some(p => p.role === 'libero')
+      expect(team0HasLibero || team1HasLibero).toBe(true)
+
+      // Keep the team with the libero
+      const keepTeamId = team0HasLibero ? 0 : 1
+
+      // Second match - keep team with libero, add new libero to bench
+      const newMatch = calculateTeams({
+        participants,
+        teams: firstMatch.formedTeams,
+        benchPlayers: firstMatch.remainingPlayers,
+        keepTeamId,
+      })
+
+      // Count liberos in each team
+      const newTeam0Liberos = newMatch.formedTeams[0].filter(p => p.role === 'libero')
+      const newTeam1Liberos = newMatch.formedTeams[1].filter(p => p.role === 'libero')
+
+      // Each team should have at most 1 libero
+      expect(newTeam0Liberos.length).toBeLessThanOrEqual(1)
+      expect(newTeam1Liberos.length).toBeLessThanOrEqual(1)
+
+      // The kept team should still have its original libero (if it had one)
+      if (keepTeamId === 0 && team0HasLibero) {
+        expect(newTeam0Liberos.length).toBe(1)
+      } else if (keepTeamId === 1 && team1HasLibero) {
+        expect(newTeam1Liberos.length).toBe(1)
+      }
+    })
+
+    test('should respect libero constraint when keeping a team without a libero', () => {
+      const participants: Participant[] = [
+        { id: '1', name: 'Libero1', weight: 1, role: 'libero' },
+        { id: '2', name: 'Libero2', weight: 1, role: 'libero' },
+        { id: '3', name: 'Player1', weight: 1, role: 'any' },
+        { id: '4', name: 'Player2', weight: 1, role: 'any' },
+        { id: '5', name: 'Player3', weight: 1, role: 'any' },
+        { id: '6', name: 'Player4', weight: 1, role: 'any' },
+        { id: '7', name: 'Player5', weight: 1, role: 'any' },
+        { id: '8', name: 'Player6', weight: 1, role: 'any' },
+        { id: '9', name: 'Player7', weight: 1, role: 'any' },
+        { id: '10', name: 'Player8', weight: 1, role: 'any' },
+      ]
+
+      // First match
+      const firstMatch = calculateTeams({ participants })
+      
+      // Find the team without a libero (or with if both have)
+      const team0HasLibero = firstMatch.formedTeams[0].some(p => p.role === 'libero')
+      const team1HasLibero = firstMatch.formedTeams[1].some(p => p.role === 'libero')
+      
+      // Keep a team (preferably one without libero, but either works for this test)
+      const keepTeamId = !team0HasLibero ? 0 : 1
+
+      // Second match
+      const newMatch = calculateTeams({
+        participants,
+        teams: firstMatch.formedTeams,
+        benchPlayers: firstMatch.remainingPlayers,
+        keepTeamId,
+      })
+
+      // Count liberos in each team
+      const newTeam0Liberos = newMatch.formedTeams[0].filter(p => p.role === 'libero')
+      const newTeam1Liberos = newMatch.formedTeams[1].filter(p => p.role === 'libero')
+
+      // Each team should have at most 1 libero
+      expect(newTeam0Liberos.length).toBeLessThanOrEqual(1)
+      expect(newTeam1Liberos.length).toBeLessThanOrEqual(1)
+    })
+
+    test('should prioritize bench liberos for redistribution', () => {
+      const participants: Participant[] = [
+        { id: '1', name: 'Libero1', weight: 1, role: 'libero' },
+        { id: '2', name: 'Libero2', weight: 1, role: 'libero' },
+        { id: '3', name: 'Libero3', weight: 1, role: 'libero' },
+        { id: '4', name: 'Player1', weight: 1, role: 'any' },
+        { id: '5', name: 'Player2', weight: 1, role: 'any' },
+        { id: '6', name: 'Player3', weight: 1, role: 'any' },
+        { id: '7', name: 'Player4', weight: 1, role: 'any' },
+        { id: '8', name: 'Player5', weight: 1, role: 'any' },
+        { id: '9', name: 'Player6', weight: 1, role: 'any' },
+        { id: '10', name: 'Player7', weight: 1, role: 'any' },
+        { id: '11', name: 'Player8', weight: 1, role: 'any' },
+        { id: '12', name: 'Player9', weight: 1, role: 'any' },
+        { id: '13', name: 'Player10', weight: 1, role: 'any' },
+      ]
+
+      // First match - 3 liberos, only 2 can play, 1 goes to bench
+      const firstMatch = calculateTeams({ participants })
+      
+      const benchLiberos = firstMatch.remainingPlayers.filter(p => p.role === 'libero')
+      expect(benchLiberos.length).toBeGreaterThanOrEqual(1)
+
+      // Second match - bench players should be prioritized
+      const secondMatch = calculateTeams({
+        participants,
+        teams: firstMatch.formedTeams,
+        benchPlayers: firstMatch.remainingPlayers,
+      })
+
+      // All bench players from first match should be playing in second match
+      const secondMatchPlayerIds = secondMatch.formedTeams.flat().map(p => p.id)
+      const firstBenchIds = firstMatch.remainingPlayers.map(p => p.id)
+      
+      // Bench players should be included in the new match
+      expect(secondMatchPlayerIds).toEqual(expect.arrayContaining(firstBenchIds))
+
+      // Still respect libero constraint
+      const team0Liberos = secondMatch.formedTeams[0].filter(p => p.role === 'libero')
+      const team1Liberos = secondMatch.formedTeams[1].filter(p => p.role === 'libero')
+      expect(team0Liberos.length).toBeLessThanOrEqual(1)
+      expect(team1Liberos.length).toBeLessThanOrEqual(1)
+    })
+
+    test('should balance teams considering libero constraint with mixed weights', () => {
+      const participants: Participant[] = [
+        { id: '1', name: 'Libero1', weight: 1.5, role: 'libero' },
+        { id: '2', name: 'Libero2', weight: 1, role: 'libero' },
+        { id: '3', name: 'Advanced1', weight: 1.5, role: 'any' },
+        { id: '4', name: 'Advanced2', weight: 1.5, role: 'any' },
+        { id: '5', name: 'Intermediate1', weight: 1, role: 'any' },
+        { id: '6', name: 'Intermediate2', weight: 1, role: 'any' },
+        { id: '7', name: 'Beginner1', weight: 0.5, role: 'any' },
+        { id: '8', name: 'Beginner2', weight: 0.5, role: 'any' },
+      ]
+
+      const { formedTeams } = calculateTeams({ participants })
+
+      // Count liberos in each team
+      const team0Liberos = formedTeams[0].filter(p => p.role === 'libero')
+      const team1Liberos = formedTeams[1].filter(p => p.role === 'libero')
+
+      // Each team should have at most 1 libero
+      expect(team0Liberos.length).toBeLessThanOrEqual(1)
+      expect(team1Liberos.length).toBeLessThanOrEqual(1)
+
+      // Teams should be balanced in weight
+      const team0Weight = formedTeams[0].reduce((sum, p) => sum + (p.weight || 1), 0)
+      const team1Weight = formedTeams[1].reduce((sum, p) => sum + (p.weight || 1), 0)
+      const difference = Math.abs(team0Weight - team1Weight)
+      
+      // Allow reasonable difference given libero constraint
+      expect(difference).toBeLessThanOrEqual(1.5)
+    })
+
+    test('should handle edge case with many liberos and few regular players', () => {
+      const participants: Participant[] = [
+        { id: '1', name: 'Libero1', weight: 1, role: 'libero' },
+        { id: '2', name: 'Libero2', weight: 1, role: 'libero' },
+        { id: '3', name: 'Libero3', weight: 1, role: 'libero' },
+        { id: '4', name: 'Libero4', weight: 1, role: 'libero' },
+        { id: '5', name: 'Libero5', weight: 1, role: 'libero' },
+        { id: '6', name: 'Player1', weight: 1, role: 'any' },
+        { id: '7', name: 'Player2', weight: 1, role: 'any' },
+      ]
+
+      const { formedTeams, remainingPlayers } = calculateTeams({ participants })
+
+      // Count liberos in teams
+      const team0Liberos = formedTeams[0].filter(p => p.role === 'libero')
+      const team1Liberos = formedTeams[1].filter(p => p.role === 'libero')
+      const benchLiberos = remainingPlayers.filter(p => p.role === 'libero')
+
+      // Each team should have at most 1 libero
+      expect(team0Liberos.length).toBeLessThanOrEqual(1)
+      expect(team1Liberos.length).toBeLessThanOrEqual(1)
+
+      // At least 3 liberos should be on bench (5 total - max 2 playing)
+      expect(benchLiberos.length).toBeGreaterThanOrEqual(3)
+
+      // All players should be accounted for
+      const totalPlayers = formedTeams[0].length + formedTeams[1].length + remainingPlayers.length
+      expect(totalPlayers).toBe(7)
+    })
+  })
 })
 
 const generateParticipants = (count: number): Participant[] => {

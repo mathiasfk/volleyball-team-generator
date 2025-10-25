@@ -21,6 +21,11 @@
     "advanced": "Experte",
     "label": "Fähigkeitsstufe"
   },
+  "role": {
+    "label": "Position",
+    "any": "Beliebig",
+    "libero": "Libero"
+  },
   "actions": {
     "draw_teams": "Teams bilden",
     "clear_draw": "Auslosung zurücksetzen"

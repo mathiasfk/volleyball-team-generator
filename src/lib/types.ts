@@ -17,5 +17,13 @@ export interface Participant {
    * When undefined, defaults to 1.0 (Intermediate)
    */
   weight?: number
+  /**
+   * Player position/role
+   * - 'any': Can play any position (default)
+   * - 'libero': Defensive specialist (max 1 per team)
+   * 
+   * When undefined, defaults to 'any'
+   */
+  role?: 'any' | 'libero'
 }
 

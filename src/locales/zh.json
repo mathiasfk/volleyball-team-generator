@@ -21,6 +21,11 @@
     "advanced": "高级",
     "label": "技能水平"
   },
+  "role": {
+    "label": "位置",
+    "any": "任何",
+    "libero": "自由人"
+  },
   "actions": {
     "draw_teams": "分配队伍",
     "clear_draw": "清除分配"

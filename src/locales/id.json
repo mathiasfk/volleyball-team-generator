@@ -21,6 +21,11 @@
     "advanced": "Mahir",
     "label": "Tingkat Keterampilan"
   },
+  "role": {
+    "label": "Posisi",
+    "any": "Apa saja",
+    "libero": "Libero"
+  },
   "actions": {
     "draw_teams": "Buat Tim",
     "clear_draw": "Hapus Hasil"

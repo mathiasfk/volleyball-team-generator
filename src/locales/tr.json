@@ -21,6 +21,11 @@
     "advanced": "İleri",
     "label": "Yetenek Seviyesi"
   },
+  "role": {
+    "label": "Pozisyon",
+    "any": "Herhangi",
+    "libero": "Libero"
+  },
   "actions": {
     "draw_teams": "Takımları Oluştur",
     "clear_draw": "Sonuçları Temizle"

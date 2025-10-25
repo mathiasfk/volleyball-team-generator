@@ -21,6 +21,11 @@
     "advanced": "متقدم",
     "label": "مستوى المهارة"
   },
+  "role": {
+    "label": "الموقع",
+    "any": "أي",
+    "libero": "ليبرو"
+  },
   "actions": {
     "draw_teams": "إنشاء الفرق",
     "clear_draw": "مسح النتائج"

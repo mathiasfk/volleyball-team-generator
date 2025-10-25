@@ -1,3 +1,4 @@
+import { Shield } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import { Badge } from '@/components/ui/badge.jsx'
@@ -33,8 +34,11 @@ const TeamCard = ({ team, teamColor, _index, changedPlayerIds = [] }) => {
                 }`}
               >
                 <div className="flex items-center justify-center gap-2">
-                  <span>{idx + 1}. {participant.name}</span>
+                  <span>{participant.name}</span>
                   <SkillLevelIcon weight={participant.weight} size={14} />
+                  {participant.role === 'libero' && (
+                    <Shield className="w-4 h-4 text-blue-400" />
+                  )}
                 </div>
               </div>
             )

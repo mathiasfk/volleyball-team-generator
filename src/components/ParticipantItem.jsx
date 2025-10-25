@@ -1,4 +1,4 @@
-import { Edit2, Trash2 } from 'lucide-react'
+import { Edit2, Shield, Trash2 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import { Button } from '@/components/ui/button.jsx'
@@ -16,6 +16,9 @@ const ParticipantItem = ({
     <div className="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
       <div className="flex items-center gap-2">
         <SkillLevelIcon weight={participant.weight} size={16} />
+        {participant.role === 'libero' && (
+          <Shield className="w-4 h-4 text-blue-400" />
+        )}
         <span className="text-white">{participant.name}</span>
       </div>
       <div className="flex gap-2">

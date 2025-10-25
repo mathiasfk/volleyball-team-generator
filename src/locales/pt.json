@@ -21,6 +21,11 @@
     "advanced": "Avançado",
     "label": "Nível de Habilidade"
   },
+  "role": {
+    "label": "Posição",
+    "any": "Qualquer",
+    "libero": "Líbero"
+  },
   "actions": {
     "draw_teams": "Sortear Times",
     "clear_draw": "Limpar Sorteio"
