@@ -24,7 +24,7 @@ const BenchCard = ({ benchPlayers, changedPlayerIds = [] }) => {
             return (
               <div
                 key={participant.id}
-                className={`bg-gray-700 p-2 rounded text-center text-white transition-all duration-300 ${
+                className={`player-card-base bg-gray-700 p-2 rounded text-center text-white ${
                   isChanged ? 'player-changed' : ''
                 }`}
               >

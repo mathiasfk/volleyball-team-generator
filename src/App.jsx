@@ -1,7 +1,7 @@
 import './App.css'
 
 import { AlertCircle, ListChevronsDownUp, ListChevronsUpDown,Shuffle, Users } from 'lucide-react'
-import { useEffect,useReducer } from 'react'
+import { useEffect, useReducer, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx'
@@ -32,6 +32,7 @@ function App() {
   useSEO() // Initialize SEO management
   
   const [state, dispatch] = useReducer(appReducer, initialState)
+  const clearHighlightTimeoutRef = useRef(null)
   
   const {
     participants,
@@ -241,6 +242,18 @@ function App() {
   }
 
   const drawTeams = (keepTeamId = null) => {
+    // Clear any existing timeout to prevent conflicts
+    if (clearHighlightTimeoutRef.current) {
+      clearTimeout(clearHighlightTimeoutRef.current)
+      clearHighlightTimeoutRef.current = null
+    }
+
+    // If there are currently highlighted players, clear them immediately
+    // This allows the previous animation to finish gracefully
+    if (changedPlayerIds.length > 0) {
+      dispatch({ type: ACTIONS.CLEAR_CHANGED_PLAYERS })
+    }
+
     // calculateTeams now works directly with Participant objects
     const { formedTeams, remainingPlayers } = calculateTeams({
       participants: participants, 
@@ -274,27 +287,37 @@ function App() {
       'changed_players_count': changedPlayersArray.length
     });
 
-    dispatch({
-      type: ACTIONS.SET_TEAMS,
-      payload: {
-        teams: formedTeams,
-        benchPlayers: remainingPlayers,
-        changedPlayerIds: changedPlayersArray,
-        newPlayerPositions: newPlayerPositions
-      }
-    })
-
-    // Save teams to localStorage
-    saveToStorage(STORAGE_KEYS.TEAMS, formedTeams)
-    saveToStorage(STORAGE_KEYS.BENCH, remainingPlayers)
-
-    // Clear the highlight after animation completes (4 seconds)
+    // Use a small delay to ensure the cleared state is processed before applying new highlights
     setTimeout(() => {
-      dispatch({ type: ACTIONS.CLEAR_CHANGED_PLAYERS })
-    }, 4000)
+      dispatch({
+        type: ACTIONS.SET_TEAMS,
+        payload: {
+          teams: formedTeams,
+          benchPlayers: remainingPlayers,
+          changedPlayerIds: changedPlayersArray,
+          newPlayerPositions: newPlayerPositions
+        }
+      })
+
+      // Save teams to localStorage
+      saveToStorage(STORAGE_KEYS.TEAMS, formedTeams)
+      saveToStorage(STORAGE_KEYS.BENCH, remainingPlayers)
+
+      // Clear the highlight after animation completes (4 seconds)
+      clearHighlightTimeoutRef.current = setTimeout(() => {
+        dispatch({ type: ACTIONS.CLEAR_CHANGED_PLAYERS })
+        clearHighlightTimeoutRef.current = null
+      }, 4000)
+    }, 50)
   }
 
   const clearDraw = () => {
+    // Clear any pending highlight timeout
+    if (clearHighlightTimeoutRef.current) {
+      clearTimeout(clearHighlightTimeoutRef.current)
+      clearHighlightTimeoutRef.current = null
+    }
+
     gtag('event', 'clear_draw', {
       'participant_count': participants.length,
       'previous_team_count': teams.length,
