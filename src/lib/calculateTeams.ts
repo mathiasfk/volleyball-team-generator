@@ -25,7 +25,8 @@ export function calculateTeams(options: {
 
   // Special case: if we have 0 or 1 player, they go to bench
   if (availablePlayers <= 1) {
-    return { formedTeams, remainingPlayers: participants }
+    remainingPlayers = participants.sort((a, b) => a.name.localeCompare(b.name))
+    return { formedTeams, remainingPlayers }
   }
 
   // If keepTeamId is specified, preserve that team and only redistribute the other team
@@ -76,6 +77,10 @@ export function calculateTeams(options: {
     // Remaining players go to bench
     remainingPlayers = prioritizedPlayers.slice(otherTeamSize)
     
+    // Sort participants by name before returning
+    formedTeams = formedTeams.map(team => team.sort((a, b) => a.name.localeCompare(b.name)))
+    remainingPlayers = remainingPlayers.sort((a, b) => a.name.localeCompare(b.name))
+    
     return { formedTeams, remainingPlayers }
   }
 
@@ -113,6 +118,10 @@ export function calculateTeams(options: {
     const teamIndex = Math.floor(i / playersPerTeam)
     formedTeams[teamIndex].push(playingPlayers[i])
   }
+
+  // Sort participants by name
+  formedTeams = formedTeams.map(team => team.sort((a, b) => a.name.localeCompare(b.name)))
+  remainingPlayers = remainingPlayers.sort((a, b) => a.name.localeCompare(b.name))
 
   return { formedTeams, remainingPlayers }
 }
