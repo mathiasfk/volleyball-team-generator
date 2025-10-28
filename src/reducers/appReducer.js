@@ -113,7 +113,7 @@ export function appReducer(state, action) {
         error: '',
       }
     
-    case ACTIONS.SET_TEAMS:
+    case ACTIONS.SET_TEAMS: {
       // Create a set of player IDs that are in teams (not on bench)
       const playersInTeams = new Set()
       action.payload.teams.forEach(team => {
@@ -150,6 +150,7 @@ export function appReducer(state, action) {
         error: '',
         openDrawDialog: false,
       }
+    }
     
     case ACTIONS.CLEAR_DRAW:
       return {

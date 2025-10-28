@@ -705,7 +705,6 @@ describe('calculateTeams', () => {
       
       // Find the team without a libero (or with if both have)
       const team0HasLibero = firstMatch.formedTeams[0].some(p => p.role === 'libero')
-      const team1HasLibero = firstMatch.formedTeams[1].some(p => p.role === 'libero')
       
       // Keep a team (preferably one without libero, but either works for this test)
       const keepTeamId = !team0HasLibero ? 0 : 1
@@ -967,7 +966,6 @@ describe('calculateTeams', () => {
 
       // Team 1 should prioritize players with fewer games (unless they're bench players)
       const team1 = secondMatch.formedTeams[1]
-      const team1Ids = team1.map(p => p.id)
       
       // Players with 0 games should be highly likely to play (unless on bench requires more)
       const hasLowGamePlayers = team1.some(p => (p.gamesPlayed || 0) <= 2)
