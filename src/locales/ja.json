@@ -24,7 +24,8 @@
   "role": {
     "label": "ポジション",
     "any": "任意",
-    "libero": "リベロ"
+    "libero": "リベロ",
+    "setter": "セッター"
   },
   "actions": {
     "draw_teams": "チームを作成",

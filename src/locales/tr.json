@@ -24,7 +24,8 @@
   "role": {
     "label": "Pozisyon",
     "any": "Herhangi",
-    "libero": "Libero"
+    "libero": "Libero",
+    "setter": "Pasör"
   },
   "actions": {
     "draw_teams": "Takımları Oluştur",

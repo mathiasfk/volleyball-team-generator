@@ -24,7 +24,8 @@
   "role": {
     "label": "Position",
     "any": "Beliebig",
-    "libero": "Libero"
+    "libero": "Libero",
+    "setter": "Zuspieler"
   },
   "actions": {
     "draw_teams": "Teams bilden",

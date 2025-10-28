@@ -832,6 +832,379 @@ describe('calculateTeams', () => {
     })
   })
 
+  describe('Setter role constraint', () => {
+    test('should not assign more than one setter per team', () => {
+      const participants: Participant[] = [
+        { id: '1', name: 'Setter1', weight: 1, role: 'setter' },
+        { id: '2', name: 'Setter2', weight: 1, role: 'setter' },
+        { id: '3', name: 'Setter3', weight: 1, role: 'setter' },
+        { id: '4', name: 'Setter4', weight: 1, role: 'setter' },
+        { id: '5', name: 'Player1', weight: 1, role: 'any' },
+        { id: '6', name: 'Player2', weight: 1, role: 'any' },
+        { id: '7', name: 'Player3', weight: 1, role: 'any' },
+        { id: '8', name: 'Player4', weight: 1, role: 'any' },
+        { id: '9', name: 'Player5', weight: 1, role: 'any' },
+        { id: '10', name: 'Player6', weight: 1, role: 'any' },
+        { id: '11', name: 'Player7', weight: 1, role: 'any' },
+        { id: '12', name: 'Player8', weight: 1, role: 'any' },
+      ]
+
+      const { formedTeams, remainingPlayers } = calculateTeams({ participants })
+
+      // Count setters in each team
+      const team0Setters = formedTeams[0].filter(p => p.role === 'setter')
+      const team1Setters = formedTeams[1].filter(p => p.role === 'setter')
+      const benchSetters = remainingPlayers.filter(p => p.role === 'setter')
+
+      // Each team should have at most 1 setter
+      expect(team0Setters.length).toBeLessThanOrEqual(1)
+      expect(team1Setters.length).toBeLessThanOrEqual(1)
+
+      // Extra setters should be on bench (we have 4 setters, only 2 can play)
+      expect(benchSetters.length).toBeGreaterThanOrEqual(2)
+    })
+
+    test('should distribute teams correctly when there is only 1 setter', () => {
+      const participants: Participant[] = [
+        { id: '1', name: 'Setter1', weight: 1, role: 'setter' },
+        { id: '2', name: 'Player1', weight: 1, role: 'any' },
+        { id: '3', name: 'Player2', weight: 1, role: 'any' },
+        { id: '4', name: 'Player3', weight: 1, role: 'any' },
+        { id: '5', name: 'Player4', weight: 1, role: 'any' },
+        { id: '6', name: 'Player5', weight: 1, role: 'any' },
+        { id: '7', name: 'Player6', weight: 1, role: 'any' },
+        { id: '8', name: 'Player7', weight: 1, role: 'any' },
+        { id: '9', name: 'Player8', weight: 1, role: 'any' },
+        { id: '10', name: 'Player9', weight: 1, role: 'any' },
+        { id: '11', name: 'Player10', weight: 1, role: 'any' },
+        { id: '12', name: 'Player11', weight: 1, role: 'any' },
+      ]
+
+      const { formedTeams } = calculateTeams({ participants })
+
+      // Count setters in each team
+      const team0Setters = formedTeams[0].filter(p => p.role === 'setter')
+      const team1Setters = formedTeams[1].filter(p => p.role === 'setter')
+
+      // Only one team should have the setter
+      const totalSetters = team0Setters.length + team1Setters.length
+      expect(totalSetters).toBe(1)
+
+      // Teams should still be balanced
+      expect(formedTeams[0].length).toBe(6)
+      expect(formedTeams[1].length).toBe(6)
+    })
+
+    test('should handle teams with no setters', () => {
+      const participants: Participant[] = [
+        { id: '1', name: 'Player1', weight: 1, role: 'any' },
+        { id: '2', name: 'Player2', weight: 1, role: 'any' },
+        { id: '3', name: 'Player3', weight: 1, role: 'any' },
+        { id: '4', name: 'Player4', weight: 1, role: 'any' },
+        { id: '5', name: 'Player5', weight: 1, role: 'any' },
+        { id: '6', name: 'Player6', weight: 1, role: 'any' },
+      ]
+
+      const { formedTeams } = calculateTeams({ participants })
+
+      // Count setters in each team (should be 0)
+      const team0Setters = formedTeams[0].filter(p => p.role === 'setter')
+      const team1Setters = formedTeams[1].filter(p => p.role === 'setter')
+
+      expect(team0Setters.length).toBe(0)
+      expect(team1Setters.length).toBe(0)
+
+      // Teams should still be balanced
+      expect(formedTeams[0].length).toBe(3)
+      expect(formedTeams[1].length).toBe(3)
+    })
+
+    test('should respect setter constraint when keeping a team with a setter', () => {
+      const participants: Participant[] = [
+        { id: '1', name: 'Setter1', weight: 1, role: 'setter' },
+        { id: '2', name: 'Setter2', weight: 1, role: 'setter' },
+        { id: '3', name: 'Player1', weight: 1, role: 'any' },
+        { id: '4', name: 'Player2', weight: 1, role: 'any' },
+        { id: '5', name: 'Player3', weight: 1, role: 'any' },
+        { id: '6', name: 'Player4', weight: 1, role: 'any' },
+        { id: '7', name: 'Player5', weight: 1, role: 'any' },
+        { id: '8', name: 'Player6', weight: 1, role: 'any' },
+        { id: '9', name: 'Player7', weight: 1, role: 'any' },
+        { id: '10', name: 'Player8', weight: 1, role: 'any' },
+      ]
+
+      // First match
+      const firstMatch = calculateTeams({ participants })
+      
+      // Ensure at least one team has a setter
+      const team0HasSetter = firstMatch.formedTeams[0].some(p => p.role === 'setter')
+      const team1HasSetter = firstMatch.formedTeams[1].some(p => p.role === 'setter')
+      expect(team0HasSetter || team1HasSetter).toBe(true)
+
+      // Keep the team with the setter
+      const keepTeamId = team0HasSetter ? 0 : 1
+
+      // Second match - keep team with setter
+      const newMatch = calculateTeams({
+        participants,
+        teams: firstMatch.formedTeams,
+        benchPlayers: firstMatch.remainingPlayers,
+        keepTeamId,
+      })
+
+      // Count setters in each team
+      const newTeam0Setters = newMatch.formedTeams[0].filter(p => p.role === 'setter')
+      const newTeam1Setters = newMatch.formedTeams[1].filter(p => p.role === 'setter')
+
+      // Each team should have at most 1 setter
+      expect(newTeam0Setters.length).toBeLessThanOrEqual(1)
+      expect(newTeam1Setters.length).toBeLessThanOrEqual(1)
+
+      // The kept team should still have its original setter (if it had one)
+      if (keepTeamId === 0 && team0HasSetter) {
+        expect(newTeam0Setters.length).toBe(1)
+      } else if (keepTeamId === 1 && team1HasSetter) {
+        expect(newTeam1Setters.length).toBe(1)
+      }
+    })
+
+    test('should respect setter constraint when keeping a team without a setter', () => {
+      const participants: Participant[] = [
+        { id: '1', name: 'Setter1', weight: 1, role: 'setter' },
+        { id: '2', name: 'Setter2', weight: 1, role: 'setter' },
+        { id: '3', name: 'Player1', weight: 1, role: 'any' },
+        { id: '4', name: 'Player2', weight: 1, role: 'any' },
+        { id: '5', name: 'Player3', weight: 1, role: 'any' },
+        { id: '6', name: 'Player4', weight: 1, role: 'any' },
+        { id: '7', name: 'Player5', weight: 1, role: 'any' },
+        { id: '8', name: 'Player6', weight: 1, role: 'any' },
+        { id: '9', name: 'Player7', weight: 1, role: 'any' },
+        { id: '10', name: 'Player8', weight: 1, role: 'any' },
+      ]
+
+      // First match
+      const firstMatch = calculateTeams({ participants })
+      
+      // Find the team without a setter (or with if both have)
+      const team0HasSetter = firstMatch.formedTeams[0].some(p => p.role === 'setter')
+      
+      // Keep a team (preferably one without setter, but either works for this test)
+      const keepTeamId = !team0HasSetter ? 0 : 1
+
+      // Second match
+      const newMatch = calculateTeams({
+        participants,
+        teams: firstMatch.formedTeams,
+        benchPlayers: firstMatch.remainingPlayers,
+        keepTeamId,
+      })
+
+      // Count setters in each team
+      const newTeam0Setters = newMatch.formedTeams[0].filter(p => p.role === 'setter')
+      const newTeam1Setters = newMatch.formedTeams[1].filter(p => p.role === 'setter')
+
+      // Each team should have at most 1 setter
+      expect(newTeam0Setters.length).toBeLessThanOrEqual(1)
+      expect(newTeam1Setters.length).toBeLessThanOrEqual(1)
+    })
+
+    test('should prioritize bench setters for redistribution', () => {
+      const participants: Participant[] = [
+        { id: '1', name: 'Setter1', weight: 1, role: 'setter' },
+        { id: '2', name: 'Setter2', weight: 1, role: 'setter' },
+        { id: '3', name: 'Setter3', weight: 1, role: 'setter' },
+        { id: '4', name: 'Player1', weight: 1, role: 'any' },
+        { id: '5', name: 'Player2', weight: 1, role: 'any' },
+        { id: '6', name: 'Player3', weight: 1, role: 'any' },
+        { id: '7', name: 'Player4', weight: 1, role: 'any' },
+        { id: '8', name: 'Player5', weight: 1, role: 'any' },
+        { id: '9', name: 'Player6', weight: 1, role: 'any' },
+        { id: '10', name: 'Player7', weight: 1, role: 'any' },
+        { id: '11', name: 'Player8', weight: 1, role: 'any' },
+        { id: '12', name: 'Player9', weight: 1, role: 'any' },
+        { id: '13', name: 'Player10', weight: 1, role: 'any' },
+      ]
+
+      // First match - 3 setters, only 2 can play, 1 goes to bench
+      const firstMatch = calculateTeams({ participants })
+      
+      const benchSetters = firstMatch.remainingPlayers.filter(p => p.role === 'setter')
+      expect(benchSetters.length).toBeGreaterThanOrEqual(1)
+
+      // Second match - bench players should be prioritized
+      const secondMatch = calculateTeams({
+        participants,
+        teams: firstMatch.formedTeams,
+        benchPlayers: firstMatch.remainingPlayers,
+      })
+
+      // All bench players from first match should be playing in second match
+      const secondMatchPlayerIds = secondMatch.formedTeams.flat().map(p => p.id)
+      const firstBenchIds = firstMatch.remainingPlayers.map(p => p.id)
+      
+      // Bench players should be included in the new match
+      expect(secondMatchPlayerIds).toEqual(expect.arrayContaining(firstBenchIds))
+
+      // Still respect setter constraint
+      const team0Setters = secondMatch.formedTeams[0].filter(p => p.role === 'setter')
+      const team1Setters = secondMatch.formedTeams[1].filter(p => p.role === 'setter')
+      expect(team0Setters.length).toBeLessThanOrEqual(1)
+      expect(team1Setters.length).toBeLessThanOrEqual(1)
+    })
+
+    test('should balance teams considering setter constraint with mixed weights', () => {
+      const participants: Participant[] = [
+        { id: '1', name: 'Setter1', weight: 1.5, role: 'setter' },
+        { id: '2', name: 'Setter2', weight: 1, role: 'setter' },
+        { id: '3', name: 'Advanced1', weight: 1.5, role: 'any' },
+        { id: '4', name: 'Advanced2', weight: 1.5, role: 'any' },
+        { id: '5', name: 'Intermediate1', weight: 1, role: 'any' },
+        { id: '6', name: 'Intermediate2', weight: 1, role: 'any' },
+        { id: '7', name: 'Beginner1', weight: 0.5, role: 'any' },
+        { id: '8', name: 'Beginner2', weight: 0.5, role: 'any' },
+      ]
+
+      const { formedTeams } = calculateTeams({ participants })
+
+      // Count setters in each team
+      const team0Setters = formedTeams[0].filter(p => p.role === 'setter')
+      const team1Setters = formedTeams[1].filter(p => p.role === 'setter')
+
+      // Each team should have at most 1 setter
+      expect(team0Setters.length).toBeLessThanOrEqual(1)
+      expect(team1Setters.length).toBeLessThanOrEqual(1)
+
+      // Teams should be balanced in weight
+      const team0Weight = formedTeams[0].reduce((sum, p) => sum + (p.weight || 1), 0)
+      const team1Weight = formedTeams[1].reduce((sum, p) => sum + (p.weight || 1), 0)
+      const difference = Math.abs(team0Weight - team1Weight)
+      
+      // Allow reasonable difference given setter constraint
+      expect(difference).toBeLessThanOrEqual(1.5)
+    })
+
+    test('should handle edge case with many setters and few regular players', () => {
+      const participants: Participant[] = [
+        { id: '1', name: 'Setter1', weight: 1, role: 'setter' },
+        { id: '2', name: 'Setter2', weight: 1, role: 'setter' },
+        { id: '3', name: 'Setter3', weight: 1, role: 'setter' },
+        { id: '4', name: 'Setter4', weight: 1, role: 'setter' },
+        { id: '5', name: 'Setter5', weight: 1, role: 'setter' },
+        { id: '6', name: 'Player1', weight: 1, role: 'any' },
+        { id: '7', name: 'Player2', weight: 1, role: 'any' },
+      ]
+
+      const { formedTeams, remainingPlayers } = calculateTeams({ participants })
+
+      // Count setters in teams
+      const team0Setters = formedTeams[0].filter(p => p.role === 'setter')
+      const team1Setters = formedTeams[1].filter(p => p.role === 'setter')
+      const benchSetters = remainingPlayers.filter(p => p.role === 'setter')
+
+      // Each team should have at most 1 setter
+      expect(team0Setters.length).toBeLessThanOrEqual(1)
+      expect(team1Setters.length).toBeLessThanOrEqual(1)
+
+      // At least 3 setters should be on bench (5 total - max 2 playing)
+      expect(benchSetters.length).toBeGreaterThanOrEqual(3)
+
+      // All players should be accounted for
+      const totalPlayers = formedTeams[0].length + formedTeams[1].length + remainingPlayers.length
+      expect(totalPlayers).toBe(7)
+    })
+
+    test('should allow both libero and setter on same team', () => {
+      const participants: Participant[] = [
+        { id: '1', name: 'Libero1', weight: 1, role: 'libero' },
+        { id: '2', name: 'Libero2', weight: 1, role: 'libero' },
+        { id: '3', name: 'Setter1', weight: 1, role: 'setter' },
+        { id: '4', name: 'Setter2', weight: 1, role: 'setter' },
+        { id: '5', name: 'Player1', weight: 1, role: 'any' },
+        { id: '6', name: 'Player2', weight: 1, role: 'any' },
+        { id: '7', name: 'Player3', weight: 1, role: 'any' },
+        { id: '8', name: 'Player4', weight: 1, role: 'any' },
+        { id: '9', name: 'Player5', weight: 1, role: 'any' },
+        { id: '10', name: 'Player6', weight: 1, role: 'any' },
+        { id: '11', name: 'Player7', weight: 1, role: 'any' },
+        { id: '12', name: 'Player8', weight: 1, role: 'any' },
+      ]
+
+      const { formedTeams } = calculateTeams({ participants })
+
+      // Count liberos and setters in each team
+      const team0Liberos = formedTeams[0].filter(p => p.role === 'libero')
+      const team1Liberos = formedTeams[1].filter(p => p.role === 'libero')
+      const team0Setters = formedTeams[0].filter(p => p.role === 'setter')
+      const team1Setters = formedTeams[1].filter(p => p.role === 'setter')
+
+      // Each team should have at most 1 libero
+      expect(team0Liberos.length).toBeLessThanOrEqual(1)
+      expect(team1Liberos.length).toBeLessThanOrEqual(1)
+
+      // Each team should have at most 1 setter
+      expect(team0Setters.length).toBeLessThanOrEqual(1)
+      expect(team1Setters.length).toBeLessThanOrEqual(1)
+
+      // Both teams should have 6 players
+      expect(formedTeams[0].length).toBe(6)
+      expect(formedTeams[1].length).toBe(6)
+    })
+
+    test('should handle mixed liberos and setters with bench rotation', () => {
+      const participants: Participant[] = [
+        { id: '1', name: 'Libero1', weight: 1, role: 'libero' },
+        { id: '2', name: 'Libero2', weight: 1, role: 'libero' },
+        { id: '3', name: 'Libero3', weight: 1, role: 'libero' },
+        { id: '4', name: 'Setter1', weight: 1, role: 'setter' },
+        { id: '5', name: 'Setter2', weight: 1, role: 'setter' },
+        { id: '6', name: 'Setter3', weight: 1, role: 'setter' },
+        { id: '7', name: 'Player1', weight: 1, role: 'any' },
+        { id: '8', name: 'Player2', weight: 1, role: 'any' },
+        { id: '9', name: 'Player3', weight: 1, role: 'any' },
+        { id: '10', name: 'Player4', weight: 1, role: 'any' },
+        { id: '11', name: 'Player5', weight: 1, role: 'any' },
+        { id: '12', name: 'Player6', weight: 1, role: 'any' },
+        { id: '13', name: 'Player7', weight: 1, role: 'any' },
+      ]
+
+      const firstMatch = calculateTeams({ participants })
+      
+      // Verify constraints in first match
+      const team0Liberos1 = firstMatch.formedTeams[0].filter(p => p.role === 'libero')
+      const team1Liberos1 = firstMatch.formedTeams[1].filter(p => p.role === 'libero')
+      const team0Setters1 = firstMatch.formedTeams[0].filter(p => p.role === 'setter')
+      const team1Setters1 = firstMatch.formedTeams[1].filter(p => p.role === 'setter')
+      
+      expect(team0Liberos1.length).toBeLessThanOrEqual(1)
+      expect(team1Liberos1.length).toBeLessThanOrEqual(1)
+      expect(team0Setters1.length).toBeLessThanOrEqual(1)
+      expect(team1Setters1.length).toBeLessThanOrEqual(1)
+
+      // Second match with bench players
+      const secondMatch = calculateTeams({
+        participants,
+        teams: firstMatch.formedTeams,
+        benchPlayers: firstMatch.remainingPlayers,
+      })
+
+      // Verify constraints in second match
+      const team0Liberos2 = secondMatch.formedTeams[0].filter(p => p.role === 'libero')
+      const team1Liberos2 = secondMatch.formedTeams[1].filter(p => p.role === 'libero')
+      const team0Setters2 = secondMatch.formedTeams[0].filter(p => p.role === 'setter')
+      const team1Setters2 = secondMatch.formedTeams[1].filter(p => p.role === 'setter')
+      
+      expect(team0Liberos2.length).toBeLessThanOrEqual(1)
+      expect(team1Liberos2.length).toBeLessThanOrEqual(1)
+      expect(team0Setters2.length).toBeLessThanOrEqual(1)
+      expect(team1Setters2.length).toBeLessThanOrEqual(1)
+
+      // Bench players should be prioritized
+      const secondMatchPlayerIds = secondMatch.formedTeams.flat().map(p => p.id)
+      const firstBenchIds = firstMatch.remainingPlayers.map(p => p.id)
+      expect(secondMatchPlayerIds).toEqual(expect.arrayContaining(firstBenchIds))
+    })
+  })
+
   describe('Game participation counter - prioritizing players with fewer games', () => {
     test('should prioritize players with fewer games played', () => {
       const participants: Participant[] = [

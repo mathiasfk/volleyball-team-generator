@@ -24,7 +24,8 @@
   "role": {
     "label": "位置",
     "any": "任何",
-    "libero": "自由人"
+    "libero": "自由人",
+    "setter": "二传手"
   },
   "actions": {
     "draw_teams": "分配队伍",

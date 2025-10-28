@@ -24,7 +24,8 @@
   "role": {
     "label": "Posisi",
     "any": "Apa saja",
-    "libero": "Libero"
+    "libero": "Libero",
+    "setter": "Setter"
   },
   "actions": {
     "draw_teams": "Buat Tim",

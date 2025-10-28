@@ -1,4 +1,4 @@
-import { Edit2, Shield, Trash2 } from 'lucide-react'
+import { CircleFadingArrowUp, Edit2, Shield, Trash2 } from 'lucide-react'
 
 import { Button } from '@/components/ui/button.jsx'
 
@@ -16,6 +16,9 @@ const ParticipantItem = ({
         <SkillLevelIcon weight={participant.weight} size={16} />
         {participant.role === 'libero' && (
           <Shield className="w-4 h-4 text-blue-400" />
+        )}
+        {participant.role === 'setter' && (
+          <CircleFadingArrowUp className="w-4 h-4 text-blue-400" />
         )}
         <span className="text-white">{participant.name}</span>
       </div>

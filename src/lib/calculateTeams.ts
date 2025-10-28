@@ -79,8 +79,15 @@ function isLibero(player: Participant): boolean {
 }
 
 /**
+ * Checks if a player is a setter
+ */
+function isSetter(player: Participant): boolean {
+  return player.role === 'setter'
+}
+
+/**
  * Distributes players into teams balancing by experience weight
- * Enforces the constraint: max 1 libero per team
+ * Enforces the constraints: max 1 libero per team, max 1 setter per team
  */
 function distributePlayersIntoTeams(
   players: Participant[],
@@ -88,12 +95,14 @@ function distributePlayersIntoTeams(
 ): Participant[][] {
   const teams: Participant[][] = [[], []]
   
-  // Separate liberos from regular players
+  // Separate liberos, setters, and regular players
   const liberos = players.filter(isLibero)
-  const regularPlayers = players.filter(p => !isLibero(p))
+  const setters = players.filter(isSetter)
+  const regularPlayers = players.filter(p => !isLibero(p) && !isSetter(p))
   
-  // Sort both groups by weight (descending) for better balancing
+  // Sort all groups by weight (descending) for better balancing
   const sortedLiberos = liberos.sort((a, b) => (b.weight || 1) - (a.weight || 1))
+  const sortedSetters = setters.sort((a, b) => (b.weight || 1) - (a.weight || 1))
   const sortedRegularPlayers = regularPlayers.sort((a, b) => (b.weight || 1) - (a.weight || 1))
   
   // Distribute liberos first (max 1 per team)
@@ -101,6 +110,13 @@ function distributePlayersIntoTeams(
   // Remaining liberos will be left out (returned as bench players)
   for (let i = 0; i < Math.min(sortedLiberos.length, maxTeams); i++) {
     teams[i].push(sortedLiberos[i])
+  }
+  
+  // Distribute setters (max 1 per team)
+  // Assign first setter to team 0, second to team 1
+  // Remaining setters will be left out (returned as bench players)
+  for (let i = 0; i < Math.min(sortedSetters.length, maxTeams); i++) {
+    teams[i].push(sortedSetters[i])
   }
   
   // Distribute regular players using a greedy algorithm:
@@ -132,7 +148,7 @@ function distributePlayersIntoTeams(
  * Handles the case where one team is kept and the other is redistributed
  * 
  * Priority order (from highest to lowest):
- * 1. Enforce constraint: max 1 libero per team (can play with 0 liberos)
+ * 1. Enforce constraints: max 1 libero per team, max 1 setter per team (can play with 0 of either)
  * 2. Balance games played - players with fewer games MUST play first
  * 3. Balance team weights for fair competition
  */
@@ -168,9 +184,10 @@ function redistributeWithKeptTeam(
     return (b.weight || 1) - (a.weight || 1) // Then balance by weight
   })
   
-  // Select players respecting the libero constraint - PRIORITY #1
+  // Select players respecting the role constraints - PRIORITY #1
   const selectedPlayers: Participant[] = []
   let selectedHasLibero = false
+  let selectedHasSetter = false
   
   for (const player of sortedAvailable) {
     // Stop if team is full
@@ -186,6 +203,16 @@ function redistributeWithKeptTeam(
         continue // Skip to next player in the sorted list
       }
       selectedHasLibero = true
+    }
+    
+    // Check setter constraint - PRIORITY #1
+    // Each team can have max 1 setter independently
+    if (isSetter(player)) {
+      // Skip this setter if we already selected a setter for this team
+      if (selectedHasSetter) {
+        continue // Skip to next player in the sorted list
+      }
+      selectedHasSetter = true
     }
     
     selectedPlayers.push(player)
@@ -220,9 +247,10 @@ function performFullDraw(
   const playersPerTeam = calculateTeamSize(participants.length)
   const totalPlayingPlayers = playersPerTeam * maxTeams
   
-  // Separate liberos and regular players
+  // Separate liberos, setters, and regular players
   const allLiberos = participants.filter(isLibero)
-  const allRegularPlayers = participants.filter(p => !isLibero(p))
+  const allSetters = participants.filter(isSetter)
+  const allRegularPlayers = participants.filter(p => !isLibero(p) && !isSetter(p))
   
   // Prioritize bench players within each group
   const benchPlayerIds = new Set(benchPlayers.map(bp => bp.id))
@@ -233,6 +261,10 @@ function performFullDraw(
   const otherLiberos = allLiberos.filter(l => !benchPlayerIds.has(l.id))
   const shuffledLiberos = [...sortByGamesPlayed(benchLiberos), ...sortByGamesPlayed(otherLiberos)]
   
+  const benchSetters = allSetters.filter(s => benchPlayerIds.has(s.id))
+  const otherSetters = allSetters.filter(s => !benchPlayerIds.has(s.id))
+  const shuffledSetters = [...sortByGamesPlayed(benchSetters), ...sortByGamesPlayed(otherSetters)]
+  
   const benchRegular = allRegularPlayers.filter(p => benchPlayerIds.has(p.id))
   const otherRegular = allRegularPlayers.filter(p => !benchPlayerIds.has(p.id))
   const shuffledRegular = [...sortByGamesPlayed(benchRegular), ...sortByGamesPlayed(otherRegular)]
@@ -241,19 +273,23 @@ function performFullDraw(
   const playingLiberos = shuffledLiberos.slice(0, Math.min(2, shuffledLiberos.length))
   const benchLiberos2 = shuffledLiberos.slice(Math.min(2, shuffledLiberos.length))
   
+  // Take max 2 setters for playing (one per team)
+  const playingSetters = shuffledSetters.slice(0, Math.min(2, shuffledSetters.length))
+  const benchSetters2 = shuffledSetters.slice(Math.min(2, shuffledSetters.length))
+  
   // Calculate remaining slots for regular players
-  const regularSlotsNeeded = totalPlayingPlayers - playingLiberos.length
+  const regularSlotsNeeded = totalPlayingPlayers - playingLiberos.length - playingSetters.length
   const playingRegular = shuffledRegular.slice(0, regularSlotsNeeded)
   const benchRegular2 = shuffledRegular.slice(regularSlotsNeeded)
   
   // Combine playing players
-  const playingPlayers = [...playingLiberos, ...playingRegular]
+  const playingPlayers = [...playingLiberos, ...playingSetters, ...playingRegular]
   
-  // Distribute into teams (will respect libero constraint)
+  // Distribute into teams (will respect libero and setter constraints)
   const formedTeams = distributePlayersIntoTeams(playingPlayers, playersPerTeam)
   
   // Remaining players on bench
-  const remainingPlayers = [...benchLiberos2, ...benchRegular2]
+  const remainingPlayers = [...benchLiberos2, ...benchSetters2, ...benchRegular2]
   
   debugTeams(participants, formedTeams, remainingPlayers)
   return { formedTeams, remainingPlayers }

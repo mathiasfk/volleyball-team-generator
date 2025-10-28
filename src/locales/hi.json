@@ -24,7 +24,8 @@
   "role": {
     "label": "स्थिति",
     "any": "कोई भी",
-    "libero": "लिबेरो"
+    "libero": "लिबेरो",
+    "setter": "सेटर"
   },
   "actions": {
     "draw_teams": "टीम बनाएं",

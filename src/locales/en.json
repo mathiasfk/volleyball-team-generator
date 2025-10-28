@@ -24,7 +24,8 @@
   "role": {
     "label": "Position",
     "any": "Any",
-    "libero": "Libero"
+    "libero": "Libero",
+    "setter": "Setter"
   },
   "actions": {
     "draw_teams": "Draw Teams",

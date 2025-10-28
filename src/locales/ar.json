@@ -24,7 +24,8 @@
   "role": {
     "label": "الموقع",
     "any": "أي",
-    "libero": "ليبرو"
+    "libero": "ليبرو",
+    "setter": "معد الكرة"
   },
   "actions": {
     "draw_teams": "إنشاء الفرق",

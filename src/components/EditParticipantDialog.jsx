@@ -1,4 +1,4 @@
-import { Shield } from 'lucide-react'
+import { CircleFadingArrowUp, Shield } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -174,6 +174,13 @@ const EditParticipantDialog = ({
                 <Label htmlFor="role-libero" className="text-white cursor-pointer flex items-center gap-2">
                   <Shield className="w-4 h-4" />
                   {t('role.libero')}
+                </Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="setter" id="role-setter" className="border-white text-white" />
+                <Label htmlFor="role-setter" className="text-white cursor-pointer flex items-center gap-2">
+                  <CircleFadingArrowUp className="w-4 h-4" />
+                  {t('role.setter')}
                 </Label>
               </div>
             </RadioGroup>

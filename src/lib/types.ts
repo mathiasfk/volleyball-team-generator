@@ -21,10 +21,11 @@ export interface Participant {
    * Player position/role
    * - 'any': Can play any position (default)
    * - 'libero': Defensive specialist (max 1 per team)
+   * - 'setter': Setting specialist (max 1 per team)
    * 
    * When undefined, defaults to 'any'
    */
-  role?: 'any' | 'libero'
+  role?: 'any' | 'libero' | 'setter'
   /**
    * Counter tracking how many games this player has participated in
    * Incremented each time the player is allocated to a team (not bench)

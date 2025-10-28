@@ -24,7 +24,8 @@
   "role": {
     "label": "Posição",
     "any": "Qualquer",
-    "libero": "Líbero"
+    "libero": "Líbero",
+    "setter": "Levantador"
   },
   "actions": {
     "draw_teams": "Sortear Times",
