@@ -1,4 +1,3 @@
-import { CircleFadingArrowUp, Shield } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -16,6 +15,7 @@ import { Label } from '@/components/ui/label.jsx'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group.jsx'
 import { Slider } from '@/components/ui/slider.jsx'
 
+import RoleIcon from './RoleIcon.jsx'
 import SkillLevelIcon from './SkillLevelIcon.jsx'
 
 /**
@@ -172,14 +172,14 @@ const EditParticipantDialog = ({
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="libero" id="role-libero" className="border-white text-white" />
                 <Label htmlFor="role-libero" className="text-white cursor-pointer flex items-center gap-2">
-                  <Shield className="w-4 h-4" />
+                  <RoleIcon role="libero" size={16} />
                   {t('role.libero')}
                 </Label>
               </div>
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="setter" id="role-setter" className="border-white text-white" />
                 <Label htmlFor="role-setter" className="text-white cursor-pointer flex items-center gap-2">
-                  <CircleFadingArrowUp className="w-4 h-4" />
+                  <RoleIcon role="setter" size={16} />
                   {t('role.setter')}
                 </Label>
               </div>
