@@ -24,7 +24,7 @@ const TeamCard = ({ team, teamColor, _index, changedPlayerIds = [] }) => {
       </CardHeader>
       <CardContent className="pt-4">
         <div className="space-y-2">
-          {team.map((participant, idx) => {
+          {team.map((participant, _) => {
             const isChanged = changedPlayerIds.includes(participant.id)
             return (
               <div

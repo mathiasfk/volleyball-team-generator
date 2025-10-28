@@ -114,10 +114,37 @@ export function appReducer(state, action) {
       }
     
     case ACTIONS.SET_TEAMS:
+      // Create a set of player IDs that are in teams (not on bench)
+      const playersInTeams = new Set()
+      action.payload.teams.forEach(team => {
+        team.forEach(player => playersInTeams.add(player.id))
+      })
+      
+      // Update participants with incremented gamesPlayed
+      const updatedParticipants = state.participants.map(p => 
+        playersInTeams.has(p.id)
+          ? { ...p, gamesPlayed: (p.gamesPlayed || 0) + 1 }
+          : p
+      )
+      
+      // Create a map for quick lookup of updated participants
+      const participantMap = new Map(updatedParticipants.map(p => [p.id, p]))
+      
+      // Update teams with the updated participant references
+      const updatedTeams = action.payload.teams.map(team =>
+        team.map(player => participantMap.get(player.id) || player)
+      )
+      
+      // Update bench players with the updated participant references
+      const updatedBenchPlayers = action.payload.benchPlayers.map(player =>
+        participantMap.get(player.id) || player
+      )
+      
       return {
         ...state,
-        teams: action.payload.teams,
-        benchPlayers: action.payload.benchPlayers,
+        participants: updatedParticipants,
+        teams: updatedTeams,
+        benchPlayers: updatedBenchPlayers,
         changedPlayerIds: action.payload.changedPlayerIds || [],
         previousPlayerPositions: action.payload.newPlayerPositions || null,
         error: '',
@@ -127,6 +154,10 @@ export function appReducer(state, action) {
     case ACTIONS.CLEAR_DRAW:
       return {
         ...state,
+        participants: state.participants.map(p => ({
+          ...p,
+          gamesPlayed: 0
+        })),
         teams: [],
         benchPlayers: [],
         changedPlayerIds: [],

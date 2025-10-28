@@ -25,5 +25,12 @@ export interface Participant {
    * When undefined, defaults to 'any'
    */
   role?: 'any' | 'libero'
+  /**
+   * Counter tracking how many games this player has participated in
+   * Incremented each time the player is allocated to a team (not bench)
+   * 
+   * When undefined, defaults to 0
+   */
+  gamesPlayed?: number
 }
 

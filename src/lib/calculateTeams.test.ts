@@ -832,6 +832,184 @@ describe('calculateTeams', () => {
       expect(totalPlayers).toBe(7)
     })
   })
+
+  describe('Game participation counter - prioritizing players with fewer games', () => {
+    test('should prioritize players with fewer games played', () => {
+      const participants: Participant[] = [
+        { id: '1', name: 'Player1', weight: 1, gamesPlayed: 10 },
+        { id: '2', name: 'Player2', weight: 1, gamesPlayed: 10 },
+        { id: '3', name: 'Player3', weight: 1, gamesPlayed: 10 },
+        { id: '4', name: 'Player4', weight: 1, gamesPlayed: 5 },
+        { id: '5', name: 'Player5', weight: 1, gamesPlayed: 5 },
+        { id: '6', name: 'Player6', weight: 1, gamesPlayed: 5 },
+        { id: '7', name: 'Player7', weight: 1, gamesPlayed: 0 },
+        { id: '8', name: 'Player8', weight: 1, gamesPlayed: 0 },
+      ]
+
+      const { formedTeams, remainingPlayers } = calculateTeams({ participants })
+
+      // Players with 0 games should all be playing
+      const playingIds = formedTeams.flat().map(p => p.id)
+      expect(playingIds).toContain('7')
+      expect(playingIds).toContain('8')
+
+      // Calculate average games played for playing vs bench
+      const playingPlayers = formedTeams.flat()
+      const avgGamesPlaying = playingPlayers.reduce((sum, p) => sum + (p.gamesPlayed || 0), 0) / playingPlayers.length
+      const avgGamesBench = remainingPlayers.length > 0
+        ? remainingPlayers.reduce((sum, p) => sum + (p.gamesPlayed || 0), 0) / remainingPlayers.length
+        : 0
+
+      // Players who are playing should have fewer average games than bench
+      // (or bench is empty)
+      if (remainingPlayers.length > 0) {
+        expect(avgGamesPlaying).toBeLessThanOrEqual(avgGamesBench)
+      }
+    })
+
+    test('should handle participants without gamesPlayed (defaults to 0)', () => {
+      const participants: Participant[] = [
+        { id: '1', name: 'Player1', weight: 1 }, // No gamesPlayed
+        { id: '2', name: 'Player2', weight: 1, gamesPlayed: 5 },
+        { id: '3', name: 'Player3', weight: 1 }, // No gamesPlayed
+        { id: '4', name: 'Player4', weight: 1, gamesPlayed: 3 },
+      ]
+
+      const { formedTeams } = calculateTeams({ participants })
+
+      const playingIds = formedTeams.flat().map(p => p.id)
+      
+      // Players without gamesPlayed (treated as 0) should be prioritized
+      expect(playingIds).toContain('1')
+      expect(playingIds).toContain('3')
+    })
+
+    test('should still respect bench player priority over games played', () => {
+      const participants: Participant[] = [
+        { id: '1', name: 'Player1', weight: 1, gamesPlayed: 0 },
+        { id: '2', name: 'Player2', weight: 1, gamesPlayed: 0 },
+        { id: '3', name: 'Player3', weight: 1, gamesPlayed: 10 },
+        { id: '4', name: 'Player4', weight: 1, gamesPlayed: 10 },
+        { id: '5', name: 'Player5', weight: 1, gamesPlayed: 5 },
+        { id: '6', name: 'Player6', weight: 1, gamesPlayed: 5 },
+        { id: '7', name: 'Player7', weight: 1, gamesPlayed: 5 },
+      ]
+
+      const firstMatch = calculateTeams({ participants })
+      
+      // Second match - bench players should play regardless of their games count
+      const benchPlayers = firstMatch.remainingPlayers
+      const secondMatch = calculateTeams({
+        participants,
+        teams: firstMatch.formedTeams,
+        benchPlayers,
+      })
+
+      // All bench players should be playing in second match
+      const secondMatchPlayerIds = secondMatch.formedTeams.flat().map(p => p.id)
+      const benchPlayerIds = benchPlayers.map(p => p.id)
+      
+      expect(secondMatchPlayerIds).toEqual(expect.arrayContaining(benchPlayerIds))
+    })
+
+    test('should balance teams while considering games played', () => {
+      const participants: Participant[] = [
+        { id: '1', name: 'Advanced1', weight: 1.5, gamesPlayed: 10 },
+        { id: '2', name: 'Advanced2', weight: 1.5, gamesPlayed: 0 },
+        { id: '3', name: 'Intermediate1', weight: 1, gamesPlayed: 5 },
+        { id: '4', name: 'Intermediate2', weight: 1, gamesPlayed: 5 },
+        { id: '5', name: 'Beginner1', weight: 0.5, gamesPlayed: 10 },
+        { id: '6', name: 'Beginner2', weight: 0.5, gamesPlayed: 0 },
+      ]
+
+      const { formedTeams } = calculateTeams({ participants })
+
+      // Players with fewer games should be prioritized
+      const playingIds = formedTeams.flat().map(p => p.id)
+      expect(playingIds).toContain('2') // Advanced with 0 games
+      expect(playingIds).toContain('6') // Beginner with 0 games
+
+      // Teams should still be reasonably balanced by weight
+      const team0Weight = formedTeams[0].reduce((sum, p) => sum + (p.weight || 1), 0)
+      const team1Weight = formedTeams[1].reduce((sum, p) => sum + (p.weight || 1), 0)
+      const difference = Math.abs(team0Weight - team1Weight)
+      
+      // Allow reasonable difference
+      expect(difference).toBeLessThanOrEqual(1)
+    })
+
+    test('should prioritize by games played when keeping one team', () => {
+      const participants: Participant[] = [
+        { id: '1', name: 'Player1', weight: 1, gamesPlayed: 10 },
+        { id: '2', name: 'Player2', weight: 1, gamesPlayed: 10 },
+        { id: '3', name: 'Player3', weight: 1, gamesPlayed: 10 },
+        { id: '4', name: 'Player4', weight: 1, gamesPlayed: 2 },
+        { id: '5', name: 'Player5', weight: 1, gamesPlayed: 2 },
+        { id: '6', name: 'Player6', weight: 1, gamesPlayed: 2 },
+        { id: '7', name: 'Player7', weight: 1, gamesPlayed: 0 },
+        { id: '8', name: 'Player8', weight: 1, gamesPlayed: 0 },
+      ]
+
+      const firstMatch = calculateTeams({ participants })
+      
+      // Keep team 0 and redistribute team 1
+      const secondMatch = calculateTeams({
+        participants,
+        teams: firstMatch.formedTeams,
+        benchPlayers: firstMatch.remainingPlayers,
+        keepTeamId: 0,
+      })
+
+      // Team 0 should be kept intact
+      const team0Ids = secondMatch.formedTeams[0].map(p => p.id)
+      const firstTeam0Ids = firstMatch.formedTeams[0].map(p => p.id)
+      expect(team0Ids).toEqual(firstTeam0Ids)
+
+      // Team 1 should prioritize players with fewer games (unless they're bench players)
+      const team1 = secondMatch.formedTeams[1]
+      const team1Ids = team1.map(p => p.id)
+      
+      // Players with 0 games should be highly likely to play (unless on bench requires more)
+      const hasLowGamePlayers = team1.some(p => (p.gamesPlayed || 0) <= 2)
+      expect(hasLowGamePlayers).toBe(true)
+    })
+
+    test('should prioritize players with fewest games over players with more games when keeping one team', () => {
+      const participants: Participant[] = [
+        { id: '1', name: 'Player1', weight: 1, gamesPlayed: 0, role: 'libero' },
+        { id: '2', name: 'Player2', weight: 1, gamesPlayed: 0, role: 'libero' },
+        { id: '3', name: 'Player3', weight: 1, gamesPlayed: 10 },
+        { id: '4', name: 'Player4', weight: 1, gamesPlayed: 2 },
+        { id: '5', name: 'Player5', weight: 1, gamesPlayed: 2 },
+        { id: '6', name: 'Player6', weight: 1, gamesPlayed: 2 },
+        { id: '7', name: 'Player7', weight: 1, gamesPlayed: 2 },
+        { id: '8', name: 'Player8', weight: 1, gamesPlayed: 2 },
+        { id: '9', name: 'Player9', weight: 1, gamesPlayed: 2 },
+        { id: '10', name: 'Player10', weight: 1, gamesPlayed: 2 },
+        { id: '11', name: 'Player11', weight: 1, gamesPlayed: 2 },
+        { id: '12', name: 'Player12', weight: 1, gamesPlayed: 2 },
+        { id: '13', name: 'Player13', weight: 1, gamesPlayed: 2 },
+        { id: '14', name: 'Player14', weight: 1, gamesPlayed: 2 },
+        { id: '15', name: 'Player15', weight: 1, gamesPlayed: 2 }
+        ]
+
+      const firstMatch = calculateTeams({ participants })
+      const secondMatch = calculateTeams({
+        participants,
+        teams: firstMatch.formedTeams,
+        benchPlayers: firstMatch.remainingPlayers,
+        keepTeamId: 0,
+      })
+
+      // expect participants with fewest games to be playing
+      const playingIds = secondMatch.formedTeams.flat().map(p => p.id)
+      const playersWithFewestGames = participants.sort((a, b) => (a.gamesPlayed || 0) - (b.gamesPlayed || 0)).slice(0, 2)
+      expect(playersWithFewestGames.every(p => playingIds.includes(p.id))).toBe(true)
+
+      // expect participants on bench to have more games than players with fewest games
+      const playersOnBench = secondMatch.remainingPlayers.sort((a, b) => (a.gamesPlayed || 0) - (b.gamesPlayed || 0)).slice(0, 2)
+      expect(playersOnBench.every(p => p.gamesPlayed || 0 > playersWithFewestGames[0].gamesPlayed || 0)).toBe(true)
+    })
 })
 
 const generateParticipants = (count: number): Participant[] => {
@@ -855,3 +1033,4 @@ const generateParticipants = (count: number): Participant[] => {
   }
   return result
 }
+})

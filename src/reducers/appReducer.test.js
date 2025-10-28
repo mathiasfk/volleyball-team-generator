@@ -137,7 +137,7 @@ describe('appReducer', () => {
       const state = {
         ...initialState,
         participants: [{ id: '1', name: 'João' }],
-        teams: [{ color: 'red', players: [] }],
+        teams: [[{ id: '1', name: 'João' }], []],
         benchPlayers: [{ id: '2', name: 'Maria' }],
         error: 'Some error'
       }
@@ -243,8 +243,8 @@ describe('appReducer', () => {
   describe('SET_TEAMS', () => {
     it('should set teams and bench players', () => {
       const teams = [
-        { color: 'red', players: [{ id: '1', name: 'João' }] },
-        { color: 'blue', players: [{ id: '2', name: 'Maria' }] },
+        [{ id: '1', name: 'João' }],
+        [{ id: '2', name: 'Maria' }],
       ]
       const benchPlayers = [{ id: '3', name: 'Pedro' }]
       const action = {
@@ -274,13 +274,101 @@ describe('appReducer', () => {
       expect(newState.openDrawDialog).toBe(false)
       expect(newState.error).toBe('')
     })
+
+    it('should increment gamesPlayed for players in teams', () => {
+      const participants = [
+        { id: '1', name: 'João', gamesPlayed: 0 },
+        { id: '2', name: 'Maria', gamesPlayed: 1 },
+        { id: '3', name: 'Pedro', gamesPlayed: 2 },
+      ]
+      const state = { ...initialState, participants }
+      const teams = [
+        [{ id: '1', name: 'João' }],
+        [{ id: '2', name: 'Maria' }],
+      ]
+      const benchPlayers = [{ id: '3', name: 'Pedro' }]
+      const action = {
+        type: ACTIONS.SET_TEAMS,
+        payload: { teams, benchPlayers }
+      }
+      const newState = appReducer(state, action)
+      
+      // Players in teams should have counter incremented
+      expect(newState.participants[0].gamesPlayed).toBe(1)
+      expect(newState.participants[1].gamesPlayed).toBe(2)
+      // Player on bench should not have counter incremented
+      expect(newState.participants[2].gamesPlayed).toBe(2)
+    })
+
+    it('should handle undefined gamesPlayed (treating as 0)', () => {
+      const participants = [
+        { id: '1', name: 'João' }, // No gamesPlayed field
+        { id: '2', name: 'Maria' }, // No gamesPlayed field
+      ]
+      const state = { ...initialState, participants }
+      const teams = [
+        [{ id: '1', name: 'João' }],
+        [{ id: '2', name: 'Maria' }],
+      ]
+      const action = {
+        type: ACTIONS.SET_TEAMS,
+        payload: { teams, benchPlayers: [] }
+      }
+      const newState = appReducer(state, action)
+      
+      // Should initialize from undefined to 1
+      expect(newState.participants[0].gamesPlayed).toBe(1)
+      expect(newState.participants[1].gamesPlayed).toBe(1)
+    })
+
+    it('should not increment gamesPlayed for bench players', () => {
+      const participants = [
+        { id: '1', name: 'João', gamesPlayed: 5 },
+        { id: '2', name: 'Maria', gamesPlayed: 3 },
+        { id: '3', name: 'Pedro', gamesPlayed: 8 },
+      ]
+      const state = { ...initialState, participants }
+      const teams = [
+        [{ id: '1', name: 'João' }],
+        [{ id: '2', name: 'Maria' }],
+      ]
+      const benchPlayers = [{ id: '3', name: 'Pedro' }]
+      const action = {
+        type: ACTIONS.SET_TEAMS,
+        payload: { teams, benchPlayers }
+      }
+      const newState = appReducer(state, action)
+      
+      // Bench player counter should remain unchanged
+      expect(newState.participants[2].gamesPlayed).toBe(8)
+      // Team players should be incremented
+      expect(newState.participants[0].gamesPlayed).toBe(6)
+      expect(newState.participants[1].gamesPlayed).toBe(4)
+    })
+
+    it('should handle empty teams correctly', () => {
+      const participants = [
+        { id: '1', name: 'João', gamesPlayed: 0 },
+      ]
+      const state = { ...initialState, participants }
+      const teams = [[], []]
+      const benchPlayers = [{ id: '1', name: 'João' }]
+      const action = {
+        type: ACTIONS.SET_TEAMS,
+        payload: { teams, benchPlayers }
+      }
+      const newState = appReducer(state, action)
+      
+      // No players in teams, counter should not change
+      expect(newState.participants[0].gamesPlayed).toBe(0)
+    })
   })
 
   describe('CLEAR_DRAW', () => {
     it('should clear teams and bench players', () => {
       const state = {
         ...initialState,
-        teams: [{ color: 'red', players: [] }],
+        teams: [[{ id: '1', name: 'João' }], []],
         benchPlayers: [{ id: '1', name: 'João' }],
         error: 'Some error'
       }
@@ -290,6 +378,77 @@ describe('appReducer', () => {
       expect(newState.teams).toEqual([])
       expect(newState.benchPlayers).toEqual([])
       expect(newState.error).toBe('')
+    })
+
+    it('should reset gamesPlayed counter for all participants', () => {
+      const state = {
+        ...initialState,
+        participants: [
+          { id: '1', name: 'João', gamesPlayed: 5 },
+          { id: '2', name: 'Maria', gamesPlayed: 3 },
+          { id: '3', name: 'Pedro', gamesPlayed: 0 },
+          { id: '4', name: 'Ana', gamesPlayed: 10 },
+        ],
+        teams: [[{ id: '1', name: 'João' }], [{ id: '2', name: 'Maria' }]],
+        benchPlayers: [{ id: '3', name: 'Pedro' }]
+      }
+      const action = { type: ACTIONS.CLEAR_DRAW }
+      const newState = appReducer(state, action)
+      
+      // All participants should have gamesPlayed reset to 0
+      expect(newState.participants).toEqual([
+        { id: '1', name: 'João', gamesPlayed: 0 },
+        { id: '2', name: 'Maria', gamesPlayed: 0 },
+        { id: '3', name: 'Pedro', gamesPlayed: 0 },
+        { id: '4', name: 'Ana', gamesPlayed: 0 },
+      ])
+      
+      // Teams and bench should also be cleared
+      expect(newState.teams).toEqual([])
+      expect(newState.benchPlayers).toEqual([])
+    })
+
+    it('should reset gamesPlayed counter even for participants without the field', () => {
+      const state = {
+        ...initialState,
+        participants: [
+          { id: '1', name: 'João' }, // No gamesPlayed field
+          { id: '2', name: 'Maria', gamesPlayed: 5 },
+          { id: '3', name: 'Pedro', weight: 1.5 }, // No gamesPlayed field
+        ],
+        teams: [[{ id: '1', name: 'João' }], [{ id: '2', name: 'Maria' }]],
+      }
+      const action = { type: ACTIONS.CLEAR_DRAW }
+      const newState = appReducer(state, action)
+      
+      // All participants should have gamesPlayed set to 0
+      expect(newState.participants).toEqual([
+        { id: '1', name: 'João', gamesPlayed: 0 },
+        { id: '2', name: 'Maria', gamesPlayed: 0 },
+        { id: '3', name: 'Pedro', weight: 1.5, gamesPlayed: 0 },
+      ])
+    })
+
+    it('should reset gamesPlayed for participants with role (liberos)', () => {
+      const state = {
+        ...initialState,
+        participants: [
+          { id: '1', name: 'Libero1', role: 'libero', gamesPlayed: 8 },
+          { id: '2', name: 'Libero2', role: 'libero', gamesPlayed: 2 },
+          { id: '3', name: 'Player1', role: 'any', gamesPlayed: 5 },
+        ],
+        teams: [[{ id: '1', name: 'Libero1' }], [{ id: '3', name: 'Player1' }]],
+        benchPlayers: [{ id: '2', name: 'Libero2' }]
+      }
+      const action = { type: ACTIONS.CLEAR_DRAW }
+      const newState = appReducer(state, action)
+      
+      // All participants (including liberos) should have gamesPlayed reset to 0
+      expect(newState.participants).toEqual([
+        { id: '1', name: 'Libero1', role: 'libero', gamesPlayed: 0 },
+        { id: '2', name: 'Libero2', role: 'libero', gamesPlayed: 0 },
+        { id: '3', name: 'Player1', role: 'any', gamesPlayed: 0 },
+      ])
     })
   })
 
@@ -331,7 +490,7 @@ describe('appReducer', () => {
   describe('LOAD_DATA', () => {
     it('should load participants, teams, and bench players', () => {
       const participants = [{ id: '1', name: 'João' }]
-      const teams = [{ color: 'red', players: [] }]
+      const teams = [[{ id: '1', name: 'João' }], []]
       const benchPlayers = [{ id: '2', name: 'Maria' }]
       const action = {
         type: ACTIONS.LOAD_DATA,
@@ -402,7 +561,7 @@ describe('appReducer', () => {
       const state = {
         ...initialState,
         participants: [{ id: '1', name: 'João' }],
-        teams: [{ color: 'red', players: [] }],
+        teams: [[{ id: '1', name: 'João' }], []],
       }
       const stateCopy = JSON.parse(JSON.stringify(state))
       

@@ -33,6 +33,30 @@ function shuffle<T>(array: T[]): T[] {
 }
 
 /**
+ * Sorts participants by games played (ascending), prioritizing those who played fewer games
+ * Players with same gamesPlayed are randomly shuffled
+ */
+function sortByGamesPlayed(participants: Participant[]): Participant[] {
+  // Group by gamesPlayed
+  const groups = new Map<number, Participant[]>()
+  
+  participants.forEach(p => {
+    const games = p.gamesPlayed || 0
+    if (!groups.has(games)) {
+      groups.set(games, [])
+    }
+    groups.get(games)!.push(p)
+  })
+  
+  // Sort groups by games played and shuffle within each group
+  const sortedGroups = Array.from(groups.entries())
+    .sort((a, b) => a[0] - b[0]) // Sort by gamesPlayed ascending
+  
+  // Flatten and shuffle within each group
+  return sortedGroups.flatMap(([_, group]) => shuffle(group))
+}
+
+/**
  * Calculates optimal team size based on available players
  */
 function calculateTeamSize(totalPlayers: number): number {
@@ -45,13 +69,6 @@ function calculateTeamSize(totalPlayers: number): number {
  */
 function calculateTeamWeight(team: Participant[]): number {
   return team.reduce((sum, player) => sum + (player.weight || 1), 0)
-}
-
-/**
- * Checks if a team already has a libero
- */
-function hasLibero(team: Participant[]): boolean {
-  return team.some(player => player.role === 'libero')
 }
 
 /**
@@ -113,8 +130,11 @@ function distributePlayersIntoTeams(
 
 /**
  * Handles the case where one team is kept and the other is redistributed
- * Enforces the constraint: max 1 libero per team
- * Priority: ALL bench players MUST play if possible
+ * 
+ * Priority order (from highest to lowest):
+ * 1. Enforce constraint: max 1 libero per team (can play with 0 liberos)
+ * 2. Balance games played - players with fewer games MUST play first
+ * 3. Balance team weights for fair competition
  */
 function redistributeWithKeptTeam(
   participants: Participant[],
@@ -126,7 +146,6 @@ function redistributeWithKeptTeam(
   
   // Keep the specified team intact
   formedTeams[keepTeamId] = [...teams[keepTeamId]]
-  const keptTeamHasLibero = hasLibero(formedTeams[keepTeamId])
   
   // Calculate team size
   const otherTeamSize = calculateTeamSize(participants.length)
@@ -135,44 +154,41 @@ function redistributeWithKeptTeam(
   // Get players from the other team
   const otherTeamPlayers = teams[1 - keepTeamId] || []
   
-  // Separate bench players by role
-  const benchLiberos = benchPlayers.filter(isLibero)
-  const benchRegular = benchPlayers.filter(p => !isLibero(p))
+  // Combine ALL available players (bench + other team)
+  const availablePlayers = [...benchPlayers, ...otherTeamPlayers]
   
-  // Separate other team players by role
-  const otherTeamLiberos = otherTeamPlayers.filter(isLibero)
-  const otherTeamRegular = otherTeamPlayers.filter(p => !isLibero(p))
+  // Sort by gamesPlayed (ascending) - PRIORITY #2: fewer games first
+  // Then by weight (descending) for balancing - PRIORITY #3
+  const sortedAvailable = availablePlayers.sort((a, b) => {
+    const gamesA = a.gamesPlayed || 0
+    const gamesB = b.gamesPlayed || 0
+    if (gamesA !== gamesB) {
+      return gamesA - gamesB // Fewer games MUST play first
+    }
+    return (b.weight || 1) - (a.weight || 1) // Then balance by weight
+  })
   
-  // Build the new team
+  // Select players respecting the libero constraint - PRIORITY #1
   const selectedPlayers: Participant[] = []
+  let selectedHasLibero = false
   
-  // PRIORITY 1: Add ALL bench players first (respecting libero constraint)
-  // Start with bench liberos (max 1 if kept team doesn't have one, or 0 if it does)
-  if (benchLiberos.length > 0 && !keptTeamHasLibero && selectedPlayers.length < otherTeamSize) {
-    selectedPlayers.push(benchLiberos[0])
-  }
-  
-  // Add all bench regular players (as many as possible)
-  for (const player of benchRegular) {
-    if (selectedPlayers.length < otherTeamSize) {
-      selectedPlayers.push(player)
+  for (const player of sortedAvailable) {
+    // Stop if team is full
+    if (selectedPlayers.length >= otherTeamSize) {
+      break
     }
-  }
-  
-  // PRIORITY 2: Fill remaining slots from the other team
-  // Add libero from other team if we don't have one yet and kept team doesn't have one
-  if (otherTeamLiberos.length > 0 && !hasLibero(selectedPlayers) && !keptTeamHasLibero && selectedPlayers.length < otherTeamSize) {
-    selectedPlayers.push(otherTeamLiberos[0])
-  }
-  
-  // Fill remaining slots with regular players from other team
-  // Sort by weight (descending) to try to balance against the kept team
-  const sortedOtherRegular = [...otherTeamRegular].sort((a, b) => (b.weight || 1) - (a.weight || 1))
-  
-  for (const player of sortedOtherRegular) {
-    if (selectedPlayers.length < otherTeamSize) {
-      selectedPlayers.push(player)
+    
+    // Check libero constraint - PRIORITY #1
+    // Each team can have max 1 libero independently
+    if (isLibero(player)) {
+      // Skip this libero if we already selected a libero for this team
+      if (selectedHasLibero) {
+        continue // Skip to next player in the sorted list
+      }
+      selectedHasLibero = true
     }
+    
+    selectedPlayers.push(player)
   }
   
   formedTeams[otherTeamIndex] = selectedPlayers
@@ -183,13 +199,18 @@ function redistributeWithKeptTeam(
     ...formedTeams[1].map(p => p.id)
   ])
   
-  const remainingPlayers = participants.filter(p => !playingIds.has(p.id))
-  
+  const remainingPlayers = participants.filter(p => !playingIds.has(p.id));
+
+  debugTeams(participants, formedTeams, remainingPlayers)
   return { formedTeams, remainingPlayers }
 }
 
 /**
  * Performs a full team draw with all participants
+ * Priority order:
+ * 1. Bench players MUST play if possible (highest priority)
+ * 2. Players with fewer gamesPlayed are preferred
+ * 3. Players with more gamesPlayed are more likely to sit out
  */
 function performFullDraw(
   participants: Participant[],
@@ -206,15 +227,15 @@ function performFullDraw(
   // Prioritize bench players within each group
   const benchPlayerIds = new Set(benchPlayers.map(bp => bp.id))
   
-  // Shuffle liberos with bench players prioritized
+  // Priority 1: Bench players (must play) - sorted by gamesPlayed to ensure fairness
+  // Priority 2: Non-bench players sorted by gamesPlayed (fewer games first)
   const benchLiberos = allLiberos.filter(l => benchPlayerIds.has(l.id))
   const otherLiberos = allLiberos.filter(l => !benchPlayerIds.has(l.id))
-  const shuffledLiberos = [...shuffle(benchLiberos), ...shuffle(otherLiberos)]
+  const shuffledLiberos = [...sortByGamesPlayed(benchLiberos), ...sortByGamesPlayed(otherLiberos)]
   
-  // Shuffle regular players with bench players prioritized
   const benchRegular = allRegularPlayers.filter(p => benchPlayerIds.has(p.id))
   const otherRegular = allRegularPlayers.filter(p => !benchPlayerIds.has(p.id))
-  const shuffledRegular = [...shuffle(benchRegular), ...shuffle(otherRegular)]
+  const shuffledRegular = [...sortByGamesPlayed(benchRegular), ...sortByGamesPlayed(otherRegular)]
   
   // Take max 2 liberos for playing (one per team)
   const playingLiberos = shuffledLiberos.slice(0, Math.min(2, shuffledLiberos.length))
@@ -234,7 +255,36 @@ function performFullDraw(
   // Remaining players on bench
   const remainingPlayers = [...benchLiberos2, ...benchRegular2]
   
+  debugTeams(participants, formedTeams, remainingPlayers)
   return { formedTeams, remainingPlayers }
+}
+
+const debugTeams = (participants: Participant[], formedTeams: Participant[][], remainingPlayers: Participant[]) => {
+  // Debug (only in browser, not in tests)
+  if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+    // team weights and difference
+    const team0Weight = calculateTeamWeight(formedTeams[0])
+    const team1Weight = calculateTeamWeight(formedTeams[1])
+    const difference = Math.abs(team0Weight - team1Weight)
+    console.log('# weights')
+    console.log('team0Weight', team0Weight)
+    console.log('team1Weight', team1Weight)
+    console.log('difference', difference)
+
+    // payed games of each player in each team
+    console.log('# team0')
+    formedTeams[0].forEach(p => {
+      console.log(' - ', p.name, p.gamesPlayed)
+    })
+    console.log('# team1')
+    formedTeams[1].forEach(p => {
+      console.log(' - ',p.name, p.gamesPlayed)
+    })
+    console.log('# remainingPlayers')
+    remainingPlayers.forEach(p => {
+      console.log(' - ',p.name, p.gamesPlayed)
+    })
+  }
 }
 
 /**
