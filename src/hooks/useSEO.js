@@ -120,6 +120,17 @@ const useSEO = () => {
       let twitterDesc = document.querySelector('meta[name="twitter:description"]')
       if (twitterDesc) twitterDesc.setAttribute('content', description)
 
+      // Update canonical URL to point to current language version
+      let canonical = document.querySelector('link[rel="canonical"]')
+      const baseUrl = 'https://volleyball-team-generator.com'
+      const canonicalUrl = lang !== 'en' 
+        ? `${baseUrl}/?lang=${lang}`
+        : `${baseUrl}/`
+      
+      if (canonical) {
+        canonical.setAttribute('href', canonicalUrl)
+      }
+
       // Update language direction for RTL languages
       const rtlLanguages = ['ar']
       if (rtlLanguages.includes(lang)) {
