@@ -12,84 +12,84 @@ const useSEO = () => {
         en: {
           title: 'Volleyball Team Generator - Create Fair & Balanced Teams Instantly',
           description:
-            'Free online volleyball team generator. Automatically create fair and balanced teams from your players. Perfect for coaches, recreational leagues, and pickup games.',
+            'Free online volleyball team draw. Automatically create fair and balanced teams from your players. Perfect for coaches, recreational leagues, and pickup games.',
           languageName: 'English',
           locale: 'en_US',
         },
         pt: {
-          title: 'Sorteio de Times de Vôlei - Crie Times Justos e Equilibrados Instantaneamente',
+          title: 'Gerador de Times de Vôlei - Crie Times Justos e Equilibrados Instantaneamente',
           description:
-            'Gerador gratuito de times de vôlei online. Crie automaticamente times justos e equilibrados com seus jogadores. Perfeito para treinadores, ligas recreativas e jogos casuais.',
+            'Sorteio gratuito de times de vôlei online. Crie automaticamente times justos e equilibrados com seus jogadores. Perfeito para treinadores, ligas recreativas e jogos casuais.',
           languageName: 'Português',
           locale: 'pt_BR',
         },
         es: {
           title: 'Generador de Equipos de Voleibol - Crea Equipos Justos y Equilibrados al Instante',
           description:
-            'Generador gratuito de equipos de voleibol en línea. Crea automáticamente equipos justos y equilibrados con tus jugadores. Perfecto para entrenadores, ligas recreativas y partidos informales.',
+            'Sorteo gratuito de equipos de voleibol en línea. Crea automáticamente equipos justos y equilibrados con tus jugadores. Perfecto para entrenadores, ligas recreativas y partidos informales.',
           languageName: 'Español',
           locale: 'es_ES',
         },
         zh: {
           title: '排球队伍生成器 - 立即创建公平平衡的队伍',
           description:
-            '免费的在线排球队伍生成器。自动从您的球员中创建公平、平衡的队伍。非常适合教练、娱乐联赛和即兴比赛。',
+            '免费在线排球分队抽签。自动从您的球员中创建公平、均衡的队伍。非常适合教练、娱乐联赛和休闲比赛。',
           languageName: '中文',
           locale: 'zh_CN',
         },
         hi: {
-          title: 'वॉलीबॉल टीम जनरेटर - तुरंत बनाएं संतुलित और निष्पक्ष टीमें',
+          title: 'वॉलीबॉल टीम जनरेटर - निष्पक्ष और संतुलित टीमें तुरंत बनाएं',
           description:
-            'फ्री ऑनलाइन वॉलीबॉल टीम जनरेटर। अपने खिलाड़ियों से स्वतः निष्पक्ष और संतुलित टीमें बनाएं। कोचों, मनोरंजन लीगों और पिकअप खेलों के लिए परफेक्ट।',
+            'मुफ्त ऑनलाइन वॉलीबॉल टीम ड्रा। अपने खिलाड़ियों से स्वचालित रूप से निष्पक्ष और संतुलित टीमें बनाएं। कोचों, मनोरंजन लीग और आकस्मिक खेलों के लिए बिल्कुल सही।',
           languageName: 'हिन्दी',
           locale: 'hi_IN',
         },
         ar: {
           title: 'مولّد فرق الكرة الطائرة - أنشئ فرقاً عادلة ومتوازنة فوراً',
           description:
-            'مولّد فرق كرة الطائرة مجاني عبر الإنترنت. أنشئ تلقائياً فرقاً عادلة ومتوازنة من لاعبيك. مثالي للمدربين والدوريات الترفيهية والمباريات الودية.',
+            'سحب قرعة مجاني لفرق الكرة الطائرة عبر الإنترنت. كوّن تلقائياً فرقاً عادلة ومتوازنة من لاعبيك. مثالي للمدربين والدوريات الترفيهية والمباريات الودية.',
           languageName: 'العربية',
           locale: 'ar_SA',
         },
         fr: {
-          title: "Générateur d'équipes de volley-ball - Créez des équipes justes et équilibrées instantanément",
+          title: "Générateur d'équipes de volley - Créez des équipes justes et équilibrées instantanément",
           description:
-            "Générateur d'équipes de volley-ball en ligne gratuit. Créez automatiquement des équipes équilibrées et équitables à partir de vos joueurs. Idéal pour les entraîneurs, les ligues récréatives et les matchs amicaux.",
+            "Tirage au sort gratuit d'équipes de volley en ligne. Créez automatiquement des équipes justes et équilibrées avec vos joueurs. Parfait pour les entraîneurs, les ligues récréatives et les matchs entre amis.",
           languageName: "Français",
           locale: "fr_FR",
         },
         de: {
           title: "Volleyball-Teamgenerator – Erstellen Sie faire und ausgewogene Teams im Handumdrehen",
           description:
-            "Kostenloser Volleyball-Teamgenerator online. Erstellen Sie automatisch faire und ausgewogene Teams aus Ihren Spielern. Perfekt für Trainer, Freizeitligen und Freundschaftsspiele.",
+            "Kostenlose Volleyball-Teamauslosung online. Erstellen Sie automatisch faire und ausgewogene Teams aus Ihren Spielern. Perfekt für Trainer, Freizeitligen und Freundschaftsspiele.",
           languageName: "Deutsch",
           locale: "de_DE",
         },
         id: {
           title: "Generator Tim Voli - Buat Tim yang Adil & Seimbang Secara Instan",
           description:
-            "Generator tim voli online gratis. Buat tim yang adil dan seimbang secara otomatis dari para pemain Anda. Sempurna untuk pelatih, liga rekreasi, dan pertandingan santai.",
+            "Pengundian tim voli online gratis. Buat tim yang adil dan seimbang secara otomatis dari pemain Anda. Sempurna untuk pelatih, liga rekreasi, dan pertandingan kasual.",
           languageName: "Bahasa Indonesia",
           locale: "id_ID",
         },
         ru: {
           title: "Генератор волейбольных команд — создавайте честные и сбалансированные команды мгновенно",
           description:
-            "Бесплатный онлайн-генератор волейбольных команд. Автоматически создавайте честные и сбалансированные команды из своих игроков. Идеально подходит для тренеров, любительских лиг и дружеских матчей.",
+            "Бесплатная жеребьёвка волейбольных команд онлайн. Автоматически создавайте честные и сбалансированные команды из своих игроков. Идеально подходит для тренеров, любительских лиг и дружеских матчей.",
           languageName: "Русский",
           locale: "ru_RU",
         },
         ja: {
           title: "バレーボールチームジェネレーター - 公平でバランスの取れたチームをすぐに作成",
           description:
-            "無料のオンラインバレーボールチームジェネレーター。プレイヤーから自動的に公平でバランスの取れたチームを作成します。コーチ、レクリエーションリーグ、友人との試合に最適です。",
+            "無料のオンラインバレーボールチーム分け。プレイヤーから自動的に公平でバランスの取れたチームを作成します。コーチ、レクリエーションリーグ、気軽な試合に最適です。",
           languageName: "日本語",
           locale: "ja_JP",
         },
         tr: {
           title: "Voleybol Takımı Oluşturucu - Adil ve Dengeli Takımları Anında Oluşturun",
           description:
-            "Ücretsiz çevrimiçi voleybol takımı oluşturucu. Oyuncularınızdan otomatik olarak adil ve dengeli takımlar oluşturun. Antrenörler, amatör ligler ve arkadaş maçları için mükemmel.",
+            "Ücretsiz çevrimiçi voleybol takım çekilişi. Oyuncularınızdan otomatik olarak adil ve dengeli takımlar oluşturun. Antrenörler, amatör ligler ve günlük maçlar için mükemmel.",
           languageName: "Türkçe",
           locale: "tr_TR",
         },
