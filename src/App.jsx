@@ -1,6 +1,6 @@
 import './App.css'
 
-import { AlertCircle, ListChevronsDownUp, ListChevronsUpDown,Shuffle, Users } from 'lucide-react'
+import { AlertCircle, HelpCircle, ListChevronsDownUp, ListChevronsUpDown,Shuffle, Users } from 'lucide-react'
 import { useEffect, useReducer, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -12,6 +12,7 @@ import BenchCard from './components/BenchCard.jsx'
 import ClearParticipantsDialog from './components/ClearParticipantsDialog.jsx'
 import DrawTeamsDialog from './components/DrawTeamsDialog.jsx'
 import EditParticipantDialog from './components/EditParticipantDialog.jsx'
+import FAQDialog from './components/FAQDialog.jsx'
 import LanguageSelector from './components/LanguageSelector.jsx'
 import ParticipantForm from './components/ParticipantForm.jsx'
 import ParticipantList from './components/ParticipantList.jsx'
@@ -50,6 +51,7 @@ function App() {
   
   const [editDialogOpen, setEditDialogOpen] = useState(false)
   const [editingParticipant, setEditingParticipant] = useState(null)
+  const [faqDialogOpen, setFaqDialogOpen] = useState(false)
 
   // Vibrant colors for teams
   const teamColors = getTeamColors(t)
@@ -459,6 +461,20 @@ function App() {
               />
             </div>
           )}
+
+          {/* FAQ Link */}
+          <div className="mt-12 text-center border-t border-gray-700 pt-6">
+            <button
+              onClick={() => setFaqDialogOpen(true)}
+              className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-blue-400 transition-colors"
+            >
+              <HelpCircle className="w-4 h-4" />
+              {t('faq.button')}
+            </button>
+          </div>
+
+          {/* FAQ Dialog */}
+          <FAQDialog open={faqDialogOpen} onOpenChange={setFaqDialogOpen} />
       </div>
     </div>
   )

@@ -81,5 +81,39 @@
     "japanese": "日本語",
     "russian": "Русский",
     "persian": "فارسی"
+  },
+  "faq": {
+    "title": "Questions fréquentes",
+    "button": "FAQ",
+    "questions": [
+      {
+        "question": "Comment fonctionne le tirage au sort des équipes ?",
+        "answer": "L'algorithme répartit les joueurs de manière équilibrée entre les équipes, en tenant compte des niveaux de compétence (Débutant, Intermédiaire, Avancé) et des positions spéciales (Libéro, Passeur). Cela garantit que les équipes sont équilibrées et compétitives."
+      },
+      {
+        "question": "Que sont les niveaux de compétence ?",
+        "answer": "Les niveaux de compétence aident à équilibrer les équipes. Débutant (poids 1) représente les joueurs qui débutent au volleyball, Intermédiaire (poids 2) pour les joueurs avec une expérience modérée, et Avancé (poids 3) pour les joueurs expérimentés. L'algorithme utilise ces poids pour répartir équitablement la force des équipes."
+      },
+      {
+        "question": "Que signifie 'garder l'équipe' ?",
+        "answer": "Lors du redécoupage, vous pouvez choisir de conserver l'une des équipes (Rouge ou Bleue) et ne réorganiser que l'autre équipe et le banc. C'est utile lorsqu'une équipe est déjà bonne et que vous voulez juste ajuster le reste."
+      },
+      {
+        "question": "Comment modifier les participants ?",
+        "answer": "Cliquez sur le bouton 'Modifier' (icône de crayon) à côté du nom de n'importe quel participant dans la liste. Vous pouvez changer leur nom, niveau de compétence et position. Les modifications sont enregistrées automatiquement."
+      },
+      {
+        "question": "Mes données sont-elles sauvegardées ?",
+        "answer": "Oui ! Tous les participants et équipes tirées au sort sont automatiquement sauvegardés dans votre navigateur (localStorage). Vos données resteront même si vous fermez et rouvrez la page."
+      },
+      {
+        "question": "Cela fonctionne-t-il hors ligne ?",
+        "answer": "Oui ! C'est une PWA (Progressive Web App) qui fonctionne complètement hors ligne après le premier chargement. Vous pouvez l'installer : sur Android/Chrome (appuyez sur le menu ⋮ > 'Ajouter à l'écran d'accueil'), sur iOS/Safari (appuyez sur Partager > 'Sur l'écran d'accueil'), ou sur Desktop (cliquez sur l'icône d'installation dans la barre d'adresse)."
+      },
+      {
+        "question": "Comment signaler un bug ?",
+        "answer": "Si vous avez trouvé un problème, envoyez un email à admin@volleyball-team-generator.com en décrivant l'erreur rencontrée."
+      }
+    ]
   }
 }

@@ -81,5 +81,39 @@
     "japanese": "日本語",
     "russian": "Русский",
     "persian": "فارسی"
+  },
+  "faq": {
+    "title": "Perguntas Frequentes",
+    "button": "FAQ",
+    "questions": [
+      {
+        "question": "Como funciona o sorteio de times?",
+        "answer": "O algoritmo distribui os jogadores de forma equilibrada entre os times, considerando os níveis de habilidade (Iniciante, Intermediário, Avançado) e posições especiais (Líbero, Levantador). Isso garante que os times fiquem balanceados e competitivos."
+      },
+      {
+        "question": "O que são níveis de habilidade?",
+        "answer": "Os níveis de habilidade ajudam a equilibrar os times. Iniciante (peso 1) representa jogadores começando no vôlei, Intermediário (peso 2) para jogadores com experiência moderada, e Avançado (peso 3) para jogadores experientes. O algoritmo usa esses pesos para distribuir a força dos times de forma justa."
+      },
+      {
+        "question": "O que significa 'manter time'?",
+        "answer": "Ao sortear novamente, você pode escolher manter um dos times (Vermelho ou Azul) e apenas reorganizar o outro time e o banco. Isso é útil quando um time já está bom e você quer apenas ajustar o restante."
+      },
+      {
+        "question": "Como editar participantes?",
+        "answer": "Clique no botão 'Editar' (ícone de lápis) ao lado do nome de qualquer participante na lista. Você pode alterar o nome, nível de habilidade e posição. As mudanças são salvas automaticamente."
+      },
+      {
+        "question": "Os dados são salvos?",
+        "answer": "Sim! Todos os participantes e times sorteados são salvos automaticamente no navegador (localStorage). Seus dados permanecerão mesmo se você fechar e reabrir a página."
+      },
+      {
+        "question": "Funciona offline?",
+        "answer": "Sim! Este é um PWA (Progressive Web App) que funciona completamente offline após o primeiro carregamento. Você pode instalá-lo: no Android/Chrome (toque no menu ⋮ > 'Adicionar à tela inicial'), no iOS/Safari (toque em Compartilhar > 'Adicionar à Tela de Início'), ou no Desktop (clique no ícone de instalação na barra de endereço)."
+      },
+      {
+        "question": "Como reportar um bug?",
+        "answer": "Se você encontrou algum problema, envie um email para admin@volleyball-team-generator.com descrevendo o erro encontrado."
+      }
+    ]
   }
 }

@@ -81,5 +81,39 @@
     "japanese": "日本語",
     "russian": "Русский",
     "persian": "فارسی"
+  },
+  "faq": {
+    "title": "Pertanyaan yang Sering Diajukan",
+    "button": "FAQ",
+    "questions": [
+      {
+        "question": "Bagaimana cara kerja pembagian tim?",
+        "answer": "Algoritma mendistribusikan pemain secara merata ke seluruh tim, dengan mempertimbangkan tingkat keterampilan (Pemula, Menengah, Mahir) dan posisi khusus (Libero, Setter). Ini memastikan tim seimbang dan kompetitif."
+      },
+      {
+        "question": "Apa itu tingkat keterampilan?",
+        "answer": "Tingkat keterampilan membantu menyeimbangkan tim. Pemula (bobot 1) mewakili pemain yang baru memulai voli, Menengah (bobot 2) untuk pemain dengan pengalaman sedang, dan Mahir (bobot 3) untuk pemain berpengalaman. Algoritma menggunakan bobot ini untuk mendistribusikan kekuatan tim secara adil."
+      },
+      {
+        "question": "Apa arti 'pertahankan tim'?",
+        "answer": "Saat membuat ulang, Anda dapat memilih untuk mempertahankan salah satu tim (Merah atau Biru) dan hanya mengatur ulang tim lain dan cadangan. Ini berguna ketika satu tim sudah bagus dan Anda hanya ingin menyesuaikan sisanya."
+      },
+      {
+        "question": "Bagaimana cara mengedit peserta?",
+        "answer": "Klik tombol 'Edit' (ikon pensil) di sebelah nama peserta mana pun dalam daftar. Anda dapat mengubah nama, tingkat keterampilan, dan posisi mereka. Perubahan disimpan secara otomatis."
+      },
+      {
+        "question": "Apakah data saya disimpan?",
+        "answer": "Ya! Semua peserta dan tim yang dibuat secara otomatis disimpan di browser Anda (localStorage). Data Anda akan tetap ada meskipun Anda menutup dan membuka kembali halaman."
+      },
+      {
+        "question": "Apakah berfungsi secara offline?",
+        "answer": "Ya! Ini adalah PWA (Progressive Web App) yang bekerja sepenuhnya secara offline setelah pemuatan pertama. Anda dapat menginstalnya: di Android/Chrome (ketuk menu ⋮ > 'Tambahkan ke layar utama'), di iOS/Safari (ketuk Bagikan > 'Tambah ke Layar Utama'), atau di Desktop (klik ikon instal di bilah alamat)."
+      },
+      {
+        "question": "Bagaimana cara melaporkan bug?",
+        "answer": "Jika Anda menemukan masalah, silakan kirim email ke admin@volleyball-team-generator.com dengan deskripsi kesalahan yang Anda temui."
+      }
+    ]
   }
 }

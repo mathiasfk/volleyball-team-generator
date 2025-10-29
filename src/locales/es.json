@@ -81,5 +81,39 @@
     "japanese": "日本語",
     "russian": "Русский",
     "persian": "فارسی"
+  },
+  "faq": {
+    "title": "Preguntas Frecuentes",
+    "button": "FAQ",
+    "questions": [
+      {
+        "question": "¿Cómo funciona el sorteo de equipos?",
+        "answer": "El algoritmo distribuye a los jugadores de manera equilibrada entre los equipos, considerando los niveles de habilidad (Principiante, Intermedio, Avanzado) y posiciones especiales (Líbero, Armador). Esto garantiza que los equipos sean balanceados y competitivos."
+      },
+      {
+        "question": "¿Qué son los niveles de habilidad?",
+        "answer": "Los niveles de habilidad ayudan a equilibrar los equipos. Principiante (peso 1) representa jugadores que están comenzando en voleibol, Intermedio (peso 2) para jugadores con experiencia moderada, y Avanzado (peso 3) para jugadores experimentados. El algoritmo usa estos pesos para distribuir la fuerza de los equipos de manera justa."
+      },
+      {
+        "question": "¿Qué significa 'mantener equipo'?",
+        "answer": "Al sortear nuevamente, puedes elegir mantener uno de los equipos (Rojo o Azul) y solo reorganizar el otro equipo y el banco. Esto es útil cuando un equipo ya está bien y solo quieres ajustar el resto."
+      },
+      {
+        "question": "¿Cómo edito participantes?",
+        "answer": "Haz clic en el botón 'Editar' (ícono de lápiz) junto al nombre de cualquier participante en la lista. Puedes cambiar su nombre, nivel de habilidad y posición. Los cambios se guardan automáticamente."
+      },
+      {
+        "question": "¿Se guardan los datos?",
+        "answer": "¡Sí! Todos los participantes y equipos sorteados se guardan automáticamente en tu navegador (localStorage). Tus datos permanecerán incluso si cierras y vuelves a abrir la página."
+      },
+      {
+        "question": "¿Funciona sin conexión?",
+        "answer": "¡Sí! Esta es una PWA (Progressive Web App) que funciona completamente sin conexión después de la primera carga. Puedes instalarla: en Android/Chrome (toca el menú ⋮ > 'Añadir a pantalla de inicio'), en iOS/Safari (toca Compartir > 'Añadir a pantalla de inicio'), o en Desktop (haz clic en el ícono de instalación en la barra de direcciones)."
+      },
+      {
+        "question": "¿Cómo reporto un error?",
+        "answer": "Si encontraste algún problema, envía un correo electrónico a admin@volleyball-team-generator.com describiendo el error encontrado."
+      }
+    ]
   }
 }

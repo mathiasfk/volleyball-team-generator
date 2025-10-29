@@ -81,5 +81,39 @@
     "japanese": "日本語",
     "russian": "Русский",
     "persian": "فارسی"
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "button": "FAQ",
+    "questions": [
+      {
+        "question": "How does the team draw work?",
+        "answer": "The algorithm distributes players evenly across teams, considering skill levels (Beginner, Intermediate, Advanced) and special positions (Libero, Setter). This ensures teams are balanced and competitive."
+      },
+      {
+        "question": "What are skill levels?",
+        "answer": "Skill levels help balance teams. Beginner (weight 1) represents players starting in volleyball, Intermediate (weight 2) for players with moderate experience, and Advanced (weight 3) for experienced players. The algorithm uses these weights to distribute team strength fairly."
+      },
+      {
+        "question": "What does 'keep team' mean?",
+        "answer": "When redrawing, you can choose to keep one of the teams (Red or Blue) and only reorganize the other team and bench. This is useful when one team is already good and you just want to adjust the rest."
+      },
+      {
+        "question": "How do I edit participants?",
+        "answer": "Click the 'Edit' button (pencil icon) next to any participant's name in the list. You can change their name, skill level, and position. Changes are saved automatically."
+      },
+      {
+        "question": "Is my data saved?",
+        "answer": "Yes! All participants and drawn teams are automatically saved in your browser (localStorage). Your data will remain even if you close and reopen the page."
+      },
+      {
+        "question": "Does it work offline?",
+        "answer": "Yes! This is a PWA (Progressive Web App) that works completely offline after the first load. You can install it: on Android/Chrome (tap menu ⋮ > 'Add to Home screen'), on iOS/Safari (tap Share > 'Add to Home Screen'), or on Desktop (click the install icon in the address bar)."
+      },
+      {
+        "question": "How do I report a bug?",
+        "answer": "If you found an issue, please send an email to admin@volleyball-team-generator.com describing the error you encountered."
+      }
+    ]
   }
 }

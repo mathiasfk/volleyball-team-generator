@@ -81,5 +81,39 @@
     "japanese": "日本語",
     "russian": "Русский",
     "persian": "فارسی"
+  },
+  "faq": {
+    "title": "Sık Sorulan Sorular",
+    "button": "SSS",
+    "questions": [
+      {
+        "question": "Takım kuraları nasıl çalışır?",
+        "answer": "Algoritma, yetenek seviyelerini (Başlangıç, Orta, İleri) ve özel pozisyonları (Libero, Pasör) dikkate alarak oyuncuları takımlara eşit şekilde dağıtır. Bu, takımların dengeli ve rekabetçi olmasını sağlar."
+      },
+      {
+        "question": "Yetenek seviyeleri nedir?",
+        "answer": "Yetenek seviyeleri takımları dengelemeye yardımcı olur. Başlangıç (ağırlık 1) voleybol başlayan oyuncuları temsil eder, Orta (ağırlık 2) orta deneyime sahip oyuncular için, ve İleri (ağırlık 3) deneyimli oyuncular içindir. Algoritma, takım gücünü adil bir şekilde dağıtmak için bu ağırlıkları kullanır."
+      },
+      {
+        "question": "'Takımı koru' ne anlama gelir?",
+        "answer": "Yeniden kura çekerken, takımlardan birini (Kırmızı veya Mavi) korumayı ve sadece diğer takımı ve yedeği yeniden düzenlemeyi seçebilirsiniz. Bu, bir takım zaten iyi olduğunda ve sadece geri kalanını ayarlamak istediğinizde kullanışlıdır."
+      },
+      {
+        "question": "Katılımcıları nasıl düzenlerim?",
+        "answer": "Listedeki herhangi bir katılımcının adının yanındaki 'Düzenle' düğmesine (kalem simgesi) tıklayın. Adlarını, yetenek seviyelerini ve pozisyonlarını değiştirebilirsiniz. Değişiklikler otomatik olarak kaydedilir."
+      },
+      {
+        "question": "Verilerim kaydediliyor mu?",
+        "answer": "Evet! Tüm katılımcılar ve oluşturulan takımlar tarayıcınızda (localStorage) otomatik olarak kaydedilir. Sayfayı kapatıp yeniden açsanız bile verileriniz kalacaktır."
+      },
+      {
+        "question": "Çevrimdışı çalışıyor mu?",
+        "answer": "Evet! Bu, ilk yüklemeden sonra tamamen çevrimdışı çalışan bir PWA'dır (Progressive Web App). Yükleyebilirsiniz: Android/Chrome'da (menü ⋮ > 'Ana ekrana ekle'ye dokunun), iOS/Safari'de (Paylaş > 'Ana Ekrana Ekle'ye dokunun) veya Masaüstünde (adres çubuğundaki yükleme simgesine tıklayın)."
+      },
+      {
+        "question": "Bir hatayı nasıl bildirebilirim?",
+        "answer": "Bir sorun bulduysanız, lütfen karşılaştığınız hatayı açıklayarak admin@volleyball-team-generator.com adresine e-posta gönderin."
+      }
+    ]
   }
 }

@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 const useSEO = () => {
-  const { i18n } = useTranslation()
+  const { i18n, t } = useTranslation()
 
   useEffect(() => {
     const updateSEO = () => {
@@ -161,6 +161,45 @@ const useSEO = () => {
       if (url.toString() !== window.location.toString()) {
         window.history.replaceState({}, '', url.toString())
       }
+
+      // Update FAQ Schema
+      updateFAQSchema()
+    }
+
+    const updateFAQSchema = () => {
+      // Remove existing FAQ schema if present
+      const existingSchema = document.querySelector('script[data-schema="faq"]')
+      if (existingSchema) {
+        existingSchema.remove()
+      }
+
+      // Get FAQ questions from translations
+      const questions = t('faq.questions', { returnObjects: true })
+      
+      if (!questions || !Array.isArray(questions)) {
+        return
+      }
+
+      // Create FAQ schema
+      const faqSchema = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": questions.map(item => ({
+          "@type": "Question",
+          "name": item.question,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": item.answer
+          }
+        }))
+      }
+
+      // Inject schema into document
+      const script = document.createElement('script')
+      script.type = 'application/ld+json'
+      script.setAttribute('data-schema', 'faq')
+      script.textContent = JSON.stringify(faqSchema)
+      document.head.appendChild(script)
     }
 
     // Initial update
@@ -173,7 +212,7 @@ const useSEO = () => {
 
     i18n.on('languageChanged', handleLanguageChange)
     return () => i18n.off('languageChanged', handleLanguageChange)
-  }, [i18n])
+  }, [i18n, t])
 }
 
 export default useSEO
