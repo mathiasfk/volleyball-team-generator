@@ -22,6 +22,7 @@ const languages = [
   { code: 'tr', labelKey: 'language.turkish', emoji: '🇹🇷' },
   { code: 'ja', labelKey: 'language.japanese', emoji: '🇯🇵' },
   { code: 'ru', labelKey: 'language.russian', emoji: '🇷🇺' },
+  { code: 'fa', labelKey: 'language.persian', emoji: '🇮🇷' },
 
 ]
 

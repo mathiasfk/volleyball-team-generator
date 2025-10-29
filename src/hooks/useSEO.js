@@ -93,6 +93,13 @@ const useSEO = () => {
           languageName: "Türkçe",
           locale: "tr_TR",
         },
+        fa: {
+          title: "مولد تیم والیبال - ایجاد تیم‌های عادلانه و متعادل در یک لحظه",
+          description:
+            "قرعه‌کشی رایگان تیم والیبال آنلاین. به صورت خودکار تیم‌های عادلانه و متعادل از بازیکنان خود ایجاد کنید. عالی برای مربیان، لیگ‌های تفریحی و بازی‌های دوستانه.",
+          languageName: "فارسی",
+          locale: "fa_IR",
+        },
       }
       // Update title and meta tags based on the selected language
       const { title, description, languageName, locale } = seoData[lang] || seoData.en
@@ -132,7 +139,7 @@ const useSEO = () => {
       }
 
       // Update language direction for RTL languages
-      const rtlLanguages = ['ar']
+      const rtlLanguages = ['ar', 'fa']
       if (rtlLanguages.includes(lang)) {
         document.documentElement.dir = 'rtl'
       } else {
