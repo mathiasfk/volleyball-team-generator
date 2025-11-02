@@ -100,6 +100,20 @@ const useSEO = () => {
           languageName: "فارسی",
           locale: "fa_IR",
         },
+        ur: {
+          title: "والی بال ٹیم جنریٹر - فوری طور پر منصفانہ اور متوازن ٹیمیں بنائیں",
+          description:
+            "مفت آن لائن والی بال ٹیم قرعہ اندازی۔ اپنے کھلاڑیوں سے خودکار طور پر منصفانہ اور متوازن ٹیمیں بنائیں۔ کوچوں، تفریحی لیگوں اور دوستانہ کھیلوں کے لیے بہترین۔",
+          languageName: "اردو",
+          locale: "ur_PK",
+        },
+        bn: {
+          title: "ভলিবল টিম জেনারেটর - মুহূর্তে ন্যায্য এবং ভারসাম্যপূর্ণ দল তৈরি করুন",
+          description:
+            "বিনামূল্যে অনলাইন ভলিবল দল আঁকুন। আপনার খেলোয়াড়দের থেকে স্বয়ংক্রিয়ভাবে ন্যায্য এবং ভারসাম্যপূর্ণ দল তৈরি করুন। কোচ, বিনোদন লীগ এবং বন্ধুত্বপূর্ণ খেলার জন্য নিখুঁত।",
+          languageName: "বাংলা",
+          locale: "bn_BD",
+        },
       }
       // Update title and meta tags based on the selected language
       const { title, description, languageName, locale } = seoData[lang] || seoData.en
@@ -139,7 +153,7 @@ const useSEO = () => {
       }
 
       // Update language direction for RTL languages
-      const rtlLanguages = ['ar', 'fa']
+      const rtlLanguages = ['ar', 'fa', 'ur']
       if (rtlLanguages.includes(lang)) {
         document.documentElement.dir = 'rtl'
       } else {

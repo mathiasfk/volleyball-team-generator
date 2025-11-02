@@ -68,6 +68,7 @@
   },
   "language": {
     "label": "Bahasa",
+    "select": "Pilih Bahasa",
     "english": "English",
     "portuguese": "Português",
     "spanish": "Español",
@@ -80,7 +81,9 @@
     "turkish": "Türkçe",
     "japanese": "日本語",
     "russian": "Русский",
-    "persian": "فارسی"
+    "persian": "فارسی",
+    "urdu": "اردو",
+    "bengali": "বাংলা"
   },
   "faq": {
     "title": "Pertanyaan yang Sering Diajukan",

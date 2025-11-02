@@ -23,7 +23,8 @@ const languages = [
   { code: 'ja', labelKey: 'language.japanese', emoji: '🇯🇵' },
   { code: 'ru', labelKey: 'language.russian', emoji: '🇷🇺' },
   { code: 'fa', labelKey: 'language.persian', emoji: '🇮🇷' },
-
+  { code: 'ur', labelKey: 'language.urdu', emoji: '🇵🇰' },
+  { code: 'bn', labelKey: 'language.bengali', emoji: '🇧🇩' },
 ]
 
 const LanguageSelector = () => {
