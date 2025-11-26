@@ -85,6 +85,22 @@
     "urdu": "اردو",
     "bengali": "বাংলা"
   },
+  "tour": {
+    "welcome": "¡Bienvenido! Hagamos un recorrido rápido para conocer las principales funcionalidades de la app.",
+    "participant_form": "Aquí puedes agregar participantes. Escribe el nombre y haz clic en 'Agregar' o presiona Enter.",
+    "participant_list": "Esta es la lista de participantes. Puedes editar o eliminar cualquier participante haciendo clic en los iconos junto al nombre.",
+    "draw_button": "Este botón sortea los equipos de forma equilibrada, considerando niveles de habilidad y posiciones especiales.",
+    "results": "Aquí aparecerán los equipos sorteados y los jugadores que quedaron fuera (banco).",
+    "language": "Usa este selector para cambiar el idioma de la interfaz.",
+    "faq": "Haz clic aquí para ver preguntas frecuentes y obtener ayuda sobre cómo usar la app.",
+    "complete": "¡Listo! Ahora conoces todas las funcionalidades principales. ¡Disfruta sorteando equipos!",
+    "restart_button": "Reiniciar tour guiado",
+    "back": "Atrás",
+    "skip": "Omitir",
+    "close": "Cerrar",
+    "next": "Siguiente",
+    "last": "Fin"
+  },
   "faq": {
     "title": "Preguntas Frecuentes",
     "button": "FAQ",

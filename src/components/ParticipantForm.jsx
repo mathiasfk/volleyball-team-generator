@@ -15,7 +15,7 @@ const ParticipantForm = ({
   const { t } = useTranslation()
 
   return (
-    <div className="flex gap-2 mb-4">
+    <div className="flex gap-2 mb-4 tour-participant-form">
       <Input
         type="text"
         placeholder={t('participants.placeholder')}

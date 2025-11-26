@@ -3,6 +3,7 @@ import './App.css'
 import { AlertCircle, HelpCircle, ListChevronsDownUp, ListChevronsUpDown,Shuffle, Users } from 'lucide-react'
 import { useEffect, useReducer, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import Joyride from 'react-joyride'
 
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx'
 import { Button } from '@/components/ui/button.jsx'
@@ -52,9 +53,47 @@ function App() {
   const [editDialogOpen, setEditDialogOpen] = useState(false)
   const [editingParticipant, setEditingParticipant] = useState(null)
   const [faqDialogOpen, setFaqDialogOpen] = useState(false)
+  const [runTour, setRunTour] = useState(false)
 
   // Vibrant colors for teams
   const teamColors = getTeamColors(t)
+
+  // Tour steps configuration
+  const tourSteps = [
+    {
+      target: '.tour-participant-form',
+      content: t('tour.participant_form'),
+      disableBeacon: true,
+    },
+    {
+      target: '.tour-participant-list',
+      content: t('tour.participant_list'),
+    },
+    {
+      target: '.tour-draw-button',
+      content: t('tour.draw_button'),
+    },
+    ...(teams.length > 0 ? [{
+      target: '.tour-results',
+      content: t('tour.results'),
+      placement: 'top',
+    }] : []),
+    {
+      target: '.tour-language-selector',
+      content: t('tour.language'),
+      placement: 'bottom',
+    },
+    {
+      target: '.tour-faq-button',
+      content: t('tour.faq'),
+      placement: 'top',
+    },
+    {
+      target: 'body',
+      content: t('tour.complete'),
+      placement: 'center',
+    },
+  ]
 
   // Load data from localStorage on initialization
   useEffect(() => {
@@ -91,6 +130,37 @@ function App() {
     // Mark that data has been loaded (or attempt was made)
     dispatch({ type: ACTIONS.SET_DATA_LOADED })
   }, [dataLoaded])
+
+  // Check if user has seen the tour and start it if not
+  useEffect(() => {
+    if (!dataLoaded) return
+
+    const [tourCompleted] = loadFromStorage(STORAGE_KEYS.TOUR_COMPLETED)
+    
+    if (!tourCompleted) {
+      // Start tour with a delay for better UX
+      const timer = setTimeout(() => {
+        setRunTour(true)
+      }, 1500)
+      
+      return () => clearTimeout(timer)
+    }
+  }, [dataLoaded])
+
+  const handleTourComplete = () => {
+    saveToStorage(STORAGE_KEYS.TOUR_COMPLETED, true)
+    setRunTour(false)
+  }
+
+  const handleTourSkip = () => {
+    saveToStorage(STORAGE_KEYS.TOUR_COMPLETED, true)
+    setRunTour(false)
+  }
+
+  const restartTour = () => {
+    removeFromStorage(STORAGE_KEYS.TOUR_COMPLETED)
+    setRunTour(true)
+  }
 
   const clearAllStorage = () => {
     removeMultipleFromStorage([
@@ -331,13 +401,60 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-4">
+      <Joyride
+        steps={tourSteps}
+        run={runTour}
+        continuous
+        showProgress
+        showSkipButton
+        callback={(data) => {
+          if (data.status === 'finished' || data.status === 'skipped') {
+            if (data.status === 'finished') {
+              handleTourComplete()
+            } else {
+              handleTourSkip()
+            }
+          }
+        }}
+        styles={{
+          options: {
+            primaryColor: '#16a34a', // green-600
+            textColor: '#ffffff',
+            backgroundColor: '#1f2937', // gray-800
+            overlayColor: 'rgba(0, 0, 0, 0.7)',
+            arrowColor: '#1f2937',
+          },
+          tooltip: {
+            borderRadius: 8,
+          },
+          buttonNext: {
+            backgroundColor: '#16a34a',
+            color: '#ffffff',
+            borderRadius: 6,
+          },
+          buttonBack: {
+            color: '#9ca3af',
+            marginRight: 10,
+          },
+          buttonSkip: {
+            color: '#9ca3af',
+          },
+        }}
+        locale={{
+          back: t('tour.back'),
+          close: t('tour.close'),
+          last: t('tour.last'),
+          next: t('tour.next'),
+          skip: t('tour.skip'),
+        }}
+      />
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <h1 className="hidden sm:block text-4xl font-bold text-blue-400">
             {t('app.title')}
           </h1>
           <div className="ms-auto">
-            <LanguageSelector />
+            <LanguageSelector onRestartTour={restartTour} />
           </div>
         </div>
 
@@ -406,7 +523,7 @@ function App() {
             <Button
               onClick={openDrawTeamsDialog}
               disabled={participants.length === 0}
-              className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg"
+              className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg tour-draw-button"
             >
               <Shuffle className="w-5 h-5 me-2" />
               {t('actions.draw_teams')}
@@ -433,7 +550,7 @@ function App() {
 
           {/* Draw Results */}
           {teams.length > 0 && (
-            <div className="space-y-6">
+            <div className="space-y-6 tour-results">
               <h2 className="text-2xl font-bold text-center text-green-400">
                 {t('results.title')}
               </h2>
@@ -466,7 +583,7 @@ function App() {
           <div className="mt-12 text-center border-t border-gray-700 pt-6">
             <button
               onClick={() => setFaqDialogOpen(true)}
-              className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-blue-400 transition-colors"
+              className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-blue-400 transition-colors tour-faq-button"
             >
               <HelpCircle className="w-4 h-4" />
               {t('faq.button')}

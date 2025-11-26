@@ -85,6 +85,22 @@
     "urdu": "اردو",
     "bengali": "বাংলা"
   },
+  "tour": {
+    "welcome": "Selamat datang! Mari kita lakukan tur singkat untuk mempelajari fitur utama aplikasi.",
+    "participant_form": "Di sini Anda dapat menambahkan peserta. Ketik nama dan klik 'Tambah' atau tekan Enter.",
+    "participant_list": "Ini adalah daftar peserta. Anda dapat mengedit atau menghapus peserta mana pun dengan mengklik ikon di sebelah nama.",
+    "draw_button": "Tombol ini mengundi tim dengan cara yang seimbang, mempertimbangkan tingkat keterampilan dan posisi khusus.",
+    "results": "Di sini akan muncul tim yang diundi dan pemain cadangan.",
+    "language": "Gunakan pemilih ini untuk mengubah bahasa antarmuka.",
+    "faq": "Klik di sini untuk melihat pertanyaan yang sering diajukan dan mendapatkan bantuan tentang cara menggunakan aplikasi.",
+    "complete": "Selesai! Sekarang Anda mengetahui semua fitur utama. Selamat mengundi tim!",
+    "restart_button": "Mulai ulang tur panduan",
+    "back": "Kembali",
+    "skip": "Lewati",
+    "close": "Tutup",
+    "next": "Selanjutnya",
+    "last": "Selesai"
+  },
   "faq": {
     "title": "Pertanyaan yang Sering Diajukan",
     "button": "FAQ",

@@ -13,7 +13,7 @@ const ParticipantList = ({
 
   return (
     <>
-      <div className="space-y-2">
+      <div className="space-y-2 tour-participant-list">
         {participants.map((participant) => (
           <ParticipantItem
             key={participant.id}

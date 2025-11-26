@@ -85,6 +85,22 @@
     "urdu": "اردو",
     "bengali": "বাংলা"
   },
+  "tour": {
+    "welcome": "Willkommen! Machen wir eine kurze Tour, um die Hauptfunktionen der App kennenzulernen.",
+    "participant_form": "Hier können Sie Teilnehmer hinzufügen. Geben Sie den Namen ein und klicken Sie auf 'Hinzufügen' oder drücken Sie Enter.",
+    "participant_list": "Dies ist die Teilnehmerliste. Sie können jeden Teilnehmer bearbeiten oder entfernen, indem Sie auf die Symbole neben dem Namen klicken.",
+    "draw_button": "Diese Schaltfläche zieht Teams auf ausgewogene Weise, unter Berücksichtigung von Fähigkeitsstufen und speziellen Positionen.",
+    "results": "Hier erscheinen die ausgelosten Teams und die Spieler, die draußen geblieben sind (Bank).",
+    "language": "Verwenden Sie diesen Selektor, um die Sprache der Benutzeroberfläche zu ändern.",
+    "faq": "Klicken Sie hier, um häufig gestellte Fragen zu sehen und Hilfe zur Verwendung der App zu erhalten.",
+    "complete": "Fertig! Jetzt kennen Sie alle Hauptfunktionen. Viel Spaß beim Auslosen der Teams!",
+    "restart_button": "Geführte Tour neu starten",
+    "back": "Zurück",
+    "skip": "Überspringen",
+    "close": "Schließen",
+    "next": "Weiter",
+    "last": "Ende"
+  },
   "faq": {
     "title": "Häufig gestellte Fragen",
     "button": "FAQ",

@@ -85,6 +85,22 @@
     "urdu": "اردو",
     "bengali": "বাংলা"
   },
+  "tour": {
+    "welcome": "Bienvenue ! Faisons un tour rapide pour découvrir les principales fonctionnalités de l'application.",
+    "participant_form": "Ici, vous pouvez ajouter des participants. Tapez le nom et cliquez sur 'Ajouter' ou appuyez sur Entrée.",
+    "participant_list": "Voici la liste des participants. Vous pouvez modifier ou supprimer n'importe quel participant en cliquant sur les icônes à côté du nom.",
+    "draw_button": "Ce bouton tire au sort les équipes de manière équilibrée, en tenant compte des niveaux de compétence et des positions spéciales.",
+    "results": "Ici apparaîtront les équipes tirées au sort et les joueurs qui sont restés en dehors (banc).",
+    "language": "Utilisez ce sélecteur pour changer la langue de l'interface.",
+    "faq": "Cliquez ici pour voir les questions fréquentes et obtenir de l'aide sur l'utilisation de l'application.",
+    "complete": "Terminé ! Vous connaissez maintenant toutes les fonctionnalités principales. Amusez-vous à tirer au sort les équipes !",
+    "restart_button": "Redémarrer le tour guidé",
+    "back": "Retour",
+    "skip": "Passer",
+    "close": "Fermer",
+    "next": "Suivant",
+    "last": "Fin"
+  },
   "faq": {
     "title": "Questions fréquentes",
     "button": "FAQ",

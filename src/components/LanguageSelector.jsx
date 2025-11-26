@@ -1,4 +1,4 @@
-import { Globe } from 'lucide-react'
+import { MessageCircleQuestionMark } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -8,6 +8,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select.jsx'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip.jsx'
 
 const languages = [
   { code: 'en', labelKey: 'language.english', emoji: '🇺🇸' },
@@ -27,7 +32,7 @@ const languages = [
   { code: 'bn', labelKey: 'language.bengali', emoji: '🇧🇩' },
 ]
 
-const LanguageSelector = () => {
+const LanguageSelector = ({ onRestartTour }) => {
   const { i18n, t } = useTranslation()
 
   const handleChange = (newLang) => {
@@ -35,8 +40,21 @@ const LanguageSelector = () => {
   }
 
   return (
-    <div className="flex items-center gap-2">
-      <Globe className="w-4 h-4 text-gray-400" />
+    <div className="flex items-center gap-2 tour-language-selector">
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <button
+            onClick={onRestartTour}
+            className="p-1 text-gray-400 hover:text-blue-400 transition-colors"
+            aria-label={t('tour.restart_button')}
+          >
+            <MessageCircleQuestionMark className="w-4 h-4" />
+          </button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>{t('tour.restart_button')}</p>
+        </TooltipContent>
+      </Tooltip>
       <Select
         value={i18n.language}
         onValueChange={handleChange}

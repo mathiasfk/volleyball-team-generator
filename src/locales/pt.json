@@ -85,6 +85,22 @@
     "urdu": "اردو",
     "bengali": "বাংলা"
   },
+  "tour": {
+    "welcome": "Bem-vindo! Vamos fazer um tour rápido para conhecer as principais funcionalidades do app.",
+    "participant_form": "Aqui você pode adicionar participantes. Digite o nome e clique em 'Adicionar' ou pressione Enter.",
+    "participant_list": "Esta é a lista de participantes. Você pode editar ou remover qualquer participante clicando nos ícones ao lado do nome.",
+    "draw_button": "Este botão sorteia os times de forma equilibrada, considerando níveis de habilidade e posições especiais.",
+    "results": "Aqui aparecerão os times sorteados e os jogadores que ficaram de fora (banco).",
+    "language": "Use este seletor para mudar o idioma da interface.",
+    "faq": "Clique aqui para ver perguntas frequentes e obter ajuda sobre como usar o app.",
+    "complete": "Pronto! Agora você conhece todas as funcionalidades principais. Divirta-se sorteando times!",
+    "restart_button": "Reiniciar tour guiado",
+    "back": "Voltar",
+    "skip": "Pular",
+    "close": "Fechar",
+    "next": "Próximo",
+    "last": "Fim"
+  },
   "faq": {
     "title": "Perguntas Frequentes",
     "button": "FAQ",

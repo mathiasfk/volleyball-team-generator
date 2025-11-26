@@ -85,6 +85,22 @@
     "urdu": "اردو",
     "bengali": "বাংলা"
   },
+  "tour": {
+    "welcome": "Welcome! Let's take a quick tour to learn about the main features of the app.",
+    "participant_form": "Here you can add participants. Type the name and click 'Add' or press Enter.",
+    "participant_list": "This is the participants list. You can edit or remove any participant by clicking the icons next to the name.",
+    "draw_button": "This button draws teams in a balanced way, considering skill levels and special positions.",
+    "results": "Here the drawn teams and bench players will appear.",
+    "language": "Use this selector to change the interface language.",
+    "faq": "Click here to see frequently asked questions and get help on how to use the app.",
+    "complete": "Done! Now you know all the main features. Have fun drawing teams!",
+    "restart_button": "Restart guided tour",
+    "back": "Back",
+    "skip": "Skip",
+    "close": "Close",
+    "next": "Next",
+    "last": "End"
+  },
   "faq": {
     "title": "Frequently Asked Questions",
     "button": "FAQ",
