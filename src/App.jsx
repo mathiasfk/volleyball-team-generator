@@ -8,6 +8,7 @@ import Joyride from 'react-joyride'
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx'
 import { Button } from '@/components/ui/button.jsx'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.jsx'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip.jsx'
 
 import BenchCard from './components/BenchCard.jsx'
 import ClearParticipantsDialog from './components/ClearParticipantsDialog.jsx'
@@ -564,7 +565,19 @@ function App() {
                   <CardTitle className="text-white flex items-center gap-2">
                     <Users className="w-5 h-5" />
                     {t('participants.manage')}
-                    {openParticipants ? <ListChevronsDownUp className="w-5 h-5 ms-auto" /> : <ListChevronsUpDown className="w-5 h-5 ms-auto" />}
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <span 
+                          className="ms-auto cursor-pointer"
+                          aria-label={openParticipants ? t('actions.collapse', { defaultValue: 'Colapsar' }) : t('actions.expand', { defaultValue: 'Expandir' })}
+                        >
+                          {openParticipants ? <ListChevronsDownUp className="w-5 h-5" /> : <ListChevronsUpDown className="w-5 h-5" />}
+                        </span>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        {openParticipants ? t('actions.collapse', { defaultValue: 'Colapsar' }) : t('actions.expand', { defaultValue: 'Expandir' })}
+                      </TooltipContent>
+                    </Tooltip>
                   </CardTitle>
                 </CollapsibleTrigger>
               </CardHeader>
