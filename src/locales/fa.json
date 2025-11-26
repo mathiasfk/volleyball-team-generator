@@ -13,7 +13,8 @@
     "edit": "ویرایش",
     "remove": "حذف",
     "edit_dialog_title": "ویرایش شرکت‌کننده",
-    "edit_dialog_description": "نام و سطح مهارت شرکت‌کننده را تغییر دهید"
+    "edit_dialog_description": "نام و سطح مهارت شرکت‌کننده را تغییر دهید",
+    "example_player": "بازیکن {{number}}"
   },
   "skill_levels": {
     "beginner": "مبتدی",

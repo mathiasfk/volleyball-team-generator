@@ -13,7 +13,8 @@
     "edit": "Modifier",
     "remove": "Supprimer",
     "edit_dialog_title": "Modifier le participant",
-    "edit_dialog_description": "Modifiez le nom et le niveau du participant"
+    "edit_dialog_description": "Modifiez le nom et le niveau du participant",
+    "example_player": "Joueur {{number}}"
   },
   "skill_levels": {
     "beginner": "Débutant",

@@ -13,7 +13,8 @@
     "edit": "Редактировать",
     "remove": "Удалить",
     "edit_dialog_title": "Редактировать участника",
-    "edit_dialog_description": "Измените имя и уровень навыка участника"
+    "edit_dialog_description": "Измените имя и уровень навыка участника",
+    "example_player": "Игрок {{number}}"
   },
   "skill_levels": {
     "beginner": "Начинающий",

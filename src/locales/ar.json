@@ -13,7 +13,8 @@
     "edit": "تعديل",
     "remove": "إزالة",
     "edit_dialog_title": "تعديل المشارك",
-    "edit_dialog_description": "تغيير اسم ومستوى مهارة المشارك"
+    "edit_dialog_description": "تغيير اسم ومستوى مهارة المشارك",
+    "example_player": "لاعب {{number}}"
   },
   "skill_levels": {
     "beginner": "مبتدئ",

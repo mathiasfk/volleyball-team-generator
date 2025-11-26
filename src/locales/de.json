@@ -13,7 +13,8 @@
     "edit": "Bearbeiten",
     "remove": "Entfernen",
     "edit_dialog_title": "Teilnehmer bearbeiten",
-    "edit_dialog_description": "Namen und Fähigkeitsstufe des Teilnehmers ändern"
+    "edit_dialog_description": "Namen und Fähigkeitsstufe des Teilnehmers ändern",
+    "example_player": "Spieler {{number}}"
   },
   "skill_levels": {
     "beginner": "Anfänger",

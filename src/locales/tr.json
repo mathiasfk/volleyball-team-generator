@@ -13,7 +13,8 @@
     "edit": "Düzenle",
     "remove": "Kaldır",
     "edit_dialog_title": "Katılımcıyı Düzenle",
-    "edit_dialog_description": "Katılımcının adını ve yetenek seviyesini değiştirin"
+    "edit_dialog_description": "Katılımcının adını ve yetenek seviyesini değiştirin",
+    "example_player": "Oyuncu {{number}}"
   },
   "skill_levels": {
     "beginner": "Başlangıç",

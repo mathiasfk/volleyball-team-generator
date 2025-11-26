@@ -13,7 +13,8 @@
     "edit": "编辑",
     "remove": "删除",
     "edit_dialog_title": "编辑参与者",
-    "edit_dialog_description": "更改参与者的姓名和技能水平"
+    "edit_dialog_description": "更改参与者的姓名和技能水平",
+    "example_player": "球员 {{number}}"
   },
   "skill_levels": {
     "beginner": "初级",

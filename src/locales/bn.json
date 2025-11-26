@@ -13,7 +13,8 @@
     "edit": "সম্পাদনা",
     "remove": "অপসারণ করুন",
     "edit_dialog_title": "অংশগ্রহণকারী সম্পাদনা করুন",
-    "edit_dialog_description": "অংশগ্রহণকারীর নাম এবং দক্ষতার স্তর পরিবর্তন করুন"
+    "edit_dialog_description": "অংশগ্রহণকারীর নাম এবং দক্ষতার স্তর পরিবর্তন করুন",
+    "example_player": "খেলোয়াড় {{number}}"
   },
   "skill_levels": {
     "beginner": "শিক্ষানবিস",

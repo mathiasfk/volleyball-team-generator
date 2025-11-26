@@ -13,7 +13,8 @@
     "edit": "編集",
     "remove": "削除",
     "edit_dialog_title": "参加者を編集",
-    "edit_dialog_description": "参加者の名前とスキルレベルを変更"
+    "edit_dialog_description": "参加者の名前とスキルレベルを変更",
+    "example_player": "プレイヤー {{number}}"
   },
   "skill_levels": {
     "beginner": "初級",

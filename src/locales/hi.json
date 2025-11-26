@@ -13,7 +13,8 @@
     "edit": "संपादित करें",
     "remove": "हटाएँ",
     "edit_dialog_title": "प्रतिभागी संपादित करें",
-    "edit_dialog_description": "प्रतिभागी का नाम और कौशल स्तर बदलें"
+    "edit_dialog_description": "प्रतिभागी का नाम और कौशल स्तर बदलें",
+    "example_player": "खिलाड़ी {{number}}"
   },
   "skill_levels": {
     "beginner": "शुरुआती",

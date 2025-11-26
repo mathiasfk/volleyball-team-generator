@@ -13,7 +13,8 @@
     "edit": "ترمیم",
     "remove": "ہٹائیں",
     "edit_dialog_title": "شرکاء میں ترمیم کریں",
-    "edit_dialog_description": "شرکاء کا نام اور مہارت کی سطح تبدیل کریں"
+    "edit_dialog_description": "شرکاء کا نام اور مہارت کی سطح تبدیل کریں",
+    "example_player": "کھلاڑی {{number}}"
   },
   "skill_levels": {
     "beginner": "ابتدائی",

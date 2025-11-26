@@ -13,7 +13,8 @@
     "edit": "Edit",
     "remove": "Hapus",
     "edit_dialog_title": "Edit Peserta",
-    "edit_dialog_description": "Ubah nama dan tingkat keterampilan peserta"
+    "edit_dialog_description": "Ubah nama dan tingkat keterampilan peserta",
+    "example_player": "Pemain {{number}}"
   },
   "skill_levels": {
     "beginner": "Pemula",

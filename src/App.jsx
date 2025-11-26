@@ -1,6 +1,6 @@
 import './App.css'
 
-import { AlertCircle, HelpCircle, ListChevronsDownUp, ListChevronsUpDown,Shuffle, Users } from 'lucide-react'
+import { AlertCircle, HelpCircle, ListChevronsDownUp, ListChevronsUpDown, Shuffle, Users } from 'lucide-react'
 import { useEffect, useReducer, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Joyride from 'react-joyride'
@@ -24,11 +24,63 @@ import { STORAGE_KEYS } from './constants/storageKeys.ts'
 import { getTeamColors } from './constants/teamColors.ts'
 import useSEO from './hooks/useSEO.js'
 import { calculateTeams } from './lib/calculateTeams.js'
-import { ACTIONS,appReducer, initialState } from './reducers/appReducer.js'
+import { ACTIONS, appReducer, initialState } from './reducers/appReducer.js'
 import { gtag } from './services/analytics.js'
-import { loadFromStorage, removeFromStorage, removeMultipleFromStorage,saveToStorage } from './utils/localStorage.ts'
+import { loadFromStorage, removeFromStorage, removeMultipleFromStorage, saveToStorage } from './utils/localStorage.ts'
 import { createPlayerPositionMap, detectPlayerChanges } from './utils/playerChanges.ts'
-import { formatParticipantName,isDuplicateName, isEmptyName } from './utils/validation.ts'
+import { formatParticipantName, isDuplicateName, isEmptyName } from './utils/validation.ts'
+
+// Function to create example participants for the tour
+function createExampleParticipants(t) {
+  const baseTime = Date.now()
+  return [
+    {
+      id: `${baseTime}-1`,
+      name: t('participants.example_player', { number: 1 }),
+      weight: 1,
+      role: 'any',
+    },
+    {
+      id: `${baseTime}-2`,
+      name: t('participants.example_player', { number: 2 }),
+      weight: 1,
+      role: 'any',
+    },
+    {
+      id: `${baseTime}-3`,
+      name: t('participants.example_player', { number: 3 }),
+      weight: 1.5,
+      role: 'any',
+    },
+    {
+      id: `${baseTime}-4`,
+      name: t('participants.example_player', { number: 4 }),
+      weight: 1.5,
+      role: 'any',
+    },
+    {
+      id: `${baseTime}-5`,
+      name: t('participants.example_player', { number: 5 }),
+      weight: 1,
+      role: 'setter',
+    },
+  ]
+}
+
+// Function to check if all participants are example participants
+function areAllExampleParticipants(participants, t) {
+  if (participants.length !== 5) return false
+  
+  // Check if all participants have names matching the example pattern
+  return participants.every(p => {
+    // Check if name matches pattern for any number 1-5
+    for (let i = 1; i <= 5; i++) {
+      const exampleName = t('participants.example_player', { number: i })
+      if (p.name === exampleName) return true
+    }
+    return false
+  })
+}
 
 function App() {
   const { t } = useTranslation()
@@ -102,6 +154,27 @@ function App() {
     const [loadedParticipants, errorParticipants] = loadFromStorage(STORAGE_KEYS.PARTICIPANTS)
     const [loadedTeams, errorTeams] = loadFromStorage(STORAGE_KEYS.TEAMS)
     const [loadedBench, errorBench] = loadFromStorage(STORAGE_KEYS.BENCH)
+    const [tourCompleted] = loadFromStorage(STORAGE_KEYS.TOUR_COMPLETED)
+
+    // Check if we should load example participants
+    const shouldLoadExamples = (!loadedParticipants || loadedParticipants.length === 0) && !tourCompleted
+
+    let finalParticipants = loadedParticipants
+    let finalTeams = loadedTeams
+    let finalBench = loadedBench
+
+    // If we should load examples, create them and calculate teams
+    if (shouldLoadExamples) {
+      finalParticipants = createExampleParticipants(t)
+      // Calculate teams with example participants
+      const { formedTeams, remainingPlayers } = calculateTeams({
+        participants: finalParticipants,
+        teams: [],
+        benchPlayers: [],
+      })
+      finalTeams = formedTeams
+      finalBench = remainingPlayers
+    }
 
     // Combine any errors
     const errorLoading = !!errorParticipants || !!errorTeams ? ({
@@ -113,9 +186,9 @@ function App() {
     dispatch({
       type: ACTIONS.LOAD_DATA,
       payload: {
-        participants: loadedParticipants,
-        teams: loadedTeams,
-        benchPlayers: loadedBench,
+        participants: finalParticipants || [],
+        teams: finalTeams || [],
+        benchPlayers: finalBench || [],
       }
     })
 
@@ -124,12 +197,13 @@ function App() {
       'loaded_participant_count': loadedParticipants ? loadedParticipants.length : 0,
       'loaded_team_count': loadedTeams ? loadedTeams.length : 0,
       'loaded_bench_count': loadedBench ? loadedBench.length : 0,
+      'using_examples': shouldLoadExamples,
       'error_loading': errorLoading ? JSON.stringify(errorLoading) : null,
     });
 
     // Mark that data has been loaded (or attempt was made)
     dispatch({ type: ACTIONS.SET_DATA_LOADED })
-  }, [dataLoaded])
+  }, [dataLoaded, t])
 
   // Check if user has seen the tour and start it if not
   useEffect(() => {
@@ -205,6 +279,13 @@ function App() {
     if (isDuplicate) {
       dispatch({ type: ACTIONS.SET_ERROR, payload: t('errors.duplicate_name') })
       return
+    }
+
+    // If all current participants are examples, clear them first
+    if (areAllExampleParticipants(participants, t)) {
+      dispatch({ type: ACTIONS.CLEAR_ALL_PARTICIPANTS })
+      // Also clear teams and bench
+      dispatch({ type: ACTIONS.CLEAR_DRAW })
     }
 
     const newParticipant = {
