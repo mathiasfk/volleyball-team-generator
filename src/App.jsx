@@ -125,11 +125,18 @@ function App() {
       target: '.tour-draw-button',
       content: t('tour.draw_button'),
     },
-    ...(teams.length > 0 ? [{
-      target: '.tour-results',
-      content: t('tour.results'),
-      placement: 'top',
-    }] : []),
+    ...(teams.length > 0 ? [
+      {
+        target: '.tour-teams',
+        content: t('tour.teams'),
+        placement: 'top',
+      },
+      ...(benchPlayers.length > 0 ? [{
+        target: '.tour-bench',
+        content: t('tour.bench'),
+        placement: 'top',
+      }] : []),
+    ] : []),
     {
       target: '.tour-language-selector',
       content: t('tour.language'),
@@ -637,7 +644,7 @@ function App() {
               </h2>
 
               {/* Teams */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 tour-teams">
                 {teams.map((team, index) => {
                   const teamColor = teamColors[index % teamColors.length]
                   return (

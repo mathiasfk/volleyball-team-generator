@@ -13,7 +13,7 @@ const BenchCard = ({ benchPlayers, changedPlayerIds = [] }) => {
   }
 
   return (
-    <Card className="bg-gray-800 border-gray-700">
+    <Card className="bg-gray-800 border-gray-700 tour-bench">
       <CardHeader className="text-center bg-orange-600">
         <CardTitle className="text-xl font-bold text-white">
           {t('results.bench_title')}
