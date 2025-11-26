@@ -493,7 +493,7 @@ function App() {
         steps={tourSteps}
         run={runTour}
         continuous
-        showProgress
+        showProgress={true}
         showSkipButton
         callback={(data) => {
           if (data.status === 'finished' || data.status === 'skipped') {
@@ -532,7 +532,7 @@ function App() {
           back: t('tour.back'),
           close: t('tour.close'),
           last: t('tour.last'),
-          next: t('tour.next'),
+          nextLabelWithProgress: `${t('tour.next')} ({step}/{steps})`,
           skip: t('tour.skip'),
         }}
       />
