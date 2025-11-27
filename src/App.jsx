@@ -488,6 +488,23 @@ function App() {
     removeFromStorage(STORAGE_KEYS.BENCH)
   }
 
+  // Helper function to track tour events
+  const trackTourEvent = (eventName, data) => {
+    gtag('event', eventName, {
+      'step_index': data.index,
+      'step_count': data.size
+    })
+  }
+
+  // Map tour events and actions to tracking event names
+  const tourEventMap = {
+    [EVENTS.TOUR_START]: 'tour_started',
+    [`${EVENTS.STEP_AFTER}_${JOYRIDE_ACTIONS.NEXT}`]: 'tour_next_step',
+    [`${EVENTS.STEP_AFTER}_${JOYRIDE_ACTIONS.PREV}`]: 'tour_previous_step',
+    [`${EVENTS.TOUR_END}_${STATUS.SKIPPED}`]: 'tour_skipped',
+    [`${EVENTS.TOUR_END}_${STATUS.FINISHED}`]: 'tour_completed',
+  }
+
   return (
     <div className="min-h-screen bg-gray-900 text-white p-4">
       <Joyride
@@ -497,36 +514,25 @@ function App() {
         showProgress={true}
         showSkipButton
         callback={(data) => {
-          // Track tour actions
-          if (data.type === EVENTS.TOUR_START) {
-            gtag('event', 'tour_started', {
-              'step_index': data.index,
-              'step_count': data.size
-            })
-          } else if (data.type === EVENTS.STEP_AFTER) {
-            if (data.action === JOYRIDE_ACTIONS.NEXT) {
-              gtag('event', 'tour_next_step', {
-                'step_index': data.index,
-                'step_count': data.size
-              })
-            } else if (data.action === JOYRIDE_ACTIONS.PREV) {
-              gtag('event', 'tour_previous_step', {
-                'step_index': data.index,
-                'step_count': data.size
-              })
-            }
-          } else if (data.type === EVENTS.TOUR_END) {
+          // Determine event key based on type, action, and status
+          let eventKey = data.type
+          if (data.type === EVENTS.STEP_AFTER && data.action) {
+            eventKey = `${data.type}_${data.action}`
+          } else if (data.type === EVENTS.TOUR_END && data.status) {
+            eventKey = `${data.type}_${data.status}`
+          }
+
+          // Track event if mapped
+          const eventName = tourEventMap[eventKey]
+          if (eventName) {
+            trackTourEvent(eventName, data)
+          }
+
+          // Handle tour completion/skip
+          if (data.type === EVENTS.TOUR_END) {
             if (data.status === STATUS.SKIPPED) {
-              gtag('event', 'tour_skipped', {
-                'step_index': data.index,
-                'step_count': data.size
-              })
               handleTourSkip()
             } else if (data.status === STATUS.FINISHED) {
-              gtag('event', 'tour_completed', {
-                'step_index': data.index,
-                'step_count': data.size
-              })
               handleTourComplete()
             }
           }
