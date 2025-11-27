@@ -3,7 +3,7 @@ import './App.css'
 import { AlertCircle, HelpCircle, ListChevronsDownUp, ListChevronsUpDown, Shuffle, Users } from 'lucide-react'
 import { useEffect, useReducer, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Joyride from 'react-joyride'
+import Joyride, { ACTIONS as JOYRIDE_ACTIONS, EVENTS, STATUS } from 'react-joyride'
 
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx'
 import { Button } from '@/components/ui/button.jsx'
@@ -497,11 +497,37 @@ function App() {
         showProgress={true}
         showSkipButton
         callback={(data) => {
-          if (data.status === 'finished' || data.status === 'skipped') {
-            if (data.status === 'finished') {
-              handleTourComplete()
-            } else {
+          // Track tour actions
+          if (data.type === EVENTS.TOUR_START) {
+            gtag('event', 'tour_started', {
+              'step_index': data.index,
+              'step_count': data.size
+            })
+          } else if (data.type === EVENTS.STEP_AFTER) {
+            if (data.action === JOYRIDE_ACTIONS.NEXT) {
+              gtag('event', 'tour_next_step', {
+                'step_index': data.index,
+                'step_count': data.size
+              })
+            } else if (data.action === JOYRIDE_ACTIONS.PREV) {
+              gtag('event', 'tour_previous_step', {
+                'step_index': data.index,
+                'step_count': data.size
+              })
+            }
+          } else if (data.type === EVENTS.TOUR_END) {
+            if (data.status === STATUS.SKIPPED) {
+              gtag('event', 'tour_skipped', {
+                'step_index': data.index,
+                'step_count': data.size
+              })
               handleTourSkip()
+            } else if (data.status === STATUS.FINISHED) {
+              gtag('event', 'tour_completed', {
+                'step_index': data.index,
+                'step_count': data.size
+              })
+              handleTourComplete()
             }
           }
         }}
