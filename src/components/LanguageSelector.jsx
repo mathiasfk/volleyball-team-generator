@@ -13,6 +13,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip.jsx'
+import { gtag } from '@/services/analytics.js'
 
 const languages = [
   { code: 'en', labelKey: 'language.english', emoji: '🇺🇸' },
@@ -39,6 +40,13 @@ const LanguageSelector = ({ onRestartTour }) => {
   const { i18n, t } = useTranslation()
 
   const handleChange = (newLang) => {
+    const previousLang = i18n.language
+    
+    gtag('event', 'change_language', {
+      'previous_language': previousLang,
+      'new_language': newLang,
+    })
+    
     i18n.changeLanguage(newLang)
   }
 
