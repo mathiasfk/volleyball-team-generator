@@ -109,15 +109,15 @@
     "questions": [
       {
         "question": "Comment fonctionne le tirage au sort des équipes ?",
-        "answer": "L'algorithme répartit les joueurs de manière équilibrée entre les équipes, en tenant compte des niveaux de compétence (Débutant, Intermédiaire, Avancé) et des positions spéciales (Libéro, Passeur). Cela garantit que les équipes sont équilibrées et compétitives."
+        "answer": "L'algorithme répartit les joueurs de manière équilibrée entre les équipes, en tenant compte des niveaux de compétence (Débutant, Intermédiaire, Avancé) et des positions spéciales (Libéro, Passeur). Cela garantit que les équipes sont équilibrées et compétitives, et assure également que tout le monde joue approximativement le même nombre de matchs."
       },
       {
         "question": "Que sont les niveaux de compétence ?",
-        "answer": "Les niveaux de compétence aident à équilibrer les équipes. Débutant (poids 1) représente les joueurs qui débutent au volleyball, Intermédiaire (poids 2) pour les joueurs avec une expérience modérée, et Avancé (poids 3) pour les joueurs expérimentés. L'algorithme utilise ces poids pour répartir équitablement la force des équipes."
+        "answer": "Les niveaux de compétence aident à équilibrer les équipes. Débutant (poids 0.5) représente les joueurs qui débutent au volleyball, Intermédiaire (poids 1) pour les joueurs avec une expérience modérée, et Avancé (poids 1.5) pour les joueurs expérimentés. L'algorithme utilise ces poids pour répartir équitablement la force des équipes."
       },
       {
         "question": "Que signifie 'garder l'équipe' ?",
-        "answer": "Lors du redécoupage, vous pouvez choisir de conserver l'une des équipes (Rouge ou Bleue) et ne réorganiser que l'autre équipe et le banc. C'est utile lorsqu'une équipe est déjà bonne et que vous voulez juste ajuster le reste."
+        "answer": "Lors du redécoupage, vous pouvez choisir de conserver l'une des équipes (Rouge ou Bleue) et ne réorganiser que l'autre équipe et le banc. C'est utile lorsqu'un match est terminé et que vous voulez garder l'équipe gagnante intacte."
       },
       {
         "question": "Comment modifier les participants ?",

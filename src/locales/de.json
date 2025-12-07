@@ -109,15 +109,15 @@
     "questions": [
       {
         "question": "Wie funktioniert die Teamauslosung?",
-        "answer": "Der Algorithmus verteilt Spieler gleichmäßig auf die Teams unter Berücksichtigung der Fähigkeitsstufen (Anfänger, Fortgeschritten, Experte) und speziellen Positionen (Libero, Zuspieler). Dies gewährleistet, dass die Teams ausgeglichen und wettbewerbsfähig sind."
+        "answer": "Der Algorithmus verteilt Spieler gleichmäßig auf die Teams unter Berücksichtigung der Fähigkeitsstufen (Anfänger, Fortgeschritten, Experte) und speziellen Positionen (Libero, Zuspieler). Dies gewährleistet, dass die Teams ausgeglichen und wettbewerbsfähig sind, und stellt auch sicher, dass jeder ungefähr die gleiche Anzahl von Spielen spielt."
       },
       {
         "question": "Was sind Fähigkeitsstufen?",
-        "answer": "Fähigkeitsstufen helfen, Teams auszugleichen. Anfänger (Gewicht 1) repräsentiert Spieler, die mit Volleyball beginnen, Fortgeschritten (Gewicht 2) für Spieler mit mäßiger Erfahrung und Experte (Gewicht 3) für erfahrene Spieler. Der Algorithmus verwendet diese Gewichte, um die Teamstärke fair zu verteilen."
+        "answer": "Fähigkeitsstufen helfen, Teams auszugleichen. Anfänger (Gewicht 0.5) repräsentiert Spieler, die mit Volleyball beginnen, Fortgeschritten (Gewicht 1) für Spieler mit mäßiger Erfahrung und Experte (Gewicht 1.5) für erfahrene Spieler. Der Algorithmus verwendet diese Gewichte, um die Teamstärke fair zu verteilen."
       },
       {
         "question": "Was bedeutet 'Team behalten'?",
-        "answer": "Bei einer Neuauslosung können Sie eines der Teams (Rot oder Blau) behalten und nur das andere Team und die Ersatzbank neu organisieren. Dies ist nützlich, wenn ein Team bereits gut ist und Sie nur den Rest anpassen möchten."
+        "answer": "Bei einer Neuauslosung können Sie eines der Teams (Rot oder Blau) behalten und nur das andere Team und die Ersatzbank neu organisieren. Dies ist nützlich, wenn ein Spiel beendet ist und Sie das siegreiche Team intakt halten möchten."
       },
       {
         "question": "Wie bearbeite ich Teilnehmer?",

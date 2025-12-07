@@ -109,15 +109,15 @@
     "questions": [
       {
         "question": "Bagaimana cara kerja pembagian tim?",
-        "answer": "Algoritma mendistribusikan pemain secara merata ke seluruh tim, dengan mempertimbangkan tingkat keterampilan (Pemula, Menengah, Mahir) dan posisi khusus (Libero, Setter). Ini memastikan tim seimbang dan kompetitif."
+        "answer": "Algoritma mendistribusikan pemain secara merata ke seluruh tim, dengan mempertimbangkan tingkat keterampilan (Pemula, Menengah, Mahir) dan posisi khusus (Libero, Setter). Ini memastikan tim seimbang dan kompetitif, dan juga memastikan semua orang bermain dengan jumlah permainan yang kira-kira sama."
       },
       {
         "question": "Apa itu tingkat keterampilan?",
-        "answer": "Tingkat keterampilan membantu menyeimbangkan tim. Pemula (bobot 1) mewakili pemain yang baru memulai voli, Menengah (bobot 2) untuk pemain dengan pengalaman sedang, dan Mahir (bobot 3) untuk pemain berpengalaman. Algoritma menggunakan bobot ini untuk mendistribusikan kekuatan tim secara adil."
+        "answer": "Tingkat keterampilan membantu menyeimbangkan tim. Pemula (bobot 0.5) mewakili pemain yang baru memulai voli, Menengah (bobot 1) untuk pemain dengan pengalaman sedang, dan Mahir (bobot 1.5) untuk pemain berpengalaman. Algoritma menggunakan bobot ini untuk mendistribusikan kekuatan tim secara adil."
       },
       {
         "question": "Apa arti 'pertahankan tim'?",
-        "answer": "Saat membuat ulang, Anda dapat memilih untuk mempertahankan salah satu tim (Merah atau Biru) dan hanya mengatur ulang tim lain dan cadangan. Ini berguna ketika satu tim sudah bagus dan Anda hanya ingin menyesuaikan sisanya."
+        "answer": "Saat membuat ulang, Anda dapat memilih untuk mempertahankan salah satu tim (Merah atau Biru) dan hanya mengatur ulang tim lain dan cadangan. Ini berguna ketika pertandingan telah selesai dan Anda ingin mempertahankan tim pemenang tetap utuh."
       },
       {
         "question": "Bagaimana cara mengedit peserta?",

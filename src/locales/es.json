@@ -109,15 +109,15 @@
     "questions": [
       {
         "question": "¿Cómo funciona el sorteo de equipos?",
-        "answer": "El algoritmo distribuye a los jugadores de manera equilibrada entre los equipos, considerando los niveles de habilidad (Principiante, Intermedio, Avanzado) y posiciones especiales (Líbero, Armador). Esto garantiza que los equipos sean balanceados y competitivos."
+        "answer": "El algoritmo distribuye a los jugadores de manera equilibrada entre los equipos, considerando los niveles de habilidad (Principiante, Intermedio, Avanzado) y posiciones especiales (Líbero, Armador). Esto garantiza que los equipos sean balanceados y competitivos, y también asegura que todos jueguen aproximadamente el mismo número de partidos."
       },
       {
         "question": "¿Qué son los niveles de habilidad?",
-        "answer": "Los niveles de habilidad ayudan a equilibrar los equipos. Principiante (peso 1) representa jugadores que están comenzando en voleibol, Intermedio (peso 2) para jugadores con experiencia moderada, y Avanzado (peso 3) para jugadores experimentados. El algoritmo usa estos pesos para distribuir la fuerza de los equipos de manera justa."
+        "answer": "Los niveles de habilidad ayudan a equilibrar los equipos. Principiante (peso 0.5) representa jugadores que están comenzando en voleibol, Intermedio (peso 1) para jugadores con experiencia moderada, y Avanzado (peso 1.5) para jugadores experimentados. El algoritmo usa estos pesos para distribuir la fuerza de los equipos de manera justa."
       },
       {
         "question": "¿Qué significa 'mantener equipo'?",
-        "answer": "Al sortear nuevamente, puedes elegir mantener uno de los equipos (Rojo o Azul) y solo reorganizar el otro equipo y el banco. Esto es útil cuando un equipo ya está bien y solo quieres ajustar el resto."
+        "answer": "Al sortear nuevamente, puedes elegir mantener uno de los equipos (Rojo o Azul) y solo reorganizar el otro equipo y el banco. Esto es útil cuando un partido ha terminado y quieres mantener el equipo ganador intacto."
       },
       {
         "question": "¿Cómo edito participantes?",

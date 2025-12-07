@@ -109,15 +109,15 @@
     "questions": [
       {
         "question": "How does the team draw work?",
-        "answer": "The algorithm distributes players evenly across teams, considering skill levels (Beginner, Intermediate, Advanced) and special positions (Libero, Setter). This ensures teams are balanced and competitive."
+        "answer": "The algorithm evenly distributes players across teams by considering skill levels (Beginner, Intermediate, Advanced) and special positions (Libero, Setter). This ensures balanced and competitive teams, and also makes sure everyone plays roughly the same number of games."
       },
       {
         "question": "What are skill levels?",
-        "answer": "Skill levels help balance teams. Beginner (weight 1) represents players starting in volleyball, Intermediate (weight 2) for players with moderate experience, and Advanced (weight 3) for experienced players. The algorithm uses these weights to distribute team strength fairly."
+        "answer": "Skill levels help balance teams. Beginner (weight 0.5) represents players who are new to volleyball, Intermediate (weight 1) for players with moderate experience, and Advanced (weight 1.5) for experienced players. The algorithm uses these weights to distribute overall team strength fairly."
       },
       {
         "question": "What does 'keep team' mean?",
-        "answer": "When redrawing, you can choose to keep one of the teams (Red or Blue) and only reorganize the other team and bench. This is useful when one team is already good and you just want to adjust the rest."
+        "answer": "When redrawing, you can choose to keep one of the teams (Red or Blue) and only reorganize the other team and the bench. This is useful when a game has finished and you want to keep the winning team intact."
       },
       {
         "question": "How do I edit participants?",

@@ -109,15 +109,15 @@
     "questions": [
       {
         "question": "Takım kuraları nasıl çalışır?",
-        "answer": "Algoritma, yetenek seviyelerini (Başlangıç, Orta, İleri) ve özel pozisyonları (Libero, Pasör) dikkate alarak oyuncuları takımlara eşit şekilde dağıtır. Bu, takımların dengeli ve rekabetçi olmasını sağlar."
+        "answer": "Algoritma, yetenek seviyelerini (Başlangıç, Orta, İleri) ve özel pozisyonları (Libero, Pasör) dikkate alarak oyuncuları takımlara eşit şekilde dağıtır. Bu, takımların dengeli ve rekabetçi olmasını sağlar ve herkesin yaklaşık olarak aynı sayıda oyun oynamasını da garanti eder."
       },
       {
         "question": "Yetenek seviyeleri nedir?",
-        "answer": "Yetenek seviyeleri takımları dengelemeye yardımcı olur. Başlangıç (ağırlık 1) voleybol başlayan oyuncuları temsil eder, Orta (ağırlık 2) orta deneyime sahip oyuncular için, ve İleri (ağırlık 3) deneyimli oyuncular içindir. Algoritma, takım gücünü adil bir şekilde dağıtmak için bu ağırlıkları kullanır."
+        "answer": "Yetenek seviyeleri takımları dengelemeye yardımcı olur. Başlangıç (ağırlık 0.5) voleybol başlayan oyuncuları temsil eder, Orta (ağırlık 1) orta deneyime sahip oyuncular için, ve İleri (ağırlık 1.5) deneyimli oyuncular içindir. Algoritma, takım gücünü adil bir şekilde dağıtmak için bu ağırlıkları kullanır."
       },
       {
         "question": "'Takımı koru' ne anlama gelir?",
-        "answer": "Yeniden kura çekerken, takımlardan birini (Kırmızı veya Mavi) korumayı ve sadece diğer takımı ve yedeği yeniden düzenlemeyi seçebilirsiniz. Bu, bir takım zaten iyi olduğunda ve sadece geri kalanını ayarlamak istediğinizde kullanışlıdır."
+        "answer": "Yeniden kura çekerken, takımlardan birini (Kırmızı veya Mavi) korumayı ve sadece diğer takımı ve yedeği yeniden düzenlemeyi seçebilirsiniz. Bu, bir maç bittiğinde ve kazanan takımı olduğu gibi korumak istediğinizde kullanışlıdır."
       },
       {
         "question": "Katılımcıları nasıl düzenlerim?",
