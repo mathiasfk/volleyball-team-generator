@@ -1,0 +1,144 @@
+{
+  "app": {
+    "title": "🏐 Generatore di Squadre di Pallavolo"
+  },
+  "participants": {
+    "manage": "Gestisci Partecipanti",
+    "add": "Aggiungi",
+    "clear_all": "Cancella Tutto",
+    "placeholder": "Nome del partecipante",
+    "total": "Totale: {{count}} partecipanti",
+    "save": "Salva",
+    "cancel": "Annulla",
+    "edit": "Modifica",
+    "remove": "Rimuovi",
+    "edit_dialog_title": "Modifica Partecipante",
+    "edit_dialog_description": "Modifica il nome e il livello di abilità del partecipante",
+    "example_player": "Giocatore {{number}}"
+  },
+  "skill_levels": {
+    "beginner": "Principiante",
+    "intermediate": "Intermedio",
+    "advanced": "Avanzato",
+    "label": "Livello di Abilità"
+  },
+  "role": {
+    "label": "Posizione",
+    "any": "Qualsiasi",
+    "libero": "Libero",
+    "setter": "Palleggiatore"
+  },
+  "actions": {
+    "draw_teams": "Sortea Squadre",
+    "clear_draw": "Cancella Sorteggio"
+  },
+  "results": {
+    "title": "Risultati del Sorteggio",
+    "team": "Squadra {{color}}",
+    "players_count": "{{count}} giocatori",
+    "bench_title": "Giocatori in Panchina",
+    "bench_count": "{{count}} persona(e) in panchina"
+  },
+  "colors": {
+    "red": "Rosso",
+    "blue": "Blu",
+    "green": "Verde",
+    "purple": "Viola",
+    "orange": "Arancione",
+    "pink": "Rosa"
+  },
+  "errors": {
+    "empty_name": "Inserisci un nome valido.",
+    "duplicate_name": "Esiste già un partecipante con questo nome. Usa un nome diverso."
+  },
+  "dialog": {
+    "clear_participants": {
+      "title": "Attenzione!",
+      "description": "Vuoi rimuovere tutti i partecipanti?",
+      "confirm": "Rimuovi",
+      "cancel": "Annulla"
+    },
+    "draw_teams": {
+      "title": "Come vuoi sorteggiare le squadre?",
+      "description": "Scegli un'opzione qui sotto:",
+      "keep_red": "Mantieni Squadra Rossa",
+      "keep_blue": "Mantieni Squadra Blu",
+      "redraw_all": "Risorteggia Tutte le Squadre",
+      "cancel": "Annulla"
+    }
+  },
+  "language": {
+    "label": "Lingua",
+    "select": "Seleziona Lingua",
+    "english": "English",
+    "portuguese": "Português",
+    "spanish": "Español",
+    "chinese": "中文",
+    "hindi": "हिन्दी",
+    "arabic": "العربية",
+    "french": "Français",
+    "german": "Deutsch",
+    "indonesian": "Bahasa Indonesia",
+    "turkish": "Türkçe",
+    "japanese": "日本語",
+    "russian": "Русский",
+    "persian": "فارسی",
+    "urdu": "اردو",
+    "bengali": "বাংলা",
+    "ukrainian": "Українська",
+    "italian": "Italiano",
+    "serbian": "Српски"
+  },
+  "tour": {
+    "welcome": "Benvenuto! Facciamo un tour veloce per conoscere le funzionalità principali dell'app.",
+    "participant_form": "Qui puoi aggiungere partecipanti. Digita il nome e clicca 'Aggiungi' o premi Invio.",
+    "participant_list": "Questa è la lista dei partecipanti. Puoi modificare o rimuovere qualsiasi partecipante cliccando sulle icone accanto al nome.",
+    "draw_button": "Questo pulsante sorteggia le squadre in modo equilibrato, considerando i livelli di abilità e le posizioni speciali.",
+    "teams": "Qui appariranno le squadre sorteggiate, divise in modo equilibrato.",
+    "bench": "Qui appariranno i giocatori in panchina quando non ci sono abbastanza giocatori per formare squadre complete.",
+    "language": "Usa questo selettore per cambiare la lingua dell'interfaccia.",
+    "faq": "Clicca qui per vedere le domande frequenti e ottenere aiuto su come usare l'app.",
+    "complete": "Fatto! Ora conosci tutte le funzionalità principali. Buon divertimento con il sorteggio delle squadre!",
+    "restart_button": "Riavvia tour guidato",
+    "back": "Indietro",
+    "skip": "Salta",
+    "close": "Chiudi",
+    "next": "Avanti",
+    "last": "Fine"
+  },
+  "faq": {
+    "title": "Domande Frequenti",
+    "button": "FAQ",
+    "questions": [
+      {
+        "question": "Come funziona il sorteggio delle squadre?",
+        "answer": "L'algoritmo distribuisce uniformemente i giocatori tra le squadre considerando i livelli di abilità (Principiante, Intermedio, Avanzato) e le posizioni speciali (Libero, Palleggiatore). Questo garantisce squadre equilibrate e competitive, e assicura anche che tutti giochino approssimativamente lo stesso numero di partite."
+      },
+      {
+        "question": "Cosa sono i livelli di abilità?",
+        "answer": "I livelli di abilità aiutano a bilanciare le squadre. Principiante (peso 0.5) rappresenta i giocatori nuovi alla pallavolo, Intermedio (peso 1) per giocatori con esperienza moderata, e Avanzato (peso 1.5) per giocatori esperti. L'algoritmo usa questi pesi per distribuire equamente la forza complessiva delle squadre."
+      },
+      {
+        "question": "Cosa significa 'mantieni squadra'?",
+        "answer": "Quando risorteggi, puoi scegliere di mantenere una delle squadre (Rossa o Blu) e riorganizzare solo l'altra squadra e la panchina. Questo è utile quando una partita è finita e vuoi mantenere intatta la squadra vincente."
+      },
+      {
+        "question": "Come modifico i partecipanti?",
+        "answer": "Clicca il pulsante 'Modifica' (icona matita) accanto al nome di qualsiasi partecipante nella lista. Puoi cambiare il loro nome, livello di abilità e posizione. Le modifiche vengono salvate automaticamente."
+      },
+      {
+        "question": "I miei dati vengono salvati?",
+        "answer": "Sì! Tutti i partecipanti e le squadre sorteggiate vengono salvate automaticamente nel tuo browser (localStorage). I tuoi dati rimarranno anche se chiudi e riapri la pagina."
+      },
+      {
+        "question": "Funziona offline?",
+        "answer": "Sì! Questa è una PWA (Progressive Web App) che funziona completamente offline dopo il primo caricamento. Puoi installarla: su Android/Chrome (tocca il menu ⋮ > 'Aggiungi alla schermata home'), su iOS/Safari (tocca Condividi > 'Aggiungi alla schermata Home'), o su Desktop (clicca l'icona di installazione nella barra degli indirizzi)."
+      },
+      {
+        "question": "Come segnalo un bug?",
+        "answer": "Se hai trovato un problema, invia un'email a admin@volleyball-team-generator.com descrivendo l'errore che hai riscontrato."
+      }
+    ]
+  }
+}
+

@@ -84,7 +84,10 @@
     "russian": "Русский",
     "persian": "فارسی",
     "urdu": "اردو",
-    "bengali": "বাংলা"
+    "bengali": "বাংলা",
+    "ukrainian": "Українська",
+    "italian": "Italiano",
+    "serbian": "Српски"
   },
   "tour": {
     "welcome": "欢迎！让我们快速浏览一下应用程序的主要功能。",

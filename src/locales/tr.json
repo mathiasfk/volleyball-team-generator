@@ -84,7 +84,10 @@
     "russian": "Русский",
     "persian": "فارسی",
     "urdu": "اردو",
-    "bengali": "বাংলা"
+    "bengali": "বাংলা",
+    "ukrainian": "Українська",
+    "italian": "Italiano",
+    "serbian": "Српски"
   },
   "tour": {
     "welcome": "Hoş geldiniz! Uygulamanın ana özelliklerini öğrenmek için hızlı bir tur yapalım.",

@@ -84,7 +84,10 @@
     "russian": "Русский",
     "persian": "فارسی",
     "urdu": "اردو",
-    "bengali": "বাংলা"
+    "bengali": "বাংলা",
+    "ukrainian": "Українська",
+    "italian": "Italiano",
+    "serbian": "Српски"
   },
   "tour": {
     "welcome": "Welcome! Let's take a quick tour to learn about the main features of the app.",

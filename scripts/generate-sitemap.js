@@ -1,7 +1,7 @@
 // Novo arquivo para gerar sitemap no build
 import fs from 'fs'
 
-const languages = ['en', 'pt', 'es', 'zh', 'hi', 'ar', 'fr', 'de', 'id', 'tr', 'ja', 'ru', 'fa', 'ur', 'bn']
+const languages = ['en', 'pt', 'es', 'zh', 'hi', 'ar', 'fr', 'de', 'id', 'tr', 'ja', 'ru', 'fa', 'ur', 'bn', 'uk', 'it', 'sr']
 const baseUrl = 'https://volleyball-team-generator.com'
 const lastmod = new Date().toISOString().split('T')[0]
 

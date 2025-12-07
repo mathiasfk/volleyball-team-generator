@@ -114,6 +114,27 @@ const useSEO = () => {
           languageName: "বাংলা",
           locale: "bn_BD",
         },
+        uk: {
+          title: "Генератор волейбольних команд - Створюйте справедливі та збалансовані команди миттєво",
+          description:
+            "Безкоштовна онлайн жеребкування волейбольних команд. Автоматично створюйте справедливі та збалансовані команди з ваших гравців. Ідеально для дружніх ігор. Повністю безкоштовно, реєстрація не потрібна.",
+          languageName: "Українська",
+          locale: "uk_UA",
+        },
+        it: {
+          title: "Generatore di Squadre di Pallavolo - Crea Squadre Eque ed Equilibrate all'Istante",
+          description:
+            "Sorteggio gratuito di squadre di pallavolo online. Crea automaticamente squadre eque ed equilibrate con i tuoi giocatori. Perfetto per partite amichevoli. Completamente gratuito, nessuna registrazione richiesta.",
+          languageName: "Italiano",
+          locale: "it_IT",
+        },
+        sr: {
+          title: "Генератор одбојкашких тимова - Створите фер и уравнотежене тимове тренутно",
+          description:
+            "Бесплатно извлачење одбојкашких тимова на мрежи. Аутоматски креирајте фер и уравнотежене тимове од ваших играча. Савршено за пријатељске утакмице. Потпуно бесплатно, регистрација није потребна.",
+          languageName: "Српски",
+          locale: "sr_RS",
+        },
       }
       // Update title and meta tags based on the selected language
       const { title, description, languageName, locale } = seoData[lang] || seoData.en

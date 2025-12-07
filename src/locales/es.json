@@ -84,7 +84,10 @@
     "russian": "Русский",
     "persian": "فارسی",
     "urdu": "اردو",
-    "bengali": "বাংলা"
+    "bengali": "বাংলা",
+    "ukrainian": "Українська",
+    "italian": "Italiano",
+    "serbian": "Српски"
   },
   "tour": {
     "welcome": "¡Bienvenido! Hagamos un recorrido rápido para conocer las principales funcionalidades de la app.",

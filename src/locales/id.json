@@ -84,7 +84,10 @@
     "russian": "Русский",
     "persian": "فارسی",
     "urdu": "اردو",
-    "bengali": "বাংলা"
+    "bengali": "বাংলা",
+    "ukrainian": "Українська",
+    "italian": "Italiano",
+    "serbian": "Српски"
   },
   "tour": {
     "welcome": "Selamat datang! Mari kita lakukan tur singkat untuk mempelajari fitur utama aplikasi.",
