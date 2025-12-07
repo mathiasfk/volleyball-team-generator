@@ -12,8 +12,7 @@ window.dataLayer = window.dataLayer || [];
 // Analytics wrapper function
 export const gtag = (...args) => {
   if (isLocalhost) {
-    console.log('📊 Analytics (debug):', ...args);
-    return;
+    console.log('[debug]:', ...args);
   }
   
   if (typeof window.gtag === 'function') {
@@ -24,19 +23,17 @@ export const gtag = (...args) => {
   }
 };
 
-// Initialize analytics only in production
-if (!isLocalhost) {
-  // Load GA script
-  const script = document.createElement('script');
-  script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
-  script.async = true;
-  
-  // Add onload handler to ensure GA is ready
-  script.onload = () => {
-    // Initialize GA
-    gtag('js', new Date());
-    gtag('config', GA_MEASUREMENT_ID);
-  };
-  
-  document.head.appendChild(script);
-}
+
+// Load GA script
+const script = document.createElement('script');
+script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+script.async = true;
+
+// Add onload handler to ensure GA is ready
+script.onload = () => {
+  // Initialize GA
+  gtag('js', new Date());
+  gtag('config', GA_MEASUREMENT_ID, { 'debug_mode': isLocalhost });
+};
+
+document.head.appendChild(script);
