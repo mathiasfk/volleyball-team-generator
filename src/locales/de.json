@@ -139,5 +139,11 @@
         "answer": "Wenn Sie ein Problem gefunden haben, senden Sie bitte eine E-Mail an admin@volleyball-team-generator.com mit einer Beschreibung des aufgetretenen Fehlers."
       }
     ]
+  },
+  "seo": {
+    "title": "Volleyball-Teamgenerator – Erstellen Sie faire und ausgewogene Teams im Handumdrehen",
+    "description": "Kostenlose Volleyball-Teamauslosung online. Erstellen Sie automatisch faire und ausgewogene Teams aus Ihren Spielern. Perfekt für Freundschaftsspiele. Völlig kostenlos, keine Registrierung erforderlich.",
+    "languageName": "Deutsch",
+    "locale": "de_DE"
   }
 }

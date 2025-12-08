@@ -139,5 +139,11 @@
         "answer": "If you found an issue, please send an email to admin@volleyball-team-generator.com describing the error you encountered."
       }
     ]
+  },
+  "seo": {
+    "title": "Volleyball Team Generator - Create Fair & Balanced Teams Instantly",
+    "description": "Free online volleyball team draw. Automatically create fair and balanced teams from your players. Perfect for pickup games. Completely free, with no registration required.",
+    "languageName": "English",
+    "locale": "en_US"
   }
 }

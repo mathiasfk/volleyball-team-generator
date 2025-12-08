@@ -139,5 +139,11 @@
         "answer": "如果您发现问题，请发送电子邮件至admin@volleyball-team-generator.com描述您遇到的错误。"
       }
     ]
+  },
+  "seo": {
+    "title": "排球队伍生成器 - 立即创建公平平衡的队伍",
+    "description": "免费在线排球分队抽签。自动从您的球员中创建公平、均衡的队伍。非常适合休闲比赛。完全免费，无需注册。",
+    "languageName": "中文",
+    "locale": "zh_CN"
   }
 }

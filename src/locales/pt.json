@@ -139,5 +139,11 @@
         "answer": "Se você encontrou algum problema, envie um email para admin@volleyball-team-generator.com descrevendo o erro encontrado."
       }
     ]
+  },
+  "seo": {
+    "title": "Gerador de Times de Vôlei - Crie Times Justos e Equilibrados Instantaneamente",
+    "description": "Sorteio gratuito de times de vôlei online. Crie automaticamente times justos e equilibrados com seus jogadores. Perfeito para jogos casuais. Completamente grátis e não precisa de cadastro.",
+    "languageName": "Português",
+    "locale": "pt_BR"
   }
 }

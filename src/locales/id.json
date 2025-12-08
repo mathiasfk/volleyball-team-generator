@@ -139,5 +139,11 @@
         "answer": "Jika Anda menemukan masalah, silakan kirim email ke admin@volleyball-team-generator.com dengan deskripsi kesalahan yang Anda temui."
       }
     ]
+  },
+  "seo": {
+    "title": "Generator Tim Voli - Buat Tim yang Adil & Seimbang Secara Instan",
+    "description": "Pengundian tim voli online gratis. Buat tim yang adil dan seimbang secara otomatis dari pemain Anda. Sempurna untuk pertandingan kasual. Sepenuhnya gratis dan tidak perlu registrasi.",
+    "languageName": "Bahasa Indonesia",
+    "locale": "id_ID"
   }
 }

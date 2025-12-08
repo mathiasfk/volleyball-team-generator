@@ -139,5 +139,11 @@
         "answer": "Si encontraste algún problema, envía un correo electrónico a admin@volleyball-team-generator.com describiendo el error encontrado."
       }
     ]
+  },
+  "seo": {
+    "title": "Generador de Equipos de Voleibol - Crea Equipos Justos y Equilibrados al Instante",
+    "description": "Sorteo gratuito de equipos de voleibol en línea. Crea automáticamente equipos justos y equilibrados con tus jugadores. Perfecto para partidos informales. Completamente gratis y no requiere registro.",
+    "languageName": "Español",
+    "locale": "es_ES"
   }
 }

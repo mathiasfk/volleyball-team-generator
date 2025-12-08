@@ -139,5 +139,11 @@
         "answer": "Si vous avez trouvé un problème, envoyez un email à admin@volleyball-team-generator.com en décrivant l'erreur rencontrée."
       }
     ]
+  },
+  "seo": {
+    "title": "Générateur d'équipes de volley - Créez des équipes justes et équilibrées instantanément",
+    "description": "Tirage au sort gratuit d'équipes de volley en ligne. Créez automatiquement des équipes justes et équilibrées avec vos joueurs. Parfait pour les matchs entre amis. Entièrement gratuit, sans inscription requise.",
+    "languageName": "Français",
+    "locale": "fr_FR"
   }
 }
