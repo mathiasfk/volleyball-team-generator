@@ -40,9 +40,22 @@ const useSEO = () => {
       // Update canonical URL to point to current language version
       let canonical = document.querySelector('link[rel="canonical"]')
       const baseUrl = 'https://volleyball-team-generator.com'
-      const canonicalUrl = lang !== 'en' 
-        ? `${baseUrl}/?lang=${lang}`
-        : `${baseUrl}/`
+      
+      // Determine canonical URL based on path or fallback to query param
+      const pathname = window.location.pathname
+      const pathMatch = pathname.match(/^\/([a-z]{2})\//)
+      let canonicalUrl
+      
+      if (pathMatch && pathMatch[1] !== 'en') {
+        // Use path-based URL if we're on a language path
+        canonicalUrl = `${baseUrl}/${lang}/`
+      } else if (lang !== 'en') {
+        // Fallback to query param for old links and dev mode
+        canonicalUrl = `${baseUrl}/?lang=${lang}`
+      } else {
+        // English is at root
+        canonicalUrl = `${baseUrl}/`
+      }
       
       if (canonical) {
         canonical.setAttribute('href', canonicalUrl)
@@ -59,17 +72,42 @@ const useSEO = () => {
       // Update HTML lang attribute
       document.documentElement.lang = lang
 
-      // Update URL with language parameter
-      const url = new URL(window.location)
-      if (lang !== 'en') {
-        url.searchParams.set('lang', lang)
-      } else {
-        url.searchParams.delete('lang')
-      }
-
-      // Only update URL if it's different to avoid history pollution
-      if (url.toString() !== window.location.toString()) {
-        window.history.replaceState({}, '', url.toString())
+      // Update URL with language path or parameter (only if not already on correct path)
+      const currentPath = window.location.pathname
+      const expectedPath = lang === 'en' ? '/' : `/${lang}/`
+      
+      // Only update URL if we're not already on the correct path
+      // This prevents unnecessary redirects when using path-based URLs
+      if (currentPath !== expectedPath) {
+        // Check if we're on a language path
+        const pathMatch = currentPath.match(/^\/([a-z]{2})\//)
+        
+        if (pathMatch) {
+          // We're on a language path, update to correct path
+          const newUrl = new URL(window.location)
+          newUrl.pathname = expectedPath
+          newUrl.search = '' // Remove query params when using paths
+          window.history.replaceState({}, '', newUrl.toString())
+        } else if (currentPath === '/' && lang !== 'en') {
+          // We're on root but language is not English, update to language path
+          const newUrl = new URL(window.location)
+          newUrl.pathname = expectedPath
+          newUrl.search = '' // Remove query params when using paths
+          window.history.replaceState({}, '', newUrl.toString())
+        } else {
+          // Fallback: use query param for old links and dev mode
+          const url = new URL(window.location)
+          if (lang !== 'en') {
+            url.searchParams.set('lang', lang)
+          } else {
+            url.searchParams.delete('lang')
+          }
+          
+          // Only update URL if it's different to avoid history pollution
+          if (url.toString() !== window.location.toString()) {
+            window.history.replaceState({}, '', url.toString())
+          }
+        }
       }
 
       // Update FAQ Schema
