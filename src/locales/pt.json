@@ -145,5 +145,21 @@
     "description": "Sorteio gratuito de times de vôlei online. Crie automaticamente times justos e equilibrados com seus jogadores. Perfeito para jogos casuais. Completamente grátis e não precisa de cadastro.",
     "languageName": "Português",
     "locale": "pt_BR"
+  },
+  "structuredData": {
+    "name": "Gerador de Times de Vôlei",
+    "alternateName": "Sorteio de Times de Vôlei",
+    "description": "Sorteio gratuito de times de vôlei online. Crie automaticamente times justos e equilibrados com seus jogadores. Perfeito para jogos casuais. Completamente grátis e não precisa de cadastro.",
+    "featureList": [
+      "Geração aleatória de times",
+      "Equilíbrio justo dos times",
+      "Suporte multi-idioma",
+      "Design responsivo",
+      "Sem necessidade de cadastro",
+      "Gratuito para usar",
+      "Equilíbrio por nível de habilidade",
+      "Distribuição baseada em posição"
+    ],
+    "releaseNotes": "Melhorias no suporte a PWA"
   }
 }

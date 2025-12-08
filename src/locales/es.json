@@ -145,5 +145,21 @@
     "description": "Sorteo gratuito de equipos de voleibol en línea. Crea automáticamente equipos justos y equilibrados con tus jugadores. Perfecto para partidos informales. Completamente gratis y no requiere registro.",
     "languageName": "Español",
     "locale": "es_ES"
+  },
+  "structuredData": {
+    "name": "Generador de Equipos de Vóley",
+    "alternateName": "Generador de Equipos de Vóley",
+    "description": "Sorteo gratuito de equipos de voleibol en línea. Crea automáticamente equipos justos y equilibrados con tus jugadores. Perfecto para partidos informales. Completamente gratis y no requiere registro.",
+    "featureList": [
+      "Generación aleatoria de equipos",
+      "Equilibrio justo de equipos",
+      "Soporte multi-idioma",
+      "Diseño responsivo",
+      "Sin necesidad de registro",
+      "Gratis para usar",
+      "Equilibrio por nivel de habilidad",
+      "Distribución basada en posición"
+    ],
+    "releaseNotes": "Mejoras en el soporte PWA"
   }
 }

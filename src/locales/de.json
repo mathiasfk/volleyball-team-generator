@@ -145,5 +145,21 @@
     "description": "Kostenlose Volleyball-Teamauslosung online. Erstellen Sie automatisch faire und ausgewogene Teams aus Ihren Spielern. Perfekt für Freundschaftsspiele. Völlig kostenlos, keine Registrierung erforderlich.",
     "languageName": "Deutsch",
     "locale": "de_DE"
+  },
+  "structuredData": {
+    "name": "Volleyball-Teamgenerator",
+    "alternateName": "Volleyball-Teamgenerator",
+    "description": "Kostenlose Volleyball-Teamauslosung online. Erstellen Sie automatisch faire und ausgewogene Teams aus Ihren Spielern. Perfekt für Freundschaftsspiele. Völlig kostenlos, keine Registrierung erforderlich.",
+    "featureList": [
+      "Zufällige Teamgenerierung",
+      "Faire Teambalance",
+      "Mehrsprachige Unterstützung",
+      "Responsives Design",
+      "Keine Registrierung erforderlich",
+      "Kostenlos zu verwenden",
+      "Balance nach Fähigkeitsstufe",
+      "Positionsbasierte Verteilung"
+    ],
+    "releaseNotes": "Verbesserte PWA-Unterstützung"
   }
 }

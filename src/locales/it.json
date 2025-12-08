@@ -145,6 +145,22 @@
     "description": "Sorteggio gratuito di squadre di pallavolo online. Crea automaticamente squadre eque ed equilibrate con i tuoi giocatori. Perfetto per partite amichevoli. Completamente gratuito, nessuna registrazione richiesta.",
     "languageName": "Italiano",
     "locale": "it_IT"
+  },
+  "structuredData": {
+    "name": "Generatore di Squadre di Pallavolo",
+    "alternateName": "Generatore di Squadre di Pallavolo",
+    "description": "Sorteggio gratuito di squadre di pallavolo online. Crea automaticamente squadre eque ed equilibrate con i tuoi giocatori. Perfetto per partite amichevoli. Completamente gratuito, nessuna registrazione richiesta.",
+    "featureList": [
+      "Generazione casuale di squadre",
+      "Bilanciamento equo delle squadre",
+      "Supporto multi-lingua",
+      "Design responsive",
+      "Nessuna registrazione richiesta",
+      "Gratuito da usare",
+      "Bilanciamento per livello di abilità",
+      "Distribuzione basata sulla posizione"
+    ],
+    "releaseNotes": "Miglioramenti al supporto PWA"
   }
 }
 

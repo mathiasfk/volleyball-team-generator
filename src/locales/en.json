@@ -145,5 +145,21 @@
     "description": "Free online volleyball team draw. Automatically create fair and balanced teams from your players. Perfect for pickup games. Completely free, with no registration required.",
     "languageName": "English",
     "locale": "en_US"
+  },
+  "structuredData": {
+    "name": "Volleyball Team Generator",
+    "alternateName": "Volleyball Team Generator",
+    "description": "Free online volleyball team draw. Automatically create fair and balanced teams from your players. Perfect for pickup games. Completely free, with no registration required.",
+    "featureList": [
+      "Random team generation",
+      "Fair team balancing",
+      "Multi-language support",
+      "Responsive design",
+      "No registration required",
+      "Free to use",
+      "Skill level balancing",
+      "Position-based distribution"
+    ],
+    "releaseNotes": "Improving WPA support"
   }
 }

@@ -65,6 +65,56 @@ function generateHreflangLinks(currentLang) {
   }).join('\n') + `\n    <link rel="alternate" hreflang="x-default" href="${baseUrl}/" />`
 }
 
+// Generate structured data JSON-LD for a specific language
+function generateStructuredData(lang, translation) {
+  const structuredData = translation.structuredData || {}
+  const canonicalUrl = lang === 'en' ? `${baseUrl}/` : `${baseUrl}/${lang}/`
+  
+  // Load all translations to get language names for availableLanguage
+  const languageNames = languages.map(l => {
+    try {
+      const t = loadTranslation(l)
+      return t.seo?.languageName || l
+    } catch {
+      return l
+    }
+  })
+  
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": structuredData.name || "Volleyball Team Generator",
+    "alternateName": structuredData.alternateName || structuredData.name || "Volleyball Team Generator",
+    "description": structuredData.description || "",
+    "url": canonicalUrl,
+    "screenshot": `${baseUrl}/og-image.png`,
+    "applicationCategory": "SportsApplication",
+    "operatingSystem": "Web Browser",
+    "browserRequirements": "Requires JavaScript.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Mathias Kriebel"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": structuredData.name || "Volleyball Team Generator",
+      "url": baseUrl
+    },
+    "inLanguage": languages,
+    "availableLanguage": languageNames,
+    "featureList": structuredData.featureList || [],
+    "softwareVersion": "1.5",
+    "releaseNotes": structuredData.releaseNotes || "Improving WPA support"
+  }
+  
+  return JSON.stringify(schema, null, 2)
+}
+
 // Update meta tags in HTML for a specific language
 function updateHTMLForLanguage(html, lang, translation) {
   const seo = translation.seo || {}
@@ -155,6 +205,13 @@ function updateHTMLForLanguage(html, lang, translation) {
     /<meta name="twitter:description" content="[^"]*" \/>/,
     `<meta name="twitter:description" content="${description}" />`
   )
+  
+  // Update Structured Data
+  const structuredDataJson = generateStructuredData(lang, translation)
+  // Match from <!-- Structured Data --> to the closing </script> tag
+  const structuredDataPattern = /<!-- Structured Data -->[\s\S]*?<\/script>/m
+  const structuredDataReplacement = `<!-- Structured Data -->\n    <script type="application/ld+json">\n    ${structuredDataJson}\n    </script>`
+  html = html.replace(structuredDataPattern, structuredDataReplacement)
   
   return html
 }

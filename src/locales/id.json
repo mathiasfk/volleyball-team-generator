@@ -145,5 +145,21 @@
     "description": "Pengundian tim voli online gratis. Buat tim yang adil dan seimbang secara otomatis dari pemain Anda. Sempurna untuk pertandingan kasual. Sepenuhnya gratis dan tidak perlu registrasi.",
     "languageName": "Bahasa Indonesia",
     "locale": "id_ID"
+  },
+  "structuredData": {
+    "name": "Generator Tim Voli",
+    "alternateName": "Generator Tim Voli",
+    "description": "Pengundian tim voli online gratis. Buat tim yang adil dan seimbang secara otomatis dari pemain Anda. Sempurna untuk pertandingan kasual. Sepenuhnya gratis dan tidak perlu registrasi.",
+    "featureList": [
+      "Generasi tim acak",
+      "Keseimbangan tim yang adil",
+      "Dukungan multi-bahasa",
+      "Desain responsif",
+      "Tidak perlu registrasi",
+      "Gratis digunakan",
+      "Keseimbangan tingkat keterampilan",
+      "Distribusi berbasis posisi"
+    ],
+    "releaseNotes": "Peningkatan dukungan PWA"
   }
 }

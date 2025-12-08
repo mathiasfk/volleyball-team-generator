@@ -145,5 +145,21 @@
     "description": "Tirage au sort gratuit d'équipes de volley en ligne. Créez automatiquement des équipes justes et équilibrées avec vos joueurs. Parfait pour les matchs entre amis. Entièrement gratuit, sans inscription requise.",
     "languageName": "Français",
     "locale": "fr_FR"
+  },
+  "structuredData": {
+    "name": "Générateur d'équipes de volley-ball",
+    "alternateName": "Générateur d'équipes de volley-ball",
+    "description": "Tirage au sort gratuit d'équipes de volley en ligne. Créez automatiquement des équipes justes et équilibrées avec vos joueurs. Parfait pour les matchs entre amis. Entièrement gratuit, sans inscription requise.",
+    "featureList": [
+      "Génération aléatoire d'équipes",
+      "Équilibrage équitable des équipes",
+      "Support multi-langue",
+      "Design responsive",
+      "Aucune inscription requise",
+      "Gratuit à utiliser",
+      "Équilibrage par niveau de compétence",
+      "Distribution basée sur la position"
+    ],
+    "releaseNotes": "Amélioration du support PWA"
   }
 }

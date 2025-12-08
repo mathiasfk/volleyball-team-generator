@@ -145,5 +145,21 @@
     "description": "Ücretsiz çevrimiçi voleybol takım çekilişi. Oyuncularınızdan otomatik olarak adil ve dengeli takımlar oluşturun. Günlük maçlar için mükemmel. Tamamen ücretsiz, kayıt gerekmez.",
     "languageName": "Türkçe",
     "locale": "tr_TR"
+  },
+  "structuredData": {
+    "name": "Voleybol Takımı Oluşturucu",
+    "alternateName": "Voleybol Takımı Oluşturucu",
+    "description": "Ücretsiz çevrimiçi voleybol takım çekilişi. Oyuncularınızdan otomatik olarak adil ve dengeli takımlar oluşturun. Günlük maçlar için mükemmel. Tamamen ücretsiz, kayıt gerekmez.",
+    "featureList": [
+      "Rastgele takım oluşturma",
+      "Adil takım dengesi",
+      "Çok dilli destek",
+      "Duyarlı tasarım",
+      "Kayıt gerekmez",
+      "Ücretsiz kullanım",
+      "Yetenek seviyesi dengesi",
+      "Pozisyon bazlı dağıtım"
+    ],
+    "releaseNotes": "PWA desteği iyileştirmeleri"
   }
 }
