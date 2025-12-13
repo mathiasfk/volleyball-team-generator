@@ -665,7 +665,7 @@ function App() {
               <Button
                 onClick={clearDraw}
                 variant="outline"
-                className="border-gray-500 text-gray-300 hover:bg-gray-600 px-8 py-3 text-lg"
+                className="border-gray-400 text-gray-200 bg-gray-800/50 hover:bg-gray-700 hover:text-white hover:border-gray-300 px-8 py-3 text-lg"
               >
                 {t('actions.clear_draw')}
               </Button>
