@@ -14,6 +14,7 @@ import { Input } from '@/components/ui/input.jsx'
 import { Label } from '@/components/ui/label.jsx'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group.jsx'
 import { Slider } from '@/components/ui/slider.jsx'
+import { gtag } from '@/services/analytics.js'
 
 import RoleIcon from './RoleIcon.jsx'
 import SkillLevelIcon from './SkillLevelIcon.jsx'
@@ -86,6 +87,54 @@ const EditParticipantDialog = ({
     }
   }
 
+  // Track skill level change
+  const handleSkillLevelChange = (value) => {
+    const newSkillLevel = value[0]
+    const weightMap = [0.5, 1.0, 1.5]
+    const weight = weightMap[newSkillLevel]
+    
+    let skillLabel
+    switch (newSkillLevel) {
+      case 0:
+        skillLabel = t('skill_levels.beginner')
+        break
+      case 2:
+        skillLabel = t('skill_levels.advanced')
+        break
+      case 1:
+      default:
+        skillLabel = t('skill_levels.intermediate')
+        break
+    }
+    
+    setSkillLevel(newSkillLevel)
+    
+    if (participant) {
+      gtag('event', 'edit_participant_skill_level_change', {
+        participant_id: participant.id,
+        participant_name: participant.name,
+        skill_level_index: newSkillLevel,
+        skill_level_label: skillLabel,
+        weight: weight,
+      })
+    }
+  }
+
+  // Track role change
+  const handleRoleChange = (newRole) => {
+    setRole(newRole)
+    
+    if (participant) {
+      const roleLabel = t(`role.${newRole}`)
+      gtag('event', 'edit_participant_role_change', {
+        participant_id: participant.id,
+        participant_name: participant.name,
+        role: newRole,
+        role_label: roleLabel,
+      })
+    }
+  }
+
   const currentSkillInfo = getSkillLevelInfo()
 
   return (
@@ -138,7 +187,7 @@ const EditParticipantDialog = ({
                   max={2}
                   step={1}
                   value={[skillLevel]}
-                  onValueChange={(value) => setSkillLevel(value[0])}
+                  onValueChange={handleSkillLevelChange}
                   className="cursor-pointer"
                 />
               
@@ -162,7 +211,7 @@ const EditParticipantDialog = ({
             <Label htmlFor="role" className="text-white">
               {t('role.label')}
             </Label>
-            <RadioGroup value={role} onValueChange={setRole}>
+            <RadioGroup value={role} onValueChange={handleRoleChange}>
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="any" id="role-any" className="border-white text-white" />
                 <Label htmlFor="role-any" className="text-white cursor-pointer">
