@@ -50,20 +50,20 @@ function createExampleParticipants(t) {
     {
       id: `${baseTime}-3`,
       name: t('participants.example_player', { number: 3 }),
-      weight: 1.5,
+      weight: 1,
       role: 'any',
     },
     {
       id: `${baseTime}-4`,
       name: t('participants.example_player', { number: 4 }),
-      weight: 1.5,
+      weight: 1,
       role: 'any',
     },
     {
       id: `${baseTime}-5`,
       name: t('participants.example_player', { number: 5 }),
       weight: 1,
-      role: 'setter',
+      role: 'any',
     },
   ]
 }
