@@ -13,7 +13,9 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip.jsx'
+import { useIsMobile } from '@/hooks/use-mobile'
 import { gtag } from '@/services/analytics.js'
+import { cn } from '@/utils/ui'
 
 const languages = [
   { code: 'en', labelKey: 'language.english', emoji: '🇺🇸' },
@@ -38,6 +40,7 @@ const languages = [
 
 const LanguageSelector = ({ onRestartTour }) => {
   const { i18n, t } = useTranslation()
+  const isMobile = useIsMobile()
 
   const handleChange = (newLang) => {
     const previousLang = i18n.language
@@ -71,7 +74,12 @@ const LanguageSelector = ({ onRestartTour }) => {
         onValueChange={handleChange}
       >
         <SelectTrigger
-          className="border-gray-500 text-gray-300 hover:bg-gray-600 w-[130px]"
+          className={cn(
+            'border-gray-500 text-gray-300 hover:bg-gray-600',
+            isMobile ? 'w-[95px]' : 'w-auto min-w-[120px]',
+            isMobile && '[&_[data-slot=select-value]_.lang-name]:hidden [&_[data-slot=select-value]_.lang-code]:!inline-block',
+            !isMobile && '[&_[data-slot=select-value]_.lang-code]:hidden'
+          )}
         >
           <SelectValue placeholder={t('language.select')} />
         </SelectTrigger>
@@ -80,7 +88,8 @@ const LanguageSelector = ({ onRestartTour }) => {
             <SelectItem key={lang.code} value={lang.code}>
               <span className="flex items-center gap-2">
                 <span>{lang.emoji}</span>
-                {t(lang.labelKey)}
+                <span className="lang-name">{t(lang.labelKey)}</span>
+                <span className="lang-code hidden">{lang.code}</span>
               </span>
             </SelectItem>
           ))}
