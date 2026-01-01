@@ -60,7 +60,7 @@ const DrawTeamsDialog = ({ open, onOpenChange, hasExistingTeams, onDrawTeams, on
         <Button
           onClick={onCancel}
           variant="outline"
-          className="border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white w-full py-6 text-lg"
+          className="border-gray-400 text-gray-200 bg-gray-800/50 hover:bg-gray-700 hover:text-white hover:border-gray-300 w-full py-6 text-lg"
         >
           {t('dialog.draw_teams.cancel')}
         </Button>

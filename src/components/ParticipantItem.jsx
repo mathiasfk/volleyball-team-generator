@@ -105,8 +105,8 @@ const ParticipantItem = ({
         <Button
           onClick={onEdit}
           size="sm"
-          variant="outline"
-          className="border-gray-500 text-gray-300 hover:bg-gray-600"
+          variant="primary"
+          className="border-gray-400 text-white bg-gray-800/50 hover:bg-gray-500 hover:text-white hover:border-gray-300"
           disabled={isEditing}
         >
           <Edit2 className="w-4 h-4" />
@@ -114,8 +114,8 @@ const ParticipantItem = ({
         <Button
           onClick={onRemove}
           size="sm"
-          variant="destructive"
-          className="bg-red-600 hover:bg-red-700"
+          variant="primary"
+          className="border-gray-400 text-white bg-gray-800/50 hover:bg-gray-500 hover:text-white hover:border-gray-300"
           disabled={isEditing}
         >
           <Trash2 className="w-4 h-4" />
