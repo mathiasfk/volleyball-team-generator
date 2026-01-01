@@ -683,11 +683,11 @@ function App() {
           </Collapsible>
 
           {/* Action Buttons */}
-          <div className="flex gap-4 justify-center mb-6">
+          <div className="flex flex-col md:flex-row gap-4 justify-center mb-6">
             <Button
               onClick={openDrawTeamsDialog}
               disabled={participants.length === 0}
-              className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg tour-draw-button"
+              className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg tour-draw-button w-full md:w-auto"
             >
               <Shuffle className="w-5 h-5 me-2" />
               {t('actions.draw_teams')}
@@ -696,7 +696,7 @@ function App() {
               <Button
                 onClick={clearDraw}
                 variant="outline"
-                className="border-gray-400 text-gray-200 bg-gray-800/50 hover:bg-gray-700 hover:text-white hover:border-gray-300 px-8 py-3 text-lg"
+                className="border-gray-400 text-gray-200 bg-gray-800/50 hover:bg-gray-700 hover:text-white hover:border-gray-300 px-8 py-3 text-lg w-full md:w-auto"
               >
                 {t('actions.clear_draw')}
               </Button>
