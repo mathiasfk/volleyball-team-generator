@@ -1,0 +1,166 @@
+{
+  "app": {
+    "title": "🏐 Tagapagsuri ng Koponan ng Volleyball"
+  },
+  "participants": {
+    "manage": "Pamahalaan ang mga Kalahok",
+    "add": "Idagdag",
+    "clear_all": "Linisin Lahat",
+    "placeholder": "Pangalan ng kalahok",
+    "total": "Kabuuan: {{count}} mga kalahok",
+    "save": "I-save",
+    "cancel": "Kanselahin",
+    "edit": "I-edit",
+    "remove": "Tanggalin",
+    "edit_dialog_title": "I-edit ang Kalahok",
+    "edit_dialog_description": "Baguhin ang pangalan at antas ng kasanayan ng kalahok",
+    "example_player": "Manlalaro {{number}}"
+  },
+  "skill_levels": {
+    "beginner": "Nagsisimula",
+    "intermediate": "Katamtaman",
+    "advanced": "Mahusay",
+    "label": "Antas ng Kasanayan"
+  },
+  "role": {
+    "label": "Posisyon",
+    "any": "Kahit Ano",
+    "libero": "Libero",
+    "setter": "Setter"
+  },
+  "actions": {
+    "draw_teams": "Gumawa ng mga Koponan",
+    "clear_draw": "Linisin ang Pagguhit"
+  },
+  "results": {
+    "title": "Mga Resulta ng Pagguhit",
+    "team": "Koponan {{color}}",
+    "players_count": "{{count}} mga manlalaro",
+    "bench_title": "Mga Manlalarong Nasa Bench",
+    "bench_count": "{{count}} tao/tao sa bench"
+  },
+  "colors": {
+    "red": "Pula",
+    "blue": "Asul",
+    "green": "Berde",
+    "purple": "Lila",
+    "orange": "Kahel",
+    "pink": "Rosas"
+  },
+  "errors": {
+    "empty_name": "Mangyaring maglagay ng wastong pangalan.",
+    "duplicate_name": "Mayroon nang kalahok na may ganitong pangalan. Mangyaring gumamit ng ibang pangalan."
+  },
+  "dialog": {
+    "clear_participants": {
+      "title": "Babala!",
+      "description": "Nais mo bang alisin ang lahat ng mga kalahok?",
+      "confirm": "Alisin",
+      "cancel": "Kanselahin"
+    },
+    "draw_teams": {
+      "title": "Paano mo gustong gumawa ng mga koponan?",
+      "description": "Pumili ng opsyon sa ibaba:",
+      "keep_red": "Panatilihin ang Pula na Koponan",
+      "keep_blue": "Panatilihin ang Asul na Koponan",
+      "redraw_all": "Gawin Muli ang Lahat ng mga Koponan",
+      "cancel": "Kanselahin"
+    }
+  },
+  "language": {
+    "label": "Wika",
+    "select": "Pumili ng Wika",
+    "english": "English",
+    "portuguese": "Português",
+    "spanish": "Español",
+    "chinese": "中文",
+    "hindi": "हिन्दी",
+    "arabic": "العربية",
+    "french": "Français",
+    "german": "Deutsch",
+    "indonesian": "Bahasa Indonesia",
+    "turkish": "Türkçe",
+    "japanese": "日本語",
+    "russian": "Русский",
+    "persian": "فارسی",
+    "urdu": "اردو",
+    "bengali": "বাংলা",
+    "ukrainian": "Українська",
+    "italian": "Italiano",
+    "serbian": "Српски",
+    "tagalog": "Tagalog"
+  },
+  "tour": {
+    "welcome": "Maligayang pagdating! Maglakbay tayo upang matuto tungkol sa mga pangunahing tampok ng app.",
+    "participant_form": "Dito maaari kang magdagdag ng mga kalahok. I-type ang pangalan at i-click ang 'Idagdag' o pindutin ang Enter.",
+    "participant_list": "Ito ang listahan ng mga kalahok. Maaari mong i-edit o tanggalin ang anumang kalahok sa pamamagitan ng pag-click sa mga icon sa tabi ng pangalan.",
+    "draw_button": "Ang button na ito ay gumagawa ng mga koponan sa isang balanseng paraan, isinasaalang-alang ang mga antas ng kasanayan at espesyal na posisyon.",
+    "teams": "Dito lilitaw ang mga ginawang koponan, nahahati sa isang balanseng paraan.",
+    "bench": "Dito lilitaw ang mga manlalarong nasa bench kapag walang sapat na mga manlalaro upang bumuo ng kumpletong mga koponan.",
+    "language": "Gamitin ang selector na ito upang baguhin ang wika ng interface.",
+    "faq": "I-click dito upang makita ang mga madalas na itinanong na tanong at makakuha ng tulong kung paano gamitin ang app.",
+    "complete": "Tapos na! Ngayon alam mo na ang lahat ng mga pangunahing tampok. Magsaya sa paggawa ng mga koponan!",
+    "restart_button": "I-restart ang guided tour",
+    "back": "Bumalik",
+    "skip": "Laktawan",
+    "close": "Isara",
+    "next": "Susunod",
+    "last": "Wakas"
+  },
+  "faq": {
+    "title": "Mga Madalas Itinanong na Tanong",
+    "button": "FAQ",
+    "questions": [
+      {
+        "question": "Paano gumagana ang pagguhit ng koponan?",
+        "answer": "Ang algorithm ay pantay na nagbibigay ng mga manlalaro sa mga koponan sa pamamagitan ng pagsasaalang-alang sa mga antas ng kasanayan (Nagsisimula, Katamtaman, Mahusay) at espesyal na posisyon (Libero, Setter). Tinitiyak nito ang balanseng at mapagkumpitensyang mga koponan, at tinitiyak din na halos pareho ang bilang ng mga laro na nilalaro ng lahat."
+      },
+      {
+        "question": "Ano ang mga antas ng kasanayan?",
+        "answer": "Ang mga antas ng kasanayan ay tumutulong sa pagbalanse ng mga koponan. Nagsisimula (timbang 0.5) ay kumakatawan sa mga manlalaro na baguhan sa volleyball, Katamtaman (timbang 1) para sa mga manlalaro na may katamtamang karanasan, at Mahusay (timbang 1.5) para sa mga bihasang manlalaro. Ginagamit ng algorithm ang mga timbang na ito upang pantay na ibigay ang pangkalahatang lakas ng koponan."
+      },
+      {
+        "question": "Ano ang ibig sabihin ng 'panatilihin ang koponan'?",
+        "answer": "Kapag muling gumagawa, maaari mong piliin na panatilihin ang isa sa mga koponan (Pula o Asul) at muling ayusin lamang ang ibang koponan at ang bench. Ito ay kapaki-pakinabang kapag natapos na ang isang laro at nais mong panatilihing buo ang nanalong koponan."
+      },
+      {
+        "question": "Paano ko i-edit ang mga kalahok?",
+        "answer": "I-click ang 'I-edit' button (icon ng lapis) sa tabi ng pangalan ng anumang kalahok sa listahan. Maaari mong baguhin ang kanilang pangalan, antas ng kasanayan, at posisyon. Ang mga pagbabago ay awtomatikong na-save."
+      },
+      {
+        "question": "Nai-save ba ang aking data?",
+        "answer": "Oo! Ang lahat ng mga kalahok at ginawang mga koponan ay awtomatikong na-save sa iyong browser (localStorage). Ang iyong data ay mananatili kahit isara at muling buksan mo ang pahina."
+      },
+      {
+        "question": "Gumagana ba ito offline?",
+        "answer": "Oo! Ito ay isang PWA (Progressive Web App) na ganap na gumagana offline pagkatapos ng unang load. Maaari mo itong i-install: sa Android/Chrome (i-tap ang menu ⋮ > 'Idagdag sa Home screen'), sa iOS/Safari (i-tap ang Share > 'Idagdag sa Home Screen'), o sa Desktop (i-click ang install icon sa address bar)."
+      },
+      {
+        "question": "Paano ko i-report ang isang bug?",
+        "answer": "Kung nakakita ka ng isang isyu, mangyaring magpadala ng email sa admin@volleyball-team-generator.com na naglalarawan sa error na nakatagpo mo."
+      }
+    ]
+  },
+  "seo": {
+    "title": "Tagapagsuri ng Koponan ng Volleyball - Lumikha ng Makatarungan at Balanseng mga Koponan Agad",
+    "description": "Libreng online na tagapagsuri ng koponan ng volleyball. Awtomatikong lumikha ng makatarungan at balanseng mga koponan mula sa iyong mga manlalaro. Perpekto para sa mga pickup games. Ganap na libre, walang kinakailangang pagrehistro.",
+    "languageName": "Tagalog",
+    "locale": "tl_PH"
+  },
+  "structuredData": {
+    "name": "Tagapagsuri ng Koponan ng Volleyball",
+    "alternateName": "Tagapagsuri ng Koponan ng Volleyball",
+    "description": "Libreng online na tagapagsuri ng koponan ng volleyball. Awtomatikong lumikha ng makatarungan at balanseng mga koponan mula sa iyong mga manlalaro. Perpekto para sa mga pickup games. Ganap na libre, walang kinakailangang pagrehistro.",
+    "featureList": [
+      "Random na paggawa ng koponan",
+      "Makatarungang pagbalanse ng koponan",
+      "Suporta sa maraming wika",
+      "Responsive na disenyo",
+      "Walang kinakailangang pagrehistro",
+      "Libreng gamitin",
+      "Pagbalanse ng antas ng kasanayan",
+      "Distribusyon batay sa posisyon"
+    ],
+    "releaseNotes": "Pagpapabuti ng suporta sa WPA"
+  }
+}

@@ -9,7 +9,7 @@ const rootDir = path.resolve(__dirname, '..')
 const distDir = path.join(rootDir, 'dist')
 const localesDir = path.join(rootDir, 'src', 'locales')
 
-const languages = ['en', 'pt', 'es', 'zh', 'hi', 'ar', 'fr', 'de', 'id', 'tr', 'ja', 'ru', 'fa', 'ur', 'bn', 'uk', 'it', 'sr']
+const languages = ['en', 'pt', 'es', 'zh', 'hi', 'ar', 'fr', 'de', 'id', 'tr', 'ja', 'ru', 'fa', 'ur', 'bn', 'uk', 'it', 'sr', 'tl']
 const baseUrl = 'https://volleyball-team-generator.com'
 
 // Map language codes to Open Graph locale codes
@@ -31,7 +31,8 @@ const ogLocaleMap = {
   bn: 'bn_BD',
   uk: 'uk_UA',
   it: 'it_IT',
-  sr: 'sr_RS'
+  sr: 'sr_RS',
+  tl: 'tl_PH'
 }
 
 // RTL languages

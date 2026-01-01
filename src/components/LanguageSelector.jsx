@@ -36,6 +36,7 @@ const languages = [
   { code: 'fa', labelKey: 'language.persian', emoji: '🇮🇷' },
   { code: 'ur', labelKey: 'language.urdu', emoji: '🇵🇰' },
   { code: 'bn', labelKey: 'language.bengali', emoji: '🇧🇩' },
+  { code: 'tl', labelKey: 'language.tagalog', emoji: '🇵🇭' },
 ]
 
 const LanguageSelector = ({ onRestartTour }) => {
