@@ -382,6 +382,36 @@ function App() {
     setEditingParticipant(null)
   }
 
+  const handleInlineNameUpdate = (id, newName) => {
+    const formattedName = formatParticipantName(newName)
+    const isDuplicate = isDuplicateName(formattedName, participants, id)
+    const isEmpty = isEmptyName(newName)
+
+    gtag('event', 'inline_edit_participant_name', {
+      'new_name': formattedName,
+      'is_empty': isEmpty,
+      'is_duplicate': isDuplicate,
+      'id': id
+    })
+
+    if (isEmpty) {
+      dispatch({ type: ACTIONS.SET_ERROR, payload: t('errors.empty_name') })
+      return false // Return false to indicate validation failed
+    }
+
+    if (isDuplicate) {
+      dispatch({ type: ACTIONS.SET_ERROR, payload: t('errors.duplicate_name') })
+      return false // Return false to indicate validation failed
+    }
+
+    dispatch({
+      type: ACTIONS.UPDATE_PARTICIPANT,
+      payload: { id, name: formattedName }
+    })
+    
+    return true // Return true to indicate success
+  }
+
   const openDrawTeamsDialog = () => {
     if (teams.length === 0) {
       drawTeams(null)
@@ -637,6 +667,7 @@ function App() {
                     participants={participants}
                     onEdit={openEditDialog}
                     onRemove={removeParticipant}
+                    onInlineNameUpdate={handleInlineNameUpdate}
                   />
                   
                   {/* Edit Participant Dialog */}
@@ -699,6 +730,7 @@ function App() {
                       teamColor={teamColor}
                       index={index}
                       changedPlayerIds={changedPlayerIds}
+                      onInlineNameUpdate={handleInlineNameUpdate}
                     />
                   )
                 })}
@@ -708,6 +740,7 @@ function App() {
               <BenchCard 
                 benchPlayers={benchPlayers} 
                 changedPlayerIds={changedPlayerIds}
+                onInlineNameUpdate={handleInlineNameUpdate}
               />
             </div>
           )}

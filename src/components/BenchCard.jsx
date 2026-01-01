@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.j
 
 import PlayerDisplay from './PlayerDisplay.jsx'
 
-const BenchCard = ({ benchPlayers, changedPlayerIds = [] }) => {
+const BenchCard = ({ benchPlayers, changedPlayerIds = [], onInlineNameUpdate }) => {
   const { t } = useTranslation()
 
   if (benchPlayers.length === 0) {
@@ -30,7 +30,7 @@ const BenchCard = ({ benchPlayers, changedPlayerIds = [] }) => {
                   isChanged ? 'player-changed' : ''
                 }`}
               >
-                <PlayerDisplay participant={participant} />
+                <PlayerDisplay participant={participant} onInlineNameUpdate={onInlineNameUpdate} />
               </div>
             )
           })}

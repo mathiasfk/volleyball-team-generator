@@ -7,7 +7,8 @@ import ParticipantItem from './ParticipantItem.jsx'
 const ParticipantList = ({ 
   participants,
   onEdit,
-  onRemove
+  onRemove,
+  onInlineNameUpdate
 }) => {
   const { t } = useTranslation()
 
@@ -20,6 +21,7 @@ const ParticipantList = ({
             participant={participant}
             onEdit={() => onEdit(participant)}
             onRemove={() => onRemove(participant.id)}
+            onInlineNameUpdate={onInlineNameUpdate}
           />
         ))}
       </div>

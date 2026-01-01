@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.j
 
 import PlayerDisplay from './PlayerDisplay.jsx'
 
-const TeamCard = ({ team, teamColor, _index, changedPlayerIds = [] }) => {
+const TeamCard = ({ team, teamColor, _index, changedPlayerIds = [], onInlineNameUpdate }) => {
   const { t } = useTranslation()
 
   return (
@@ -32,7 +32,7 @@ const TeamCard = ({ team, teamColor, _index, changedPlayerIds = [] }) => {
                   isChanged ? 'player-changed' : ''
                 }`}
               >
-                <PlayerDisplay participant={participant} />
+                <PlayerDisplay participant={participant} onInlineNameUpdate={onInlineNameUpdate} />
               </div>
             )
           })}

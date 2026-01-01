@@ -102,16 +102,35 @@ export function appReducer(state, action) {
         error: '',
       }
     
-    case ACTIONS.UPDATE_PARTICIPANT:
+    case ACTIONS.UPDATE_PARTICIPANT: {
+      // Update participants array
+      const updatedParticipants = state.participants.map(p =>
+        p.id === action.payload.id 
+          ? { ...p, ...action.payload } 
+          : p
+      )
+      
+      // Create a map for quick lookup of updated participants
+      const participantMap = new Map(updatedParticipants.map(p => [p.id, p]))
+      
+      // Update teams with the updated participant references
+      const updatedTeams = state.teams.map(team =>
+        team.map(player => participantMap.get(player.id) || player)
+      )
+      
+      // Update bench players with the updated participant references
+      const updatedBenchPlayers = state.benchPlayers.map(player =>
+        participantMap.get(player.id) || player
+      )
+      
       return {
         ...state,
-        participants: state.participants.map(p =>
-          p.id === action.payload.id 
-            ? { ...p, ...action.payload } 
-            : p
-        ),
+        participants: updatedParticipants,
+        teams: updatedTeams,
+        benchPlayers: updatedBenchPlayers,
         error: '',
       }
+    }
     
     case ACTIONS.SET_TEAMS: {
       // Create a set of player IDs that are in teams (not on bench)
