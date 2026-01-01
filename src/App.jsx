@@ -21,6 +21,7 @@ import ParticipantList from './components/ParticipantList.jsx'
 import TeamCard from './components/TeamCard.jsx'
 import { AlertDialog } from './components/ui/alert-dialog.jsx'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './components/ui/collapsible.jsx'
+import { Dialog } from './components/ui/dialog.jsx'
 import { STORAGE_KEYS } from './constants/storageKeys.ts'
 import { getTeamColors } from './constants/teamColors.ts'
 import useSEO from './hooks/useSEO.js'
@@ -673,13 +674,17 @@ function App() {
           </div>
 
           {/* Draw Teams Dialog */}
-          <AlertDialog open={openDrawDialog} onOpenChange={(value) => dispatch({ type: ACTIONS.SET_OPEN_DRAW_DIALOG, payload: value })}>
+          <Dialog open={openDrawDialog} onOpenChange={(value) => {
+            if (!value) {
+              cancelDrawTeams()
+            }
+          }}>
             <DrawTeamsDialog
               hasExistingTeams={teams.length > 0}
               onDrawTeams={drawTeams}
               onCancel={cancelDrawTeams}
             />
-          </AlertDialog>
+          </Dialog>
 
           {/* Draw Results */}
           {teams.length > 0 && (

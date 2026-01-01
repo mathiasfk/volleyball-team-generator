@@ -1,27 +1,28 @@
 import { useTranslation } from 'react-i18next'
 
-import { 
-  AlertDialogCancel, 
-  AlertDialogContent, 
-  AlertDialogDescription,
-  AlertDialogHeader, 
-  AlertDialogTitle} from '@/components/ui/alert-dialog.jsx'
 import { Button } from '@/components/ui/button.jsx'
+import {
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog.jsx'
 
 const DrawTeamsDialog = ({ hasExistingTeams, onDrawTeams, onCancel }) => {
   const { t } = useTranslation()
 
   return (
-    <AlertDialogContent className="bg-gray-800 border-gray-700">
-      <AlertDialogHeader>
-        <AlertDialogTitle className="text-white text-center text-xl">
+    <DialogContent className="bg-gray-800 border-gray-700 text-white">
+      <DialogHeader>
+        <DialogTitle className="text-white text-center text-xl">
           {t('dialog.draw_teams.title')}
-        </AlertDialogTitle>
-      </AlertDialogHeader>
-      <AlertDialogDescription className="text-gray-300 text-center mb-4">
-        {t('dialog.draw_teams.description')}
-      </AlertDialogDescription>
-      <div className="flex flex-col gap-3">
+        </DialogTitle>
+        <DialogDescription className="text-gray-300 text-center">
+          {t('dialog.draw_teams.description')}
+        </DialogDescription>
+      </DialogHeader>
+      <div className="flex flex-col gap-3 py-4">
         {hasExistingTeams && (
           <>
             <Button
@@ -44,14 +45,17 @@ const DrawTeamsDialog = ({ hasExistingTeams, onDrawTeams, onCancel }) => {
         >
           {t('dialog.draw_teams.redraw_all')}
         </Button>
-        <AlertDialogCancel 
+      </div>
+      <DialogFooter>
+        <Button
           onClick={onCancel}
+          variant="outline"
           className="border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white w-full py-6 text-lg"
         >
           {t('dialog.draw_teams.cancel')}
-        </AlertDialogCancel>
-      </div>
-    </AlertDialogContent>
+        </Button>
+      </DialogFooter>
+    </DialogContent>
   )
 }
 
