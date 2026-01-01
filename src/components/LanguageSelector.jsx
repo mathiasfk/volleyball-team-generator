@@ -1,4 +1,4 @@
-import { MessageCircleQuestionMark } from 'lucide-react'
+import { Globe, MessageCircleQuestionMark } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -18,25 +18,25 @@ import { gtag } from '@/services/analytics.js'
 import { cn } from '@/utils/ui'
 
 const languages = [
-  { code: 'en', labelKey: 'language.english', emoji: '🇺🇸' },
-  { code: 'pt', labelKey: 'language.portuguese', emoji: '🇧🇷' },
-  { code: 'es', labelKey: 'language.spanish', emoji: '🇪🇸' },
-  { code: 'fr', labelKey: 'language.french', emoji: '🇫🇷' },
-  { code: 'tr', labelKey: 'language.turkish', emoji: '🇹🇷' },
-  { code: 'uk', labelKey: 'language.ukrainian', emoji: '🇺🇦' },
-  { code: 'de', labelKey: 'language.german', emoji: '🇩🇪' },
-  { code: 'it', labelKey: 'language.italian', emoji: '🇮🇹' },
-  { code: 'sr', labelKey: 'language.serbian', emoji: '🇷🇸' },
-  { code: 'zh', labelKey: 'language.chinese', emoji: '🇨🇳' },
-  { code: 'ja', labelKey: 'language.japanese', emoji: '🇯🇵' },
-  { code: 'ru', labelKey: 'language.russian', emoji: '🇷🇺' },
-  { code: 'hi', labelKey: 'language.hindi', emoji: '🇮🇳' },
-  { code: 'ar', labelKey: 'language.arabic', emoji: '🇸🇦' },
-  { code: 'id', labelKey: 'language.indonesian', emoji: '🇮🇩' },
-  { code: 'fa', labelKey: 'language.persian', emoji: '🇮🇷' },
-  { code: 'ur', labelKey: 'language.urdu', emoji: '🇵🇰' },
-  { code: 'bn', labelKey: 'language.bengali', emoji: '🇧🇩' },
-  { code: 'tl', labelKey: 'language.tagalog', emoji: '🇵🇭' },
+  { code: 'en', labelKey: 'language.english' },
+  { code: 'pt', labelKey: 'language.portuguese' },
+  { code: 'es', labelKey: 'language.spanish' },
+  { code: 'fr', labelKey: 'language.french' },
+  { code: 'tr', labelKey: 'language.turkish' },
+  { code: 'uk', labelKey: 'language.ukrainian' },
+  { code: 'de', labelKey: 'language.german' },
+  { code: 'it', labelKey: 'language.italian' },
+  { code: 'sr', labelKey: 'language.serbian' },
+  { code: 'zh', labelKey: 'language.chinese' },
+  { code: 'ja', labelKey: 'language.japanese' },
+  { code: 'ru', labelKey: 'language.russian' },
+  { code: 'hi', labelKey: 'language.hindi' },
+  { code: 'ar', labelKey: 'language.arabic' },
+  { code: 'id', labelKey: 'language.indonesian' },
+  { code: 'fa', labelKey: 'language.persian' },
+  { code: 'ur', labelKey: 'language.urdu' },
+  { code: 'bn', labelKey: 'language.bengali' },
+  { code: 'tl', labelKey: 'language.tagalog' },
 ]
 
 const LanguageSelector = ({ onRestartTour }) => {
@@ -82,13 +82,15 @@ const LanguageSelector = ({ onRestartTour }) => {
             !isMobile && '[&_[data-slot=select-value]_.lang-code]:hidden'
           )}
         >
-          <SelectValue placeholder={t('language.select')} />
+          <div className="flex items-center gap-2">
+            <Globe className="w-4 h-4 flex-shrink-0" />
+            <SelectValue placeholder={t('language.select')} />
+          </div>
         </SelectTrigger>
         <SelectContent>
           {languages.map((lang) => (
             <SelectItem key={lang.code} value={lang.code}>
               <span className="flex items-center gap-2">
-                <span>{lang.emoji}</span>
                 <span className="lang-name">{t(lang.labelKey)}</span>
                 <span className="lang-code hidden">{lang.code}</span>
               </span>
