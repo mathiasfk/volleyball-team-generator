@@ -26,9 +26,9 @@ const BenchCard = ({ benchPlayers, changedPlayerIds = [], onInlineNameUpdate }) 
             return (
               <div
                 key={participant.id}
-                className={`player-card-base bg-gray-700 p-2 rounded text-center text-white ${
+                className={`player-card-base bg-gray-700 p-2 rounded text-center text-white transition-colors ${
                   isChanged ? 'player-changed' : ''
-                }`}
+                } ${onInlineNameUpdate ? 'hover:bg-gray-600' : ''}`}
               >
                 <PlayerDisplay participant={participant} onInlineNameUpdate={onInlineNameUpdate} />
               </div>

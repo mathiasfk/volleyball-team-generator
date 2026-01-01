@@ -87,7 +87,10 @@ const PlayerDisplay = ({
   }
 
   return (
-    <div className={`flex items-center justify-center gap-2 ${className}`}>
+    <div 
+      className={`flex items-center justify-center gap-2 ${className} ${onInlineNameUpdate && !isEditing ? 'cursor-pointer' : ''}`}
+      onClick={onInlineNameUpdate && !isEditing ? handleNameClick : undefined}
+    >
       {isEditing ? (
         <Input
           ref={inputRef}
@@ -99,8 +102,7 @@ const PlayerDisplay = ({
         />
       ) : (
         <span 
-          className={onInlineNameUpdate ? 'cursor-pointer hover:text-blue-300 transition-colors' : ''}
-          onClick={handleNameClick}
+          className={onInlineNameUpdate ? 'hover:text-blue-300 transition-colors' : ''}
         >
           {participant.name}
         </span>

@@ -77,7 +77,7 @@ const ParticipantItem = ({
   }
 
   return (
-    <div className="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+    <div className={`flex items-center justify-between bg-gray-700 p-3 rounded-lg ${onInlineNameUpdate && !isEditing ? 'hover:bg-gray-600 transition-colors' : ''}`}>
       <div 
         className={`flex items-center gap-2 flex-1 ${onInlineNameUpdate && !isEditing ? 'cursor-pointer' : ''}`}
         onClick={onInlineNameUpdate && !isEditing ? handleNameClick : undefined}
