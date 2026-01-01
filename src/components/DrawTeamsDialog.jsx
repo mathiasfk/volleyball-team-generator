@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 
 import { Button } from '@/components/ui/button.jsx'
 import {
+  Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -9,11 +10,20 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog.jsx'
 
-const DrawTeamsDialog = ({ hasExistingTeams, onDrawTeams, onCancel }) => {
+const DrawTeamsDialog = ({ open, onOpenChange, hasExistingTeams, onDrawTeams, onCancel }) => {
   const { t } = useTranslation()
 
+  const handleOpenChange = (value) => {
+    if (!value) {
+      onCancel()
+    } else {
+      onOpenChange?.(value)
+    }
+  }
+
   return (
-    <DialogContent className="bg-gray-800 border-gray-700 text-white">
+    <Dialog open={open} onOpenChange={handleOpenChange}>
+      <DialogContent className="bg-gray-800 border-gray-700 text-white">
       <DialogHeader>
         <DialogTitle className="text-white text-center text-xl">
           {t('dialog.draw_teams.title')}
@@ -56,6 +66,7 @@ const DrawTeamsDialog = ({ hasExistingTeams, onDrawTeams, onCancel }) => {
         </Button>
       </DialogFooter>
     </DialogContent>
+    </Dialog>
   )
 }
 
