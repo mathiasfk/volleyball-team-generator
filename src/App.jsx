@@ -1,6 +1,6 @@
 import './App.css'
 
-import { AlertCircle, HelpCircle, ListChevronsDownUp, ListChevronsUpDown, Shuffle, Users } from 'lucide-react'
+import { AlertCircle, ChevronDown, HelpCircle, ListChevronsDownUp, ListChevronsUpDown, Shuffle, Users } from 'lucide-react'
 import { useEffect, useReducer, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Joyride, { ACTIONS as JOYRIDE_ACTIONS, EVENTS, STATUS } from 'react-joyride'
@@ -12,7 +12,6 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 
 import BenchCard from './components/BenchCard.jsx'
 import ClearParticipantsDialog from './components/ClearParticipantsDialog.jsx'
-import DrawTeamsDialog from './components/DrawTeamsDialog.jsx'
 import EditParticipantDialog from './components/EditParticipantDialog.jsx'
 import FAQDialog from './components/FAQDialog.jsx'
 import LanguageSelector from './components/LanguageSelector.jsx'
@@ -21,6 +20,12 @@ import ParticipantList from './components/ParticipantList.jsx'
 import TeamCard from './components/TeamCard.jsx'
 import { AlertDialog } from './components/ui/alert-dialog.jsx'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './components/ui/collapsible.jsx'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from './components/ui/dropdown-menu.jsx'
 import { STORAGE_KEYS } from './constants/storageKeys.ts'
 import { getTeamColors } from './constants/teamColors.ts'
 import useSEO from './hooks/useSEO.js'
@@ -98,7 +103,6 @@ function App() {
     error,
     dataLoaded,
     openParticipants,
-    openDrawDialog,
     changedPlayerIds,
     previousPlayerPositions,
   } = state
@@ -412,22 +416,20 @@ function App() {
     return true // Return true to indicate success
   }
 
-  const openDrawTeamsDialog = () => {
-    if (teams.length === 0) {
-      drawTeams(null)
-      return
-    }
-    
-    gtag('event', 'draw_teams_dialog_open', {
+  const handleDrawTeamsClick = () => {
+    gtag('event', 'draw_team_primary', {
       'participant_count': participants.length,
-      'has_existing_teams': true
+      'has_existing_teams': teams.length > 0
     });
-    dispatch({ type: ACTIONS.SET_OPEN_DRAW_DIALOG, payload: true })
+    drawTeams(null)
   }
 
-  const cancelDrawTeams = () => {
-    gtag('event', 'draw_teams_cancel');
-    dispatch({ type: ACTIONS.SET_OPEN_DRAW_DIALOG, payload: false })
+  const handleKeepTeam = (keepTeamId) => {
+    gtag('event', 'draw_team_dropdown', {
+      'participant_count': participants.length,
+      'keep_team_action': keepTeamId === 0 ? 'keep_red' : 'keep_blue'
+    });
+    drawTeams(keepTeamId)
   }
 
   const drawTeams = (keepTeamId = null) => {
@@ -684,14 +686,56 @@ function App() {
 
           {/* Action Buttons */}
           <div className="flex flex-col md:flex-row gap-4 justify-center mb-6">
-            <Button
-              onClick={openDrawTeamsDialog}
-              disabled={participants.length === 0}
-              className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg tour-draw-button w-full md:w-auto"
-            >
-              <Shuffle className="w-5 h-5 me-2" />
-              {t('actions.draw_teams')}
-            </Button>
+            {teams.length === 0 ? (
+              // Simple button when no teams exist
+              <Button
+                onClick={handleDrawTeamsClick}
+                disabled={participants.length === 0}
+                className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg tour-draw-button w-full md:w-auto"
+              >
+                <Shuffle className="w-5 h-5 me-2" />
+                {t('actions.draw_teams')}
+              </Button>
+            ) : (
+              // Split button when teams exist
+              <div className="flex items-stretch tour-draw-button w-full md:w-auto">
+                <Button
+                  onClick={handleDrawTeamsClick}
+                  disabled={participants.length === 0}
+                  className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg rounded-r-none border-r border-green-800/50 disabled:opacity-50"
+                >
+                  <Shuffle className="w-5 h-5 me-2" />
+                  {t('dialog.draw_teams.redraw_all')}
+                </Button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      disabled={participants.length === 0}
+                      className="bg-green-600 hover:bg-green-700 text-white px-3 py-3 text-lg rounded-l-none border-l border-green-800/50 disabled:opacity-50 flex items-center"
+                      aria-label={t('actions.more_options', { defaultValue: 'Mais opções' })}
+                    >
+                      <ChevronDown className="w-5 h-5" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="bg-gray-800 border-gray-700 text-white min-w-[200px]">
+                    <DropdownMenuItem
+                      onClick={() => handleKeepTeam(0)}
+                      className="focus:bg-gray-700 focus:text-white cursor-pointer py-2.5"
+                    >
+                      <span className="text-red-400 me-2 font-bold">●</span>
+                      {t('dialog.draw_teams.keep_red')}
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => handleKeepTeam(1)}
+                      className="focus:bg-gray-700 focus:text-white cursor-pointer py-2.5"
+                    >
+                      <span className="text-blue-400 me-2 font-bold">●</span>
+                      {t('dialog.draw_teams.keep_blue')}
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            )}
             {teams.length > 0 && (
               <Button
                 onClick={clearDraw}
@@ -702,15 +746,6 @@ function App() {
               </Button>
             )}
           </div>
-
-          {/* Draw Teams Dialog */}
-          <DrawTeamsDialog
-            open={openDrawDialog}
-            onOpenChange={(value) => dispatch({ type: ACTIONS.SET_OPEN_DRAW_DIALOG, payload: value })}
-            hasExistingTeams={teams.length > 0}
-            onDrawTeams={drawTeams}
-            onCancel={cancelDrawTeams}
-          />
 
           {/* Draw Results */}
           {teams.length > 0 && (
