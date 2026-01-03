@@ -711,7 +711,7 @@ function App() {
                 <Button
                   onClick={handleDrawTeamsClick}
                   disabled={participants.length === 0}
-                  className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg rounded-r-none border-r border-green-800/50 disabled:opacity-50"
+                  className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg rounded-r-none border-r border-green-800/50 disabled:opacity-50 flex-1 md:flex-initial"
                 >
                   <Shuffle className="w-5 h-5 me-2" />
                   {t('dialog.draw_teams.redraw_all')}
@@ -720,7 +720,7 @@ function App() {
                   <DropdownMenuTrigger asChild>
                     <Button
                       disabled={participants.length === 0}
-                      className="bg-green-600 hover:bg-green-700 text-white px-3 py-3 text-lg rounded-l-none border-l border-green-800/50 disabled:opacity-50 flex items-center"
+                      className="bg-green-600 hover:bg-green-700 text-white px-3 py-3 text-lg rounded-l-none border-l border-green-800/50 disabled:opacity-50 flex items-center md:flex-initial"
                       aria-label={t('actions.more_options', { defaultValue: 'Mais opções' })}
                     >
                       <ChevronDown className="w-5 h-5" />
