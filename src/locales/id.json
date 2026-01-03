@@ -63,7 +63,7 @@
       "description": "Pilih salah satu opsi di bawah ini:",
       "keep_red": "Pertahankan Tim Merah",
       "keep_blue": "Pertahankan Tim Biru",
-      "redraw_all": "Buat Ulang Semua Tim",
+      "redraw_all": "Buat Ulang Tim",
       "cancel": "Batal"
     }
   },

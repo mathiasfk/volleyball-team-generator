@@ -63,7 +63,7 @@
       "description": "以下のオプションから選択してください：",
       "keep_red": "赤チームを維持",
       "keep_blue": "青チームを維持",
-      "redraw_all": "すべてのチームを再作成",
+      "redraw_all": "チームを再作成",
       "cancel": "キャンセル"
     }
   },

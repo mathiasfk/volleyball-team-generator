@@ -63,7 +63,7 @@
       "description": "Choose an option below:",
       "keep_red": "Keep Red Team",
       "keep_blue": "Keep Blue Team",
-      "redraw_all": "Redraw All Teams",
+      "redraw_all": "Redraw Teams",
       "cancel": "Cancel"
     }
   },
