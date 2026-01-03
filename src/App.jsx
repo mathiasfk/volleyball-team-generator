@@ -424,6 +424,15 @@ function App() {
     drawTeams(null)
   }
 
+  const handleDropdownOpenChange = (open) => {
+    if (open) {
+      gtag('event', 'draw_teams_dropdown_open', {
+        'participant_count': participants.length,
+        'team_count': teams.length
+      });
+    }
+  }
+
   const handleKeepTeam = (keepTeamId) => {
     gtag('event', 'draw_team_dropdown', {
       'participant_count': participants.length,
@@ -707,7 +716,7 @@ function App() {
                   <Shuffle className="w-5 h-5 me-2" />
                   {t('dialog.draw_teams.redraw_all')}
                 </Button>
-                <DropdownMenu>
+                <DropdownMenu onOpenChange={handleDropdownOpenChange}>
                   <DropdownMenuTrigger asChild>
                     <Button
                       disabled={participants.length === 0}
