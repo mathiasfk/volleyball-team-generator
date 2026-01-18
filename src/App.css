@@ -43,6 +43,30 @@
 
 :root {
   --radius: 0.625rem;
+  
+  /* Design System - Typography */
+  --text-title: 1.125rem;
+  --text-emphasis: 1rem;
+  --text-primary: 1rem;
+  --text-secondary: 1rem;
+  --text-small: 0.825rem;
+  
+  /* Design System - Colors (HSL) */
+  --color-text-primary: hsl(0, 0%, 95%);
+  --color-text-secondary: hsl(0, 0%, 50%);
+  --color-error: hsl(0, 85%, 55%);
+  --color-success: hsl(145, 65%, 45%);
+  --color-team-blue: hsl(210, 60%, 45%);
+  --color-team-red: hsl(8, 60%, 55%);
+  --color-primary: hsl(223, 100%, 50%);
+  --color-primary-hover: hsl(223, 100%, 70%);
+  --color-border: hsl(222, 30%, 20%);
+  --color-border-highlight: hsl(222, 30%, 40%);
+  --color-card-primary: hsl(222, 33%, 14%);
+  --color-card-secondary: hsl(222, 30%, 24%);
+  --color-background: hsl(225, 31%, 8%);
+  
+  /* Legacy variables - keeping for compatibility */
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -117,6 +141,37 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Design System Typography Classes */
+.ds-text-title {
+  font-size: var(--text-title);
+  font-weight: normal;
+  color: var(--color-text-primary);
+}
+
+.ds-text-emphasis {
+  font-size: var(--text-emphasis);
+  font-weight: bold;
+  color: var(--color-text-primary);
+}
+
+.ds-text-primary {
+  font-size: var(--text-primary);
+  font-weight: normal;
+  color: var(--color-text-primary);
+}
+
+.ds-text-secondary {
+  font-size: var(--text-secondary);
+  font-weight: normal;
+  color: var(--color-text-secondary);
+}
+
+.ds-text-small {
+  font-size: var(--text-small);
+  font-weight: normal;
+  color: var(--color-text-secondary);
 }
 
 /* Animation for players that changed position after draw */
