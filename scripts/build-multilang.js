@@ -57,7 +57,7 @@ function loadTranslation(lang) {
 }
 
 // Generate hreflang links for all languages
-function generateHreflangLinks(currentLang) {
+function generateHreflangLinks() {
   return languages.map(lang => {
     const href = lang === 'en' 
       ? `${baseUrl}/`
@@ -162,7 +162,7 @@ function updateHTMLForLanguage(html, lang, translation) {
   
   // Update hreflang links
   const hreflangPattern = /<!-- Language and Region -->[\s\S]*?<link rel="alternate" hreflang="x-default"[^>]*\/>/m
-  const hreflangReplacement = `<!-- Language and Region -->\n    <meta name="language" content="${languageName}" />\n${generateHreflangLinks(lang)}`
+  const hreflangReplacement = `<!-- Language and Region -->\n    <meta name="language" content="${languageName}" />\n${generateHreflangLinks()}`
   html = html.replace(hreflangPattern, hreflangReplacement)
   
   // Update Open Graph URL

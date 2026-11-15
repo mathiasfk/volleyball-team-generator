@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "🏐 Generatore di Squadre di Pallavolo"
+    "title": "Generatore di Squadre di Pallavolo"
   },
   "participants": {
     "manage": "Gestisci Partecipanti",
@@ -162,6 +162,11 @@
       "Distribuzione basata sulla posizione"
     ],
     "releaseNotes": "Miglioramenti al supporto PWA"
+  },
+  "theme": {
+    "label": "Tema",
+    "light": "Chiaro",
+    "dark": "Scuro",
+    "system": "Sistema"
   }
 }
-

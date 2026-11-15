@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "🏐 Volleyball-Teamgenerator"
+    "title": "Volleyball-Teamgenerator"
   },
   "participants": {
     "manage": "Teilnehmer verwalten",
@@ -76,8 +76,8 @@
     "chinese": "中文",
     "hindi": "हिन्दी",
     "arabic": "العربية",
-    "french" : "Français",
-    "german" : "Deutsch", 
+    "french": "Français",
+    "german": "Deutsch",
     "indonesian": "Bahasa Indonesia",
     "turkish": "Türkçe",
     "japanese": "日本語",
@@ -162,5 +162,11 @@
       "Positionsbasierte Verteilung"
     ],
     "releaseNotes": "Verbesserte PWA-Unterstützung"
+  },
+  "theme": {
+    "label": "Design",
+    "light": "Hell",
+    "dark": "Dunkel",
+    "system": "System"
   }
 }

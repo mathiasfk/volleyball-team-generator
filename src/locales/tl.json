@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "🏐 Tagapagsuri ng Koponan ng Volleyball"
+    "title": "Tagapagsuri ng Koponan ng Volleyball"
   },
   "participants": {
     "manage": "Pamahalaan ang mga Kalahok",
@@ -162,5 +162,11 @@
       "Distribusyon batay sa posisyon"
     ],
     "releaseNotes": "Pagpapabuti ng suporta sa WPA"
+  },
+  "theme": {
+    "label": "Tema",
+    "light": "Maliwanag",
+    "dark": "Madilim",
+    "system": "Sistema"
   }
 }

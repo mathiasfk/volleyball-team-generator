@@ -13,20 +13,19 @@ import {
 import { Input } from '@/components/ui/input.jsx'
 import { Label } from '@/components/ui/label.jsx'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group.jsx'
-import { Slider } from '@/components/ui/slider.jsx'
 import { gtag } from '@/services/analytics.js'
 
-import RoleIcon from './RoleIcon.jsx'
-import SkillLevelIcon from './SkillLevelIcon.jsx'
 
 /**
  * Dialog for editing participant name and skill level
  */
-const EditParticipantDialog = ({ 
-  open, 
-  onOpenChange, 
-  participant, 
-  onSave 
+const EditParticipantDialog = ({
+  open,
+  onOpenChange,
+  participant,
+  onSave,
+  error,
+  onClearError
 }) => {
   const { t } = useTranslation()
   const [name, setName] = useState('')
@@ -51,48 +50,26 @@ const EditParticipantDialog = ({
     // Map slider position to weight: 0 -> 0.5, 1 -> 1.0, 2 -> 1.5
     const weightMap = [0.5, 1.0, 1.5]
     const weight = weightMap[skillLevel]
-    
-    onSave({
+
+    const saved = onSave({
       id: participant.id,
       name: name.trim(),
       weight,
       role
     })
-    onOpenChange(false)
+    if (saved !== false) onOpenChange(false)
   }
 
   const handleCancel = () => {
     onOpenChange(false)
   }
 
-  // Get current skill level info
-  const getSkillLevelInfo = () => {
-    switch (skillLevel) {
-      case 0:
-        return {
-          label: t('skill_levels.beginner'),
-          weight: 0.5
-        }
-      case 2:
-        return {
-          label: t('skill_levels.advanced'),
-          weight: 1.5
-        }
-      case 1:
-      default:
-        return {
-          label: t('skill_levels.intermediate'),
-          weight: 1.0
-        }
-    }
-  }
-
   // Track skill level change
   const handleSkillLevelChange = (value) => {
-    const newSkillLevel = value[0]
+    const newSkillLevel = Number(value)
     const weightMap = [0.5, 1.0, 1.5]
     const weight = weightMap[newSkillLevel]
-    
+
     let skillLabel
     switch (newSkillLevel) {
       case 0:
@@ -106,9 +83,9 @@ const EditParticipantDialog = ({
         skillLabel = t('skill_levels.intermediate')
         break
     }
-    
+
     setSkillLevel(newSkillLevel)
-    
+
     if (participant) {
       gtag('event', 'edit_participant_skill_level_change', {
         participant_id: participant.id,
@@ -123,7 +100,7 @@ const EditParticipantDialog = ({
   // Track role change
   const handleRoleChange = (newRole) => {
     setRole(newRole)
-    
+
     if (participant) {
       const roleLabel = t(`role.${newRole}`)
       gtag('event', 'edit_participant_role_change', {
@@ -135,118 +112,83 @@ const EditParticipantDialog = ({
     }
   }
 
-  const currentSkillInfo = getSkillLevelInfo()
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-gray-800 border-gray-700 text-white">
-        <style>{`
-          [data-slot="slider-track"] {
-            background-color: rgb(17, 24, 39) !important;
-          }
-          [data-slot="slider-range"] {
-            background-color: white !important;
-          }
-          [data-slot="slider-thumb"] {
-            background-color: white !important;
-            border-color: white !important;
-          }
-        `}</style>
+      <DialogContent className="max-h-[calc(100dvh-2rem)] overflow-y-auto bg-card">
         <DialogHeader>
           <DialogTitle>{t('participants.edit_dialog_title')}</DialogTitle>
-          <DialogDescription className="text-gray-400">
+          <DialogDescription className="text-muted-foreground">
             {t('participants.edit_dialog_description')}
           </DialogDescription>
         </DialogHeader>
-        
+
         <div className="space-y-6 py-4">
           {/* Name Input */}
           <div className="space-y-2">
-            <Label htmlFor="participant-name" className="text-white">
+            <Label htmlFor="participant-name" >
               {t('participants.placeholder')}
             </Label>
             <Input
               id="participant-name"
               type="text"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => { setName(e.target.value); onClearError() }}
+              aria-invalid={!!error}
+              aria-describedby={error ? "participant-name-error" : undefined}
               onKeyPress={(e) => e.key === 'Enter' && handleSave()}
-              className="bg-gray-700 border-gray-600 text-white"
+              className="bg-secondary border-input"
             />
+            {error && <p id="participant-name-error" role="alert" className="text-sm text-[var(--error)]">{error}</p>}
           </div>
 
-          {/* Skill Level Slider */}
-          <div className="space-y-4">
-            <Label htmlFor="skill-level" className="text-white">
-              {t('skill_levels.label')}
-            </Label>
-            <div className="space-y-3">
-                <Slider
-                  id="skill-level"
-                  min={0}
-                  max={2}
-                  step={1}
-                  value={[skillLevel]}
-                  onValueChange={handleSkillLevelChange}
-                  className="cursor-pointer"
-                />
-              
-              {/* Skill Level Labels */}
-              <div className="flex justify-between text-xs text-gray-400">
-                <span>{t('skill_levels.beginner')}</span>
-                <span>{t('skill_levels.intermediate')}</span>
-                <span>{t('skill_levels.advanced')}</span>
-              </div>
-
-              {/* Current Selection Preview */}
-              <div className="flex items-center justify-center gap-2 p-3 bg-gray-700 rounded-lg">
-                <SkillLevelIcon weight={currentSkillInfo.weight} size={20} />
-                <span className="font-semibold">{currentSkillInfo.label}</span>
-              </div>
-            </div>
-          </div>
+          <fieldset className="space-y-3">
+            <legend id="skill-label" className="text-sm font-medium">{t('skill_levels.label')}</legend>
+            <RadioGroup aria-labelledby="skill-label" value={String(skillLevel)} onValueChange={handleSkillLevelChange} className="gap-3">
+              {['beginner', 'intermediate', 'advanced'].map((level, index) => <div key={level} className="flex items-center gap-2">
+                <RadioGroupItem value={String(index)} id={`skill-${level}`} />
+                <Label htmlFor={`skill-${level}`}>{t(`skill_levels.${level}`)}</Label>
+              </div>)}
+            </RadioGroup>
+          </fieldset>
 
           {/* Role Selector */}
-          <div className="space-y-4">
-            <Label htmlFor="role" className="text-white">
-              {t('role.label')}
-            </Label>
-            <RadioGroup value={role} onValueChange={handleRoleChange}>
+          <fieldset className="space-y-4">
+            <legend id="role-label" className="text-sm font-medium">{t('role.label')}</legend>
+            <RadioGroup aria-labelledby="role-label" value={role} onValueChange={handleRoleChange}>
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="any" id="role-any" className="border-white text-white" />
-                <Label htmlFor="role-any" className="text-white cursor-pointer">
+                <RadioGroupItem value="any" id="role-any"  />
+                <Label htmlFor="role-any" className="cursor-pointer">
                   {t('role.any')}
                 </Label>
               </div>
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="libero" id="role-libero" className="border-white text-white" />
-                <Label htmlFor="role-libero" className="text-white cursor-pointer flex items-center gap-2">
-                  <RoleIcon role="libero" size={16} />
+                <RadioGroupItem value="libero" id="role-libero"  />
+                <Label htmlFor="role-libero" className="cursor-pointer">
                   {t('role.libero')}
                 </Label>
               </div>
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="setter" id="role-setter" className="border-white text-white" />
-                <Label htmlFor="role-setter" className="text-white cursor-pointer flex items-center gap-2">
-                  <RoleIcon role="setter" size={16} />
+                <RadioGroupItem value="setter" id="role-setter"  />
+                <Label htmlFor="role-setter" className="cursor-pointer">
                   {t('role.setter')}
                 </Label>
               </div>
             </RadioGroup>
-          </div>
+          </fieldset>
         </div>
 
         <DialogFooter>
           <Button
             onClick={handleCancel}
             variant="outline"
-            className="border-gray-500 text-gray-300 hover:bg-gray-600"
+
           >
             {t('participants.cancel')}
           </Button>
           <Button
             onClick={handleSave}
-            className="bg-green-600 hover:bg-green-700"
+
           >
             {t('participants.save')}
           </Button>

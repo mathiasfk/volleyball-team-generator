@@ -35,21 +35,21 @@ function FAQDialog({ open, onOpenChange }) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-gray-800 border-gray-700 text-white max-w-2xl max-h-[80vh]">
+      <DialogContent className="max-h-[80vh] max-w-2xl border-[var(--color-border)] bg-[var(--color-card-primary)] text-[var(--color-text-primary)]">
         <DialogHeader>
-          <DialogTitle className="text-2xl text-blue-400">{t('faq.title')}</DialogTitle>
-          <DialogDescription className="text-gray-400">
+          <DialogTitle className="ds-text-section text-[var(--color-text-primary)]">{t('faq.title')}</DialogTitle>
+          <DialogDescription className="ds-text-secondary text-[var(--color-text-secondary)]">
             {t('faq.title')}
           </DialogDescription>
         </DialogHeader>
         <ScrollArea className="max-h-[60vh] pr-4">
           <Accordion type="single" collapsible className="w-full" onValueChange={handleAccordionChange}>
             {questions.map((item, index) => (
-              <AccordionItem key={index} value={`item-${index}`} className="border-gray-700">
-                <AccordionTrigger className="text-left text-gray-200 hover:text-white">
+              <AccordionItem key={index} value={`item-${index}`} className="border-[var(--color-border)]">
+                <AccordionTrigger className="text-left text-[var(--color-text-primary)] hover:text-[var(--color-text-primary)]">
                   {item.question}
                 </AccordionTrigger>
-                <AccordionContent className="text-gray-400">
+                <AccordionContent className="ds-text-secondary text-[var(--color-text-secondary)]">
                   {item.answer}
                 </AccordionContent>
               </AccordionItem>

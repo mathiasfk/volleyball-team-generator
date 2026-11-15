@@ -14,7 +14,7 @@ const ParticipantList = ({
 
   return (
     <>
-      <div className="space-y-2 tour-participant-list">
+      <div className="space-y-1 sm:space-y-2 tour-participant-list">
         {participants.map((participant) => (
           <ParticipantItem
             key={participant.id}
@@ -27,7 +27,7 @@ const ParticipantList = ({
       </div>
 
       <div className="mt-4 text-center">
-        <Badge variant="secondary" className="bg-gray-700 text-white">
+        <Badge variant="secondary" className="bg-[var(--color-card-secondary)] text-[var(--color-text-primary)]">
           {t('participants.total', { count: participants.length })}
         </Badge>
       </div>

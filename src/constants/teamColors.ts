@@ -13,8 +13,8 @@ export interface TeamColor {
  * @returns Array of team colors
  */
 export const getTeamColors = (t: (key: string) => string): TeamColor[] => [
-  { name: t('colors.red'), color: 'hsl(8, 60%, 55%)', textColor: '#ffffff' },
-  { name: t('colors.blue'), color: 'hsl(210, 60%, 45%)', textColor: '#ffffff' },
+  { name: t('colors.red'), color: 'var(--team-red)', textColor: '#ffffff' },
+  { name: t('colors.blue'), color: 'var(--team-blue)', textColor: '#ffffff' },
   { name: t('colors.green'), color: '#22c55e', textColor: '#ffffff' },
   { name: t('colors.purple'), color: '#a855f7', textColor: '#ffffff' },
   { name: t('colors.orange'), color: '#f97316', textColor: '#ffffff' },

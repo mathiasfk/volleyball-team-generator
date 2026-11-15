@@ -13,24 +13,24 @@ const ClearParticipantsDialog = ({ onConfirm, onCancel }) => {
   const { t } = useTranslation()
 
   return (
-    <AlertDialogContent className="bg-gray-800 border-gray-700">
+    <AlertDialogContent>
       <AlertDialogHeader>
-        <AlertDialogTitle className="text-white">
+        <AlertDialogTitle>
           {t('dialog.clear_participants.title')}
         </AlertDialogTitle>
       </AlertDialogHeader>
-      <AlertDialogDescription className="text-gray-300">
+      <AlertDialogDescription className="text-muted-foreground">
         {t('dialog.clear_participants.description')}
       </AlertDialogDescription>
       <AlertDialogAction 
         onClick={onConfirm} 
-        className="bg-red-600 hover:bg-red-700"
+        className="bg-destructive text-white hover:bg-red-800"
       >
         {t('dialog.clear_participants.confirm')}
       </AlertDialogAction>
       <AlertDialogCancel 
         onClick={onCancel} 
-        className="border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white"
+        className="border-input"
       >
         {t('dialog.clear_participants.cancel')}
       </AlertDialogCancel>

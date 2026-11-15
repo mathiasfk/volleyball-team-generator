@@ -1,6 +1,6 @@
+import { LayoutList } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
-import { Badge } from '@/components/ui/badge.jsx'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.jsx'
 
 import PlayerDisplay from './PlayerDisplay.jsx'
@@ -13,32 +13,28 @@ const BenchCard = ({ benchPlayers, changedPlayerIds = [], onInlineNameUpdate }) 
   }
 
   return (
-    <Card className="bg-gray-800 border-gray-700 tour-bench">
-      <CardHeader className="text-center bg-orange-600">
-        <CardTitle className="text-xl font-bold text-white">
-          {t('results.bench_title')}
+    <Card className="tour-bench border-[var(--color-border)] bg-[var(--color-card-primary)] py-0">
+      <CardHeader className="border-b border-[var(--color-border)] bg-[var(--color-card-secondary)] py-3 text-center">
+        <CardTitle className="ds-text-primary flex items-center justify-center gap-2 font-normal text-[var(--color-text-secondary)]">
+          <LayoutList className="size-4 shrink-0" aria-hidden />
+          {t('results.bench_title')} · {t('results.bench_count', { count: benchPlayers.length })}
         </CardTitle>
       </CardHeader>
-      <CardContent className="pt-4">
-        <div className="space-y-2">
+      <CardContent className="pb-3 pt-2">
+        <div className="space-y-1.5">
           {benchPlayers.map((participant) => {
             const isChanged = changedPlayerIds.includes(participant.id)
             return (
               <div
                 key={participant.id}
-                className={`player-card-base bg-gray-700 p-2 rounded text-center text-white transition-colors ${
+                className={`player-card-base rounded p-2 text-center text-[var(--color-text-primary)] transition-colors bg-[var(--color-card-secondary)] ${
                   isChanged ? 'player-changed' : ''
-                } ${onInlineNameUpdate ? 'hover:bg-gray-600' : ''}`}
+                } ${onInlineNameUpdate ? 'hover:bg-[var(--color-border-highlight)]' : ''}`}
               >
                 <PlayerDisplay participant={participant} onInlineNameUpdate={onInlineNameUpdate} />
               </div>
             )
           })}
-        </div>
-        <div className="mt-3 text-center">
-          <Badge className="bg-orange-600 text-white">
-            {t('results.bench_count', { count: benchPlayers.length })}
-          </Badge>
         </div>
       </CardContent>
     </Card>

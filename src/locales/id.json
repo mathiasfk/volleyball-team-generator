@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "🏐 Generator Tim Voli"
+    "title": "Generator Tim Voli"
   },
   "participants": {
     "manage": "Kelola Peserta",
@@ -76,8 +76,8 @@
     "chinese": "中文",
     "hindi": "हिन्दी",
     "arabic": "العربية",
-    "french" : "Français",
-    "german" : "Deutsch", 
+    "french": "Français",
+    "german": "Deutsch",
     "indonesian": "Bahasa Indonesia",
     "turkish": "Türkçe",
     "japanese": "日本語",
@@ -162,5 +162,11 @@
       "Distribusi berbasis posisi"
     ],
     "releaseNotes": "Peningkatan dukungan PWA"
+  },
+  "theme": {
+    "label": "Tema",
+    "light": "Terang",
+    "dark": "Gelap",
+    "system": "Sistem"
   }
 }

@@ -60,7 +60,7 @@ const LanguageSelector = ({ onRestartTour }) => {
         <TooltipTrigger asChild>
           <button
             onClick={onRestartTour}
-            className="p-1 text-gray-400 hover:text-blue-400 transition-colors"
+            className="min-h-11 min-w-11 flex items-center justify-center text-muted-foreground hover:text-foreground"
             aria-label={t('tour.restart_button')}
           >
             <MessageCircleQuestionMark className="w-4 h-4" />
@@ -76,7 +76,7 @@ const LanguageSelector = ({ onRestartTour }) => {
       >
         <SelectTrigger
           className={cn(
-            'border-gray-500 text-gray-300 hover:bg-gray-600',
+            'min-h-11 border-input text-foreground hover:bg-accent',
             isMobile ? 'w-[95px]' : 'w-auto min-w-[120px]',
             isMobile && '[&_[data-slot=select-value]_.lang-name]:hidden [&_[data-slot=select-value]_.lang-code]:!inline-block',
             !isMobile && '[&_[data-slot=select-value]_.lang-code]:hidden'

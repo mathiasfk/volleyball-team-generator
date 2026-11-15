@@ -1,4 +1,3 @@
-import '../App.css'
 
 import { AlertCircle, ChevronDown, HelpCircle, ListChevronsDownUp, ListChevronsUpDown, Shuffle, Users } from 'lucide-react'
 import { useEffect, useReducer, useRef, useState } from 'react'
@@ -27,6 +26,7 @@ import LanguageSelector from './LanguageSelector.jsx'
 import ParticipantForm from './ParticipantForm.jsx'
 import ParticipantList from './ParticipantList.jsx'
 import TeamCard from './TeamCard.jsx'
+import ThemeSelector from './ThemeSelector.jsx'
 import { AlertDialog } from './ui/alert-dialog.jsx'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './ui/collapsible.jsx'
 import {
@@ -76,7 +76,7 @@ function createExampleParticipants(t) {
 // Function to check if all participants are example participants
 function areAllExampleParticipants(participants, t) {
   if (participants.length !== 5) return false
-  
+
   // Check if all participants have names matching the example pattern
   return participants.every(p => {
     // Check if name matches pattern for any number 1-5
@@ -91,10 +91,10 @@ function areAllExampleParticipants(participants, t) {
 function MainApp() {
   const { t } = useTranslation()
   useSEO() // Initialize SEO management
-  
+
   const [state, dispatch] = useReducer(appReducer, initialState)
   const clearHighlightTimeoutRef = useRef(null)
-  
+
   const {
     participants,
     newName,
@@ -106,11 +106,19 @@ function MainApp() {
     changedPlayerIds,
     previousPlayerPositions,
   } = state
-  
+
   const [editDialogOpen, setEditDialogOpen] = useState(false)
   const [editingParticipant, setEditingParticipant] = useState(null)
   const [faqDialogOpen, setFaqDialogOpen] = useState(false)
   const [runTour, setRunTour] = useState(false)
+  const [tourPrimary, setTourPrimary] = useState(() => getComputedStyle(document.documentElement).getPropertyValue('--primary').trim())
+  useEffect(() => {
+    const update = () => setTourPrimary(getComputedStyle(document.documentElement).getPropertyValue('--primary').trim())
+    const observer = new MutationObserver(update)
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
+    update()
+    return () => observer.disconnect()
+  }, [])
 
   // Vibrant colors for teams
   const teamColors = getTeamColors(t)
@@ -222,13 +230,13 @@ function MainApp() {
     if (!dataLoaded) return
 
     const [tourCompleted] = loadFromStorage(STORAGE_KEYS.TOUR_COMPLETED)
-    
+
     if (!tourCompleted) {
       // Start tour with a delay for better UX
       const timer = setTimeout(() => {
         setRunTour(true)
       }, 1500)
-      
+
       return () => clearTimeout(timer)
     }
   }, [dataLoaded])
@@ -265,6 +273,13 @@ function MainApp() {
 
     saveToStorage(STORAGE_KEYS.PARTICIPANTS, participants)
   }, [participants, dataLoaded])
+
+  // Keep the persisted draw in sync when a player is edited or removed.
+  useEffect(() => {
+    if (!dataLoaded) return
+    saveToStorage(STORAGE_KEYS.TEAMS, teams)
+    saveToStorage(STORAGE_KEYS.BENCH, benchPlayers)
+  }, [dataLoaded, teams, benchPlayers])
 
   const clearError = () => {
     if (error) dispatch({ type: ACTIONS.CLEAR_ERROR })
@@ -339,7 +354,7 @@ function MainApp() {
     gtag('event', 'toggle_participants_collapsible', {
       'was_open': openParticipants
     });
-    
+
     dispatch({ type: ACTIONS.TOGGLE_PARTICIPANTS })
   }
 
@@ -369,21 +384,22 @@ function MainApp() {
 
     if (isEmpty) {
       dispatch({ type: ACTIONS.SET_ERROR, payload: t('errors.empty_name') })
-      return
+      return false
     }
 
     if (isDuplicate) {
       dispatch({ type: ACTIONS.SET_ERROR, payload: t('errors.duplicate_name') })
-      return
+      return false
     }
 
     dispatch({
       type: ACTIONS.UPDATE_PARTICIPANT,
       payload: { id: updates.id, name: formattedName, weight: updates.weight, role: updates.role }
     })
-    
+
     setEditDialogOpen(false)
     setEditingParticipant(null)
+    return true
   }
 
   const handleInlineNameUpdate = (id, newName) => {
@@ -412,7 +428,7 @@ function MainApp() {
       type: ACTIONS.UPDATE_PARTICIPANT,
       payload: { id, name: formattedName }
     })
-    
+
     return true // Return true to indicate success
   }
 
@@ -456,8 +472,8 @@ function MainApp() {
 
     // calculateTeams now works directly with Participant objects
     const { formedTeams, remainingPlayers } = calculateTeams({
-      participants: participants, 
-      teams: teams, 
+      participants: participants,
+      teams: teams,
       benchPlayers: benchPlayers,
       keepTeamId: keepTeamId
     })
@@ -476,7 +492,7 @@ function MainApp() {
     const newPlayerPositions = createPlayerPositionMap(formedTeams, remainingPlayers)
 
     const keepTeamAction = keepTeamId === 0 ? 'keep_red' : keepTeamId === 1 ? 'keep_blue' : 'redraw_all'
-    
+
     gtag('event', 'draw_team', {
       'participant_count': participants.length,
       'new_teams_count': formedTeams.length,
@@ -547,7 +563,7 @@ function MainApp() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-4">
+    <div className="min-h-screen p-4 bg-[var(--color-background)] text-[var(--color-text-primary)]">
       <Joyride
         steps={tourSteps}
         run={runTour}
@@ -580,26 +596,26 @@ function MainApp() {
         }}
         styles={{
           options: {
-            primaryColor: '#16a34a', // green-600
-            textColor: '#ffffff',
-            backgroundColor: '#1f2937', // gray-800
+            primaryColor: tourPrimary,
+            textColor: 'var(--foreground)',
+            backgroundColor: 'var(--card)',
             overlayColor: 'rgba(0, 0, 0, 0.7)',
-            arrowColor: '#1f2937',
+            arrowColor: 'var(--card)',
           },
           tooltip: {
             borderRadius: 8,
           },
           buttonNext: {
-            backgroundColor: '#16a34a',
-            color: '#ffffff',
+            backgroundColor: 'var(--primary)',
+            color: 'var(--primary-foreground)',
             borderRadius: 6,
           },
           buttonBack: {
-            color: '#9ca3af',
+            color: 'var(--muted-foreground)',
             marginRight: 10,
           },
           buttonSkip: {
-            color: '#9ca3af',
+            color: 'var(--muted-foreground)',
           },
         }}
         locale={{
@@ -611,20 +627,21 @@ function MainApp() {
         }}
       />
       <div className="max-w-6xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="hidden sm:block text-4xl font-bold text-blue-400">
+        <div className="flex flex-wrap justify-between items-center gap-3 mb-6">
+          <h1 className="ds-text-display text-xl sm:text-2xl text-[var(--color-text-primary)]">
             {t('app.title')}
           </h1>
-          <div className="ms-auto">
+          <div className="ms-auto flex items-center gap-2">
+            <ThemeSelector />
             <LanguageSelector onRestartTour={restartTour} />
           </div>
         </div>
 
           {/* Error Alert */}
-          {error && (
-            <Alert className="mb-6 bg-red-900 border-red-700">
-              <AlertCircle className="h-4 w-4" />
-              <AlertDescription className="text-red-200">
+          {error && !editDialogOpen && (
+            <Alert className="mb-6 border-[var(--color-action-destructive)] bg-[var(--color-action-destructive)]/20">
+              <AlertCircle className="size-4" />
+              <AlertDescription className="text-[var(--color-text-primary)]">
                 {error}
               </AlertDescription>
             </Alert>
@@ -632,15 +649,15 @@ function MainApp() {
 
           {/* Add Participants Section */}
           <Collapsible open={openParticipants} onOpenChange={onCollapsibleToggle}>
-            <Card className="mb-6 bg-gray-800 border-gray-700">
+            <Card className="mb-6 border-[var(--color-border)] bg-[var(--color-card-primary)]">
               <CardHeader>
                 <CollapsibleTrigger className="mb-4 text-left w-full">
-                  <CardTitle className="text-white flex items-center gap-2">
+                  <CardTitle className="ds-text-emphasis flex items-center gap-2 text-[var(--color-text-primary)]">
                     <Users className="w-5 h-5" />
                     {t('participants.manage')}
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <span 
+                        <span
                           className="ms-auto cursor-pointer"
                           aria-label={openParticipants ? t('actions.collapse', { defaultValue: 'Colapsar' }) : t('actions.expand', { defaultValue: 'Expandir' })}
                         >
@@ -655,7 +672,7 @@ function MainApp() {
                 </CollapsibleTrigger>
               </CardHeader>
               <CollapsibleContent className="mb-6">
-                <CardContent>
+                <CardContent className="px-4 py-3 sm:px-6 sm:py-4">
                   <AlertDialog>
                     <ParticipantForm
                       newName={newName}
@@ -680,11 +697,13 @@ function MainApp() {
                     onRemove={removeParticipant}
                     onInlineNameUpdate={handleInlineNameUpdate}
                   />
-                  
+
                   {/* Edit Participant Dialog */}
                   <EditParticipantDialog
                     open={editDialogOpen}
-                    onOpenChange={setEditDialogOpen}
+                    onOpenChange={(open) => { setEditDialogOpen(open); if (!open) clearError() }}
+                    error={error}
+                    onClearError={clearError}
                     participant={editingParticipant}
                     onSave={saveParticipantEdit}
                   />
@@ -700,9 +719,9 @@ function MainApp() {
               <Button
                 onClick={handleDrawTeamsClick}
                 disabled={participants.length === 0}
-                className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg tour-draw-button w-full md:w-auto"
+                className="tour-draw-button w-full px-8 py-3 md:w-auto bg-primary hover:bg-[var(--primary-hover)] text-primary-foreground ds-text-primary"
               >
-                <Shuffle className="w-5 h-5 me-2" />
+                <Shuffle className="size-5 me-2" />
                 {t('actions.draw_teams')}
               </Button>
             ) : (
@@ -711,34 +730,34 @@ function MainApp() {
                 <Button
                   onClick={handleDrawTeamsClick}
                   disabled={participants.length === 0}
-                  className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg rounded-r-none border-r border-green-800/50 disabled:opacity-50 flex-1 md:flex-initial"
+                  className="flex-1 px-8 py-3 rounded-r-none border-r border-white/20 bg-primary text-primary-foreground hover:bg-[var(--primary-hover)] disabled:opacity-50 md:flex-initial ds-text-primary"
                 >
-                  <Shuffle className="w-5 h-5 me-2" />
+                  <Shuffle className="size-5 me-2" />
                   {t('dialog.draw_teams.redraw_all')}
                 </Button>
                 <DropdownMenu onOpenChange={handleDropdownOpenChange}>
                   <DropdownMenuTrigger asChild>
                     <Button
                       disabled={participants.length === 0}
-                      className="bg-green-600 hover:bg-green-700 text-white px-3 py-3 text-lg rounded-l-none border-l border-green-800/50 disabled:opacity-50 flex items-center md:flex-initial"
+                      className="flex items-center rounded-l-none border-l border-white/20 px-3 py-3 bg-primary text-primary-foreground hover:bg-[var(--primary-hover)] disabled:opacity-50 md:flex-initial"
                       aria-label={t('actions.more_options', { defaultValue: 'Mais opções' })}
                     >
-                      <ChevronDown className="w-5 h-5" />
+                      <ChevronDown className="size-5" />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="bg-gray-800 border-gray-700 text-white min-w-[200px]">
+                  <DropdownMenuContent align="end" className="min-w-[200px] border-[var(--color-border)] bg-[var(--color-card-primary)] text-[var(--color-text-primary)]">
                     <DropdownMenuItem
                       onClick={() => handleKeepTeam(0)}
-                      className="focus:bg-gray-700 focus:text-white cursor-pointer py-2.5"
+                      className="cursor-pointer py-2.5 focus:bg-[var(--color-card-secondary)] focus:text-[var(--color-text-primary)]"
                     >
-                      <span className="text-red-400 me-2 font-bold">●</span>
+                      <span className="me-2 font-bold text-[var(--color-team-red)]">●</span>
                       {t('dialog.draw_teams.keep_red')}
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       onClick={() => handleKeepTeam(1)}
-                      className="focus:bg-gray-700 focus:text-white cursor-pointer py-2.5"
+                      className="cursor-pointer py-2.5 focus:bg-[var(--color-card-secondary)] focus:text-[var(--color-text-primary)]"
                     >
-                      <span className="text-blue-400 me-2 font-bold">●</span>
+                      <span className="me-2 font-bold text-[var(--color-team-blue)]">●</span>
                       {t('dialog.draw_teams.keep_blue')}
                     </DropdownMenuItem>
                   </DropdownMenuContent>
@@ -749,7 +768,7 @@ function MainApp() {
               <Button
                 onClick={clearDraw}
                 variant="outline"
-                className="border-gray-400 text-gray-200 bg-gray-800/50 hover:bg-gray-700 hover:text-white hover:border-gray-300 px-8 py-3 text-lg w-full md:w-auto"
+                className="w-full border-[var(--color-border)] bg-[var(--color-card-secondary)] px-8 py-3 text-[var(--color-text-primary)] hover:bg-[var(--color-border-highlight)] hover:border-[var(--color-border-highlight)] md:w-auto ds-text-primary"
               >
                 {t('actions.clear_draw')}
               </Button>
@@ -759,12 +778,12 @@ function MainApp() {
           {/* Draw Results */}
           {teams.length > 0 && (
             <div className="space-y-6 tour-results">
-              <h2 className="text-2xl font-bold text-center text-green-400">
+              <h2 className="ds-text-section text-center text-[var(--color-text-primary)]">
                 {t('results.title')}
               </h2>
 
-              {/* Teams */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 tour-teams">
+              {/* Teams (main hierarchy) */}
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-2 tour-teams">
                 {teams.map((team, index) => {
                   const teamColor = teamColors[index % teamColors.length]
                   return (
@@ -780,22 +799,26 @@ function MainApp() {
                 })}
               </div>
 
-              {/* Bench Players */}
-              <BenchCard 
-                benchPlayers={benchPlayers} 
-                changedPlayerIds={changedPlayerIds}
-                onInlineNameUpdate={handleInlineNameUpdate}
-              />
+              {/* Bench / outside match (secondary hierarchy) */}
+              {benchPlayers.length > 0 && (
+                <section aria-label={t('results.bench_title')} className="mt-6 border-t border-[var(--color-border)] pt-4">
+                  <BenchCard
+                    benchPlayers={benchPlayers}
+                    changedPlayerIds={changedPlayerIds}
+                    onInlineNameUpdate={handleInlineNameUpdate}
+                  />
+                </section>
+              )}
             </div>
           )}
 
           {/* FAQ Link */}
-          <div className="mt-12 text-center border-t border-gray-700 pt-6">
+          <div className="mt-12 border-t border-[var(--color-border)] pt-6 text-center">
             <button
               onClick={() => setFaqDialogOpen(true)}
-              className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-blue-400 transition-colors tour-faq-button"
+              className="tour-faq-button inline-flex items-center gap-2 ds-text-small text-[var(--color-text-secondary)] transition-colors hover:text-[var(--link)]"
             >
-              <HelpCircle className="w-4 h-4" />
+              <HelpCircle className="size-4" />
               {t('faq.button')}
             </button>
           </div>

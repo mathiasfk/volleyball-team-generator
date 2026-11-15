@@ -1,4 +1,5 @@
 import { AlertCircle, CheckCircle2, Palette, Type } from 'lucide-react'
+import { useEffect, useState } from 'react'
 
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx'
 import { Badge } from '@/components/ui/badge.jsx'
@@ -7,7 +8,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input.jsx'
 import { Label } from '@/components/ui/label.jsx'
 
+import ThemeSelector from './ThemeSelector.jsx'
+
 const DesignSystemPage = () => {
+  const [, setPaletteVersion] = useState(0)
+  useEffect(() => {
+    const observer = new MutationObserver(() => setPaletteVersion(version => version + 1))
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
+    return () => observer.disconnect()
+  }, [])
   // Helper function to read CSS variables
   const getCSSValue = (variable) => {
     return getComputedStyle(document.documentElement).getPropertyValue(variable).trim()
@@ -44,6 +53,7 @@ const DesignSystemPage = () => {
       <div className="max-w-6xl mx-auto p-6 space-y-12">
         {/* Header */}
         <div className="text-center space-y-4">
+          <ThemeSelector />
           <h1 className="ds-text-title">
             Design System
           </h1>
@@ -215,13 +225,13 @@ const DesignSystemPage = () => {
               <CardDescription>Mensagens de feedback para o usuário</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <Alert style={{ backgroundColor: 'var(--color-error)', borderColor: 'var(--color-error)' }}>
+              <Alert style={{ backgroundColor: 'var(--card)', borderColor: 'var(--color-error)', color: 'var(--color-error)' }}>
                 <AlertCircle className="h-4 w-4" />
                 <AlertDescription>
                   Este é um exemplo de alerta de erro usando a cor de erro do design system.
                 </AlertDescription>
               </Alert>
-              <Alert style={{ backgroundColor: 'var(--color-success)', borderColor: 'var(--color-success)' }}>
+              <Alert style={{ backgroundColor: 'var(--card)', borderColor: 'var(--color-success)', color: 'var(--color-success)' }}>
                 <CheckCircle2 className="h-4 w-4" />
                 <AlertDescription>
                   Este é um exemplo de alerta de sucesso usando a cor de sucesso do design system.
