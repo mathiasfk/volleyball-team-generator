@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/tooltip.jsx'
 import { useIsMobile } from '@/hooks/use-mobile'
 import { gtag } from '@/services/analytics.js'
+import { selectLanguage } from '@/utils/languageUrl.js'
 import { cn } from '@/utils/ui'
 
 const languages = [
@@ -51,7 +52,7 @@ const LanguageSelector = ({ onRestartTour }) => {
       'new_language': newLang,
     })
     
-    i18n.changeLanguage(newLang)
+    selectLanguage(newLang, i18n)
   }
 
   return (
