@@ -30,7 +30,7 @@
     "setter": "Palleggiatore"
   },
   "actions": {
-    "draw_teams": "Sortea Squadre",
+    "draw_teams": "Forma le squadre",
     "clear_draw": "Cancella Sorteggio",
     "collapse": "Comprimi",
     "expand": "Espandi",
