@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "Tagapagsuri ng Koponan ng Volleyball"
+    "title": "Tagabuo ng mga Koponan sa Volleyball"
   },
   "participants": {
     "manage": "Pamahalaan ang mga Kalahok",
@@ -146,15 +146,15 @@
     ]
   },
   "seo": {
-    "title": "Tagapagsuri ng Koponan ng Volleyball - Lumikha ng Balanseng mga Koponan Madali",
-    "description": "Libreng online na tagapagsuri ng koponan ng volleyball. Awtomatikong lumikha ng makatarungan at balanseng mga koponan mula sa iyong mga manlalaro. Perpekto para sa mga pickup games. Ganap na libre, walang kinakailangang pagrehistro.",
+    "title": "Tagabuo ng mga Koponan sa Volleyball - Bumuo ng Balanseng mga Koponan",
+    "description": "Libreng online na tagabuo ng mga koponan sa volleyball. Awtomatikong lumikha ng makatarungan at balanseng mga koponan mula sa iyong mga manlalaro. Perpekto para sa mga pickup games. Ganap na libre, walang kinakailangang pagrehistro.",
     "languageName": "Tagalog",
     "locale": "tl_PH"
   },
   "structuredData": {
-    "name": "Tagapagsuri ng Koponan ng Volleyball",
-    "alternateName": "Tagapagsuri ng Koponan ng Volleyball",
-    "description": "Libreng online na tagapagsuri ng koponan ng volleyball. Awtomatikong lumikha ng makatarungan at balanseng mga koponan mula sa iyong mga manlalaro. Perpekto para sa mga pickup games. Ganap na libre, walang kinakailangang pagrehistro.",
+    "name": "Tagabuo ng mga Koponan sa Volleyball",
+    "alternateName": "Tagabuo ng mga Koponan sa Volleyball",
+    "description": "Libreng online na tagabuo ng mga koponan sa volleyball. Awtomatikong lumikha ng makatarungan at balanseng mga koponan mula sa iyong mga manlalaro. Perpekto para sa mga pickup games. Ganap na libre, walang kinakailangang pagrehistro.",
     "featureList": [
       "Random na paggawa ng koponan",
       "Makatarungang pagbalanse ng koponan",
@@ -164,8 +164,7 @@
       "Libreng gamitin",
       "Pagbalanse ng antas ng kasanayan",
       "Distribusyon batay sa posisyon"
-    ],
-    "releaseNotes": "Pagpapabuti ng suporta sa WPA"
+    ]
   },
   "theme": {
     "label": "Tema",

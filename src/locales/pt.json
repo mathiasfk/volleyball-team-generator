@@ -166,8 +166,7 @@
       "Gratuito para usar",
       "Equilíbrio por nível de habilidade",
       "Distribuição baseada em posição"
-    ],
-    "releaseNotes": "Melhorias no suporte a PWA"
+    ]
   },
   "theme": {
     "label": "Tema",
