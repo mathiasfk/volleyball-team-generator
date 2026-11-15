@@ -8,6 +8,8 @@
 export interface Participant {
   id: string
   name: string
+  /** True only for the sample players created by the application. */
+  isExample?: boolean
   /**
    * Experience weight for team balancing
    * - 0.5: Beginner (Iniciante)

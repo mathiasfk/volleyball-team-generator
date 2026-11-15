@@ -108,9 +108,7 @@ function generateStructuredData(lang, translation) {
     },
     "inLanguage": languages,
     "availableLanguage": languageNames,
-    "featureList": structuredData.featureList || [],
-    "softwareVersion": "1.5",
-    "releaseNotes": structuredData.releaseNotes || "Improving WPA support"
+    "featureList": structuredData.featureList || []
   }
   
   return JSON.stringify(schema, null, 2)

@@ -3,18 +3,21 @@
     "title": "Volleyball Team Generator"
   },
   "participants": {
-    "manage": "Manage Participants",
+    "manage": "Manage Players",
     "add": "Add",
     "clear_all": "Clear All",
-    "placeholder": "Participant name",
-    "total": "Total: {{count}} participants",
+    "placeholder": "Player name",
+    "total": "Total: {{count}} players",
     "save": "Save",
     "cancel": "Cancel",
     "edit": "Edit",
     "remove": "Remove",
-    "edit_dialog_title": "Edit Participant",
-    "edit_dialog_description": "Change the participant's name and skill level",
-    "example_player": "Player {{number}}"
+    "edit_dialog_title": "Edit Player",
+    "edit_dialog_description": "Change the player's name, skill level, and position",
+    "example_player": "Player {{number}}",
+    "examples_notice": "Example players will be replaced when you add your first player.",
+    "total_one": "Total: {{count}} player",
+    "total_other": "Total: {{count}} players"
   },
   "skill_levels": {
     "beginner": "Beginner",
@@ -29,8 +32,11 @@
     "setter": "Setter"
   },
   "actions": {
-    "draw_teams": "Draw Teams",
-    "clear_draw": "Clear Draw"
+    "draw_teams": "Generate Teams",
+    "clear_draw": "Clear Results",
+    "collapse": "Collapse",
+    "expand": "Expand",
+    "more_options": "More options"
   },
   "results": {
     "title": "Draw Results",
@@ -54,16 +60,16 @@
   "dialog": {
     "clear_participants": {
       "title": "Warning!",
-      "description": "Do you want to remove all participants?",
+      "description": "Do you want to remove all players?",
       "confirm": "Remove",
       "cancel": "Cancel"
     },
     "draw_teams": {
-      "title": "How would you like to draw teams?",
+      "title": "How would you like to generate teams?",
       "description": "Choose an option below:",
       "keep_red": "Keep Red Team",
       "keep_blue": "Keep Blue Team",
-      "redraw_all": "Redraw Teams",
+      "redraw_all": "Regenerate Teams",
       "cancel": "Cancel"
     }
   },
@@ -92,14 +98,14 @@
   },
   "tour": {
     "welcome": "Welcome! Let's take a quick tour to learn about the main features of the app.",
-    "participant_form": "Here you can add participants. Type the name and click 'Add' or press Enter.",
-    "participant_list": "This is the participants list. You can edit or remove any participant by clicking the icons next to the name.",
-    "draw_button": "This button draws teams in a balanced way, considering skill levels and special positions.",
-    "teams": "Here the drawn teams will appear, divided in a balanced way.",
-    "bench": "Here the bench players will appear when there aren't enough players to form complete teams.",
+    "participant_form": "Add your players here. Enter a name and select 'Add' or press Enter.",
+    "participant_list": "Edit or remove a player using the controls next to their name.",
+    "draw_button": "Generate balanced teams based on skill levels and positions.",
+    "teams": "Your teams will appear here.",
+    "bench": "Players not assigned to a team appear here.",
     "language": "Use this selector to change the interface language.",
     "faq": "Click here to see frequently asked questions and get help on how to use the app.",
-    "complete": "Done! Now you know all the main features. Have fun drawing teams!",
+    "complete": "Done! You are ready to generate teams.",
     "restart_button": "Restart guided tour",
     "back": "Back",
     "skip": "Skip",
@@ -124,12 +130,12 @@
         "answer": "When redrawing, you can choose to keep one of the teams (Red or Blue) and only reorganize the other team and the bench. This is useful when a game has finished and you want to keep the winning team intact."
       },
       {
-        "question": "How do I edit participants?",
-        "answer": "Click the 'Edit' button (pencil icon) next to any participant's name in the list. You can change their name, skill level, and position. Changes are saved automatically."
+        "question": "How do I edit players?",
+        "answer": "Click the 'Edit' button (pencil icon) next to any player's name in the list. You can change their name, skill level, and position. Changes are saved automatically."
       },
       {
         "question": "Is my data saved?",
-        "answer": "Yes! All participants and drawn teams are automatically saved in your browser (localStorage). Your data will remain even if you close and reopen the page."
+        "answer": "Yes! All players and drawn teams are automatically saved in your browser (localStorage). Your data will remain even if you close and reopen the page."
       },
       {
         "question": "Does it work offline?",
@@ -143,14 +149,14 @@
   },
   "seo": {
     "title": "Volleyball Team Generator - Create Balanced Teams Easily",
-    "description": "Free online volleyball team draw. Automatically create fair and balanced teams from your players. Perfect for pickup games. Completely free, with no registration required.",
+    "description": "Free online volleyball team generator. Automatically create fair and balanced teams from your players. Perfect for pickup games. Completely free, with no registration required.",
     "languageName": "English",
     "locale": "en_US"
   },
   "structuredData": {
     "name": "Volleyball Team Generator",
     "alternateName": "Volleyball Team Generator",
-    "description": "Free online volleyball team draw. Automatically create fair and balanced teams from your players. Perfect for pickup games. Completely free, with no registration required.",
+    "description": "Free online volleyball team generator. Automatically create fair and balanced teams from your players. Perfect for pickup games. Completely free, with no registration required.",
     "featureList": [
       "Random team generation",
       "Fair team balancing",
@@ -160,8 +166,7 @@
       "Free to use",
       "Skill level balancing",
       "Position-based distribution"
-    ],
-    "releaseNotes": "Improving WPA support"
+    ]
   },
   "theme": {
     "label": "Theme",

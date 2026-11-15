@@ -15,9 +15,10 @@ import useSEO from '../hooks/useSEO.js'
 import { calculateTeams } from '../lib/calculateTeams.js'
 import { ACTIONS, appReducer, initialState } from '../reducers/appReducer.js'
 import { gtag } from '../services/analytics.js'
+import { createExampleParticipants } from '../utils/exampleParticipants.js'
 import { loadFromStorage, removeFromStorage, removeMultipleFromStorage, saveToStorage } from '../utils/localStorage.ts'
 import { createPlayerPositionMap, detectPlayerChanges } from '../utils/playerChanges.ts'
-import { formatParticipantName, isDuplicateName, isEmptyName } from '../utils/validation.ts'
+import { formatParticipantName, isDuplicateName, isDuplicateRealPlayerName, isEmptyName } from '../utils/validation.ts'
 import BenchCard from './BenchCard.jsx'
 import ClearParticipantsDialog from './ClearParticipantsDialog.jsx'
 import EditParticipantDialog from './EditParticipantDialog.jsx'
@@ -35,58 +36,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu.jsx'
-
-// Function to create example participants for the tour
-function createExampleParticipants(t) {
-  const baseTime = Date.now()
-  return [
-    {
-      id: `${baseTime}-1`,
-      name: t('participants.example_player', { number: 1 }),
-      weight: 1,
-      role: 'any',
-    },
-    {
-      id: `${baseTime}-2`,
-      name: t('participants.example_player', { number: 2 }),
-      weight: 1,
-      role: 'any',
-    },
-    {
-      id: `${baseTime}-3`,
-      name: t('participants.example_player', { number: 3 }),
-      weight: 1,
-      role: 'any',
-    },
-    {
-      id: `${baseTime}-4`,
-      name: t('participants.example_player', { number: 4 }),
-      weight: 1,
-      role: 'any',
-    },
-    {
-      id: `${baseTime}-5`,
-      name: t('participants.example_player', { number: 5 }),
-      weight: 1,
-      role: 'any',
-    },
-  ]
-}
-
-// Function to check if all participants are example participants
-function areAllExampleParticipants(participants, t) {
-  if (participants.length !== 5) return false
-
-  // Check if all participants have names matching the example pattern
-  return participants.every(p => {
-    // Check if name matches pattern for any number 1-5
-    for (let i = 1; i <= 5; i++) {
-      const exampleName = t('participants.example_player', { number: i })
-      if (p.name === exampleName) return true
-    }
-    return false
-  })
-}
 
 function MainApp() {
   const { t } = useTranslation()
@@ -185,7 +134,7 @@ function MainApp() {
 
     // If we should load examples, create them and calculate teams
     if (shouldLoadExamples) {
-      finalParticipants = createExampleParticipants(t)
+      finalParticipants = createExampleParticipants()
       // Calculate teams with example participants
       const { formedTeams, remainingPlayers } = calculateTeams({
         participants: finalParticipants,
@@ -287,7 +236,8 @@ function MainApp() {
 
   const addParticipant = () => {
     const formattedName = formatParticipantName(newName)
-    const isDuplicate = isDuplicateName(formattedName, participants)
+    // Examples will be replaced, so a real player may have the same name.
+    const isDuplicate = isDuplicateRealPlayerName(formattedName, participants)
     const isEmpty = isEmptyName(newName)
     const participantId = Date.now().toString()
 
@@ -306,13 +256,6 @@ function MainApp() {
     if (isDuplicate) {
       dispatch({ type: ACTIONS.SET_ERROR, payload: t('errors.duplicate_name') })
       return
-    }
-
-    // If all current participants are examples, clear them first
-    if (areAllExampleParticipants(participants, t)) {
-      dispatch({ type: ACTIONS.CLEAR_ALL_PARTICIPANTS })
-      // Also clear teams and bench
-      dispatch({ type: ACTIONS.CLEAR_DRAW })
     }
 
     const newParticipant = {
@@ -392,9 +335,15 @@ function MainApp() {
       return false
     }
 
+    const previousParticipant = participants.find(p => p.id === updates.id)
+    const changed = previousParticipant && (
+      previousParticipant.name !== formattedName ||
+      previousParticipant.weight !== updates.weight ||
+      previousParticipant.role !== updates.role
+    )
     dispatch({
       type: ACTIONS.UPDATE_PARTICIPANT,
-      payload: { id: updates.id, name: formattedName, weight: updates.weight, role: updates.role }
+      payload: { id: updates.id, name: formattedName, weight: updates.weight, role: updates.role, ...(changed ? { isExample: false } : {}) }
     })
 
     setEditDialogOpen(false)
@@ -424,9 +373,10 @@ function MainApp() {
       return false // Return false to indicate validation failed
     }
 
+    const previousParticipant = participants.find(p => p.id === id)
     dispatch({
       type: ACTIONS.UPDATE_PARTICIPANT,
-      payload: { id, name: formattedName }
+      payload: { id, name: formattedName, ...(previousParticipant && previousParticipant.name !== formattedName ? { isExample: false } : {}) }
     })
 
     return true // Return true to indicate success
@@ -673,6 +623,11 @@ function MainApp() {
               </CardHeader>
               <CollapsibleContent className="mb-6">
                 <CardContent className="px-4 py-3 sm:px-6 sm:py-4">
+                  {participants.some(p => p.isExample === true) && (
+                    <p className="mb-3 ds-text-small text-[var(--color-text-secondary)]">
+                      {t('participants.examples_notice')}
+                    </p>
+                  )}
                   <AlertDialog>
                     <ParticipantForm
                       newName={newName}

@@ -1,6 +1,8 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 
+import { languageFromPath } from './utils/languageUrl.js'
+
 // Import all locale files dynamically
 const localeFiles = import.meta.glob('./locales/*.json', { eager: true })
 
@@ -15,42 +17,19 @@ const resources = Object.entries(localeFiles).reduce((acc, [path, module]) => {
   return acc
 }, {})
 
-// Function to detect language from path, URL param, or localStorage
+// Indexable home pages always derive their language from their path.
 const detectLanguage = () => {
+  const pathLanguage = languageFromPath(window.location.pathname)
+  if (pathLanguage) return pathLanguage
+
+  // Preserve the existing preference behavior for unrelated routes.
   const supportedLangs = Object.keys(resources)
-  const defaultLang = 'en'
-
-  // Priority 1: Path-based detection (/ar/, /pt/, etc.)
-  const pathname = window.location.pathname
-  const pathMatch = pathname.match(/^\/([a-z]{2})\//)
-  if (pathMatch) {
-    const pathLang = pathMatch[1]
-    if (supportedLangs.includes(pathLang) && pathLang !== 'en') {
-      return pathLang
-    }
-  }
-
-  // Priority 2: Query parameter (fallback for old links and dev)
-  const urlParams = new URLSearchParams(window.location.search)
-  const urlLang = urlParams.get('lang')
-  if (urlLang && supportedLangs.includes(urlLang)) {
-    return urlLang
-  }
-
-  // Priority 3: localStorage
-  const savedLang = localStorage.getItem('i18nextLng')
-  if (savedLang && supportedLangs.includes(savedLang)) {
-    return savedLang
-  }
-
-  // Priority 4: Browser language (optional, improves UX)
-  const browserLang = navigator.language?.slice(0, 2)
-  if (browserLang && supportedLangs.includes(browserLang)) {
-    return browserLang
-  }
-
-  // Default to English
-  return defaultLang
+  const urlLang = new URLSearchParams(window.location.search).get('lang')
+  if (supportedLangs.includes(urlLang)) return urlLang
+  const savedLang = window.localStorage.getItem('i18nextLng')
+  if (supportedLangs.includes(savedLang)) return savedLang
+  const browserLang = window.navigator.language?.slice(0, 2)
+  return supportedLangs.includes(browserLang) ? browserLang : 'en'
 }
 
 i18n
@@ -67,7 +46,7 @@ i18n
 
 // Save language changes to localStorage
 i18n.on('languageChanged', (lng) => {
-  localStorage.setItem('i18nextLng', lng)
+  window.localStorage.setItem('i18nextLng', lng)
 })
 
 export default i18n

@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "Tagapagsuri ng Koponan ng Volleyball"
+    "title": "Tagabuo ng mga Koponan sa Volleyball"
   },
   "participants": {
     "manage": "Pamahalaan ang mga Kalahok",
@@ -14,7 +14,8 @@
     "remove": "Tanggalin",
     "edit_dialog_title": "I-edit ang Kalahok",
     "edit_dialog_description": "Baguhin ang pangalan at antas ng kasanayan ng kalahok",
-    "example_player": "Manlalaro {{number}}"
+    "example_player": "Manlalaro {{number}}",
+    "examples_notice": "Papalitan ang mga halimbawang manlalaro kapag idinagdag mo ang unang manlalaro."
   },
   "skill_levels": {
     "beginner": "Nagsisimula",
@@ -30,7 +31,10 @@
   },
   "actions": {
     "draw_teams": "Gumawa ng mga Koponan",
-    "clear_draw": "Linisin ang Pagguhit"
+    "clear_draw": "I-clear ang mga resulta",
+    "collapse": "Isara",
+    "expand": "Palawakin",
+    "more_options": "Higit pang opsyon"
   },
   "results": {
     "title": "Mga Resulta ng Pagguhit",
@@ -96,7 +100,7 @@
     "participant_list": "Ito ang listahan ng mga kalahok. Maaari mong i-edit o tanggalin ang anumang kalahok sa pamamagitan ng pag-click sa mga icon sa tabi ng pangalan.",
     "draw_button": "Ang button na ito ay gumagawa ng mga koponan sa isang balanseng paraan, isinasaalang-alang ang mga antas ng kasanayan at espesyal na posisyon.",
     "teams": "Dito lilitaw ang mga ginawang koponan, nahahati sa isang balanseng paraan.",
-    "bench": "Dito lilitaw ang mga manlalarong nasa bench kapag walang sapat na mga manlalaro upang bumuo ng kumpletong mga koponan.",
+    "bench": "Dito makikita ang mga manlalarong hindi naisama sa isang koponan.",
     "language": "Gamitin ang selector na ito upang baguhin ang wika ng interface.",
     "faq": "I-click dito upang makita ang mga madalas na itinanong na tanong at makakuha ng tulong kung paano gamitin ang app.",
     "complete": "Tapos na! Ngayon alam mo na ang lahat ng mga pangunahing tampok. Magsaya sa paggawa ng mga koponan!",
@@ -142,15 +146,15 @@
     ]
   },
   "seo": {
-    "title": "Tagapagsuri ng Koponan ng Volleyball - Lumikha ng Balanseng mga Koponan Madali",
-    "description": "Libreng online na tagapagsuri ng koponan ng volleyball. Awtomatikong lumikha ng makatarungan at balanseng mga koponan mula sa iyong mga manlalaro. Perpekto para sa mga pickup games. Ganap na libre, walang kinakailangang pagrehistro.",
+    "title": "Tagabuo ng mga Koponan sa Volleyball - Bumuo ng Balanseng mga Koponan",
+    "description": "Libreng online na tagabuo ng mga koponan sa volleyball. Awtomatikong lumikha ng makatarungan at balanseng mga koponan mula sa iyong mga manlalaro. Perpekto para sa mga pickup games. Ganap na libre, walang kinakailangang pagrehistro.",
     "languageName": "Tagalog",
     "locale": "tl_PH"
   },
   "structuredData": {
-    "name": "Tagapagsuri ng Koponan ng Volleyball",
-    "alternateName": "Tagapagsuri ng Koponan ng Volleyball",
-    "description": "Libreng online na tagapagsuri ng koponan ng volleyball. Awtomatikong lumikha ng makatarungan at balanseng mga koponan mula sa iyong mga manlalaro. Perpekto para sa mga pickup games. Ganap na libre, walang kinakailangang pagrehistro.",
+    "name": "Tagabuo ng mga Koponan sa Volleyball",
+    "alternateName": "Tagabuo ng mga Koponan sa Volleyball",
+    "description": "Libreng online na tagabuo ng mga koponan sa volleyball. Awtomatikong lumikha ng makatarungan at balanseng mga koponan mula sa iyong mga manlalaro. Perpekto para sa mga pickup games. Ganap na libre, walang kinakailangang pagrehistro.",
     "featureList": [
       "Random na paggawa ng koponan",
       "Makatarungang pagbalanse ng koponan",
@@ -160,8 +164,7 @@
       "Libreng gamitin",
       "Pagbalanse ng antas ng kasanayan",
       "Distribusyon batay sa posisyon"
-    ],
-    "releaseNotes": "Pagpapabuti ng suporta sa WPA"
+    ]
   },
   "theme": {
     "label": "Tema",

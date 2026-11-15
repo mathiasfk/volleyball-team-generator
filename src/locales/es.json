@@ -14,7 +14,8 @@
     "remove": "Eliminar",
     "edit_dialog_title": "Editar Participante",
     "edit_dialog_description": "Cambia el nombre y nivel del participante",
-    "example_player": "Jugador {{number}}"
+    "example_player": "Jugador {{number}}",
+    "examples_notice": "Los jugadores de ejemplo se sustituirán al agregar el primer jugador."
   },
   "skill_levels": {
     "beginner": "Principiante",
@@ -30,7 +31,10 @@
   },
   "actions": {
     "draw_teams": "Sortear Equipos",
-    "clear_draw": "Borrar Sorteo"
+    "clear_draw": "Borrar Sorteo",
+    "collapse": "Contraer",
+    "expand": "Expandir",
+    "more_options": "Más opciones"
   },
   "results": {
     "title": "Resultados del Sorteo",
@@ -96,7 +100,7 @@
     "participant_list": "Esta es la lista de participantes. Puedes editar o eliminar cualquier participante haciendo clic en los iconos junto al nombre.",
     "draw_button": "Este botón sortea los equipos de forma equilibrada, considerando niveles de habilidad y posiciones especiales.",
     "teams": "Aquí aparecerán los equipos sorteados, divididos de forma equilibrada.",
-    "bench": "Aquí aparecerán los jugadores que quedaron fuera (banco) cuando no hay número suficiente para formar equipos completos.",
+    "bench": "Aquí aparecen los jugadores que quedaron fuera de los equipos.",
     "language": "Usa este selector para cambiar el idioma de la interfaz.",
     "faq": "Haz clic aquí para ver preguntas frecuentes y obtener ayuda sobre cómo usar la app.",
     "complete": "¡Listo! Ahora conoces todas las funcionalidades principales. ¡Disfruta sorteando equipos!",
@@ -160,8 +164,7 @@
       "Gratis para usar",
       "Equilibrio por nivel de habilidad",
       "Distribución basada en posición"
-    ],
-    "releaseNotes": "Mejoras en el soporte PWA"
+    ]
   },
   "theme": {
     "label": "Tema",

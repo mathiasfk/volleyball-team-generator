@@ -91,6 +91,38 @@ describe('appReducer', () => {
       expect(newState.participants).toContainEqual({ id: '1', name: 'Maria' })
       expect(newState.participants).toContainEqual({ id: '2', name: 'João' })
     })
+
+    it('replaces marked examples and their draw while preserving real and legacy players', () => {
+      const example = { id: 'sample', name: 'Ana', isExample: true }
+      const real = { id: 'real', name: 'Ana' }
+      const edited = { id: 'edited', name: 'Diana', isExample: false }
+      const state = {
+        ...initialState,
+        participants: [example, real, edited],
+        teams: [[example], [real]],
+        benchPlayers: [example],
+        changedPlayerIds: ['sample'],
+        previousPlayerPositions: new Map([['sample', 0]]),
+      }
+      const added = { id: 'new', name: 'Bruno' }
+      const next = appReducer(state, { type: ACTIONS.ADD_PARTICIPANT, payload: added })
+
+      expect(next.participants).toEqual([real, edited, added])
+      expect(next.teams).toEqual([])
+      expect(next.benchPlayers).toEqual([])
+      expect(next.changedPlayerIds).toEqual([])
+      expect(next.previousPlayerPositions).toBeNull()
+      expect(state.participants).toEqual([example, real, edited])
+    })
+
+    it('preserves an existing draw if no explicitly marked examples are present', () => {
+      const legacy = { id: '1', name: 'Player 1' }
+      const state = { ...initialState, participants: [legacy], teams: [[legacy]] }
+      const next = appReducer(state, { type: ACTIONS.ADD_PARTICIPANT, payload: { id: '2', name: 'Ana' } })
+
+      expect(next.participants).toEqual([legacy, { id: '2', name: 'Ana' }])
+      expect(next.teams).toEqual([[legacy]])
+    })
   })
 
   describe('REMOVE_PARTICIPANT', () => {
