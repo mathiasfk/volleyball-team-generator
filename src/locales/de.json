@@ -14,7 +14,8 @@
     "remove": "Entfernen",
     "edit_dialog_title": "Teilnehmer bearbeiten",
     "edit_dialog_description": "Namen und Fähigkeitsstufe des Teilnehmers ändern",
-    "example_player": "Spieler {{number}}"
+    "example_player": "Spieler {{number}}",
+    "examples_notice": "Die Beispielspieler werden ersetzt, sobald Sie den ersten Spieler hinzufügen."
   },
   "skill_levels": {
     "beginner": "Anfänger",
@@ -30,7 +31,10 @@
   },
   "actions": {
     "draw_teams": "Teams bilden",
-    "clear_draw": "Auslosung zurücksetzen"
+    "clear_draw": "Auslosung zurücksetzen",
+    "collapse": "Einklappen",
+    "expand": "Ausklappen",
+    "more_options": "Weitere Optionen"
   },
   "results": {
     "title": "Ergebnisse der Auslosung",
@@ -94,9 +98,9 @@
     "welcome": "Willkommen! Machen wir eine kurze Tour, um die Hauptfunktionen der App kennenzulernen.",
     "participant_form": "Hier können Sie Teilnehmer hinzufügen. Geben Sie den Namen ein und klicken Sie auf 'Hinzufügen' oder drücken Sie Enter.",
     "participant_list": "Dies ist die Teilnehmerliste. Sie können jeden Teilnehmer bearbeiten oder entfernen, indem Sie auf die Symbole neben dem Namen klicken.",
-    "draw_button": "Diese Schaltfläche zieht Teams auf ausgewogene Weise, unter Berücksichtigung von Fähigkeitsstufen und speziellen Positionen.",
+    "draw_button": "Diese Schaltfläche bildet ausgewogene Teams und berücksichtigt dabei Spielstärke und Positionen.",
     "teams": "Hier erscheinen die ausgelosten Teams, auf ausgewogene Weise aufgeteilt.",
-    "bench": "Hier erscheinen die Spieler, die draußen geblieben sind (Bank), wenn nicht genug Spieler vorhanden sind, um vollständige Teams zu bilden.",
+    "bench": "Hier erscheinen Spieler, die keinem Team zugeteilt wurden.",
     "language": "Verwenden Sie diesen Selektor, um die Sprache der Benutzeroberfläche zu ändern.",
     "faq": "Klicken Sie hier, um häufig gestellte Fragen zu sehen und Hilfe zur Verwendung der App zu erhalten.",
     "complete": "Fertig! Jetzt kennen Sie alle Hauptfunktionen. Viel Spaß beim Auslosen der Teams!",

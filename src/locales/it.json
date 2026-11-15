@@ -14,7 +14,8 @@
     "remove": "Rimuovi",
     "edit_dialog_title": "Modifica Partecipante",
     "edit_dialog_description": "Modifica il nome e il livello di abilità del partecipante",
-    "example_player": "Giocatore {{number}}"
+    "example_player": "Giocatore {{number}}",
+    "examples_notice": "I giocatori di esempio saranno sostituiti quando aggiungi il primo giocatore."
   },
   "skill_levels": {
     "beginner": "Principiante",
@@ -30,7 +31,10 @@
   },
   "actions": {
     "draw_teams": "Sortea Squadre",
-    "clear_draw": "Cancella Sorteggio"
+    "clear_draw": "Cancella Sorteggio",
+    "collapse": "Comprimi",
+    "expand": "Espandi",
+    "more_options": "Altre opzioni"
   },
   "results": {
     "title": "Risultati del Sorteggio",
@@ -96,7 +100,7 @@
     "participant_list": "Questa è la lista dei partecipanti. Puoi modificare o rimuovere qualsiasi partecipante cliccando sulle icone accanto al nome.",
     "draw_button": "Questo pulsante sorteggia le squadre in modo equilibrato, considerando i livelli di abilità e le posizioni speciali.",
     "teams": "Qui appariranno le squadre sorteggiate, divise in modo equilibrato.",
-    "bench": "Qui appariranno i giocatori in panchina quando non ci sono abbastanza giocatori per formare squadre complete.",
+    "bench": "Qui compaiono i giocatori non assegnati a una squadra.",
     "language": "Usa questo selettore per cambiare la lingua dell'interfaccia.",
     "faq": "Clicca qui per vedere le domande frequenti e ottenere aiuto su come usare l'app.",
     "complete": "Fatto! Ora conosci tutte le funzionalità principali. Buon divertimento con il sorteggio delle squadre!",

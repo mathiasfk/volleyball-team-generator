@@ -3,18 +3,19 @@
     "title": "Voleybol Takımı Oluşturucu"
   },
   "participants": {
-    "manage": "Katılımcıları Yönet",
+    "manage": "Oyuncuları Yönet",
     "add": "Ekle",
     "clear_all": "Tümünü Sil",
-    "placeholder": "Katılımcı adı",
-    "total": "Toplam: {{count}} katılımcı",
+    "placeholder": "Oyuncu adı",
+    "total": "Toplam: {{count}} oyuncu",
     "save": "Kaydet",
     "cancel": "İptal",
     "edit": "Düzenle",
     "remove": "Kaldır",
-    "edit_dialog_title": "Katılımcıyı Düzenle",
-    "edit_dialog_description": "Katılımcının adını ve yetenek seviyesini değiştirin",
-    "example_player": "Oyuncu {{number}}"
+    "edit_dialog_title": "Oyuncuyu Düzenle",
+    "edit_dialog_description": "Oyuncunun adını, yetenek seviyesini ve pozisyonunu değiştirin",
+    "example_player": "Oyuncu {{number}}",
+    "examples_notice": "İlk oyuncuyu eklediğinizde örnek oyuncular kaldırılır."
   },
   "skill_levels": {
     "beginner": "Başlangıç",
@@ -30,7 +31,10 @@
   },
   "actions": {
     "draw_teams": "Takımları Oluştur",
-    "clear_draw": "Sonuçları Temizle"
+    "clear_draw": "Sonuçları Temizle",
+    "collapse": "Daralt",
+    "expand": "Genişlet",
+    "more_options": "Diğer seçenekler"
   },
   "results": {
     "title": "Kura Sonuçları",
@@ -54,7 +58,7 @@
   "dialog": {
     "clear_participants": {
       "title": "Uyarı!",
-      "description": "Tüm katılımcıları silmek istiyor musunuz?",
+      "description": "Tüm oyuncuları silmek istiyor musunuz?",
       "confirm": "Sil",
       "cancel": "İptal"
     },
@@ -92,14 +96,14 @@
   },
   "tour": {
     "welcome": "Hoş geldiniz! Uygulamanın ana özelliklerini öğrenmek için hızlı bir tur yapalım.",
-    "participant_form": "Buradan katılımcı ekleyebilirsiniz. Adı yazın ve 'Ekle'ye tıklayın veya Enter'a basın.",
-    "participant_list": "Bu katılımcı listesidir. Adın yanındaki simgelere tıklayarak herhangi bir katılımcıyı düzenleyebilir veya kaldırabilirsiniz.",
-    "draw_button": "Bu düğme, yetenek seviyelerini ve özel pozisyonları dikkate alarak dengeli bir şekilde takımları çizer.",
-    "teams": "Burada çizilen takımlar görünecektir, dengeli bir şekilde bölünmüş.",
-    "bench": "Tam takımlar oluşturmak için yeterli oyuncu olmadığında burada yedek oyuncular görünecektir.",
+    "participant_form": "Buradan oyuncu ekleyebilirsiniz. Adı yazın ve 'Ekle'ye tıklayın veya Enter'a basın.",
+    "participant_list": "Bu oyuncu listesidir. Adın yanındaki simgeleri kullanarak oyuncuları düzenleyebilir veya kaldırabilirsiniz.",
+    "draw_button": "Bu düğme, yetenek seviyelerini ve pozisyonları dikkate alarak dengeli takımlar oluşturur.",
+    "teams": "Oluşturulan takımlar burada görünür.",
+    "bench": "Bir takıma yerleştirilmeyen oyuncular burada görünür.",
     "language": "Arayüz dilini değiştirmek için bu seçiciyi kullanın.",
     "faq": "Sık sorulan soruları görmek ve uygulamanın nasıl kullanılacağı hakkında yardım almak için buraya tıklayın.",
-    "complete": "Tamamlandı! Artık tüm ana özellikleri biliyorsunuz. Takımları çizmekten keyif alın!",
+    "complete": "Tamamlandı! Artık takım oluşturmaya hazırsınız.",
     "restart_button": "Rehberli turu yeniden başlat",
     "back": "Geri",
     "skip": "Atla",
@@ -124,12 +128,12 @@
         "answer": "Yeniden kura çekerken, takımlardan birini (Kırmızı veya Mavi) korumayı ve sadece diğer takımı ve yedeği yeniden düzenlemeyi seçebilirsiniz. Bu, bir maç bittiğinde ve kazanan takımı olduğu gibi korumak istediğinizde kullanışlıdır."
       },
       {
-        "question": "Katılımcıları nasıl düzenlerim?",
-        "answer": "Listedeki herhangi bir katılımcının adının yanındaki 'Düzenle' düğmesine (kalem simgesi) tıklayın. Adlarını, yetenek seviyelerini ve pozisyonlarını değiştirebilirsiniz. Değişiklikler otomatik olarak kaydedilir."
+        "question": "Oyuncuları nasıl düzenlerim?",
+        "answer": "Listedeki herhangi bir oyuncunun adının yanındaki 'Düzenle' düğmesine (kalem simgesi) tıklayın. Adlarını, yetenek seviyelerini ve pozisyonlarını değiştirebilirsiniz. Değişiklikler otomatik olarak kaydedilir."
       },
       {
         "question": "Verilerim kaydediliyor mu?",
-        "answer": "Evet! Tüm katılımcılar ve oluşturulan takımlar tarayıcınızda (localStorage) otomatik olarak kaydedilir. Sayfayı kapatıp yeniden açsanız bile verileriniz kalacaktır."
+        "answer": "Evet! Tüm oyuncular ve oluşturulan takımlar tarayıcınızda (localStorage) otomatik olarak kaydedilir. Sayfayı kapatıp yeniden açsanız bile verileriniz kalacaktır."
       },
       {
         "question": "Çevrimdışı çalışıyor mu?",

@@ -3,18 +3,21 @@
     "title": "Sorteio de Times de Vôlei"
   },
   "participants": {
-    "manage": "Gerenciar Participantes",
+    "manage": "Gerenciar Jogadores",
     "add": "Adicionar",
     "clear_all": "Limpar Todos",
-    "placeholder": "Nome do participante",
-    "total": "Total: {{count}} participantes",
+    "placeholder": "Nome do jogador",
+    "total": "Total: {{count}} jogadores",
     "save": "Salvar",
     "cancel": "Cancelar",
     "edit": "Editar",
     "remove": "Remover",
-    "edit_dialog_title": "Editar Participante",
-    "edit_dialog_description": "Altere o nome e nível do participante",
-    "example_player": "Jogador {{number}}"
+    "edit_dialog_title": "Editar Jogador",
+    "edit_dialog_description": "Altere o nome, o nível de habilidade e a posição do jogador",
+    "example_player": "Jogador {{number}}",
+    "examples_notice": "Os jogadores de exemplo serão substituídos ao adicionar o primeiro jogador.",
+    "total_one": "Total: {{count}} jogador",
+    "total_other": "Total: {{count}} jogadores"
   },
   "skill_levels": {
     "beginner": "Iniciante",
@@ -30,7 +33,10 @@
   },
   "actions": {
     "draw_teams": "Sortear Times",
-    "clear_draw": "Limpar Sorteio"
+    "clear_draw": "Limpar Sorteio",
+    "collapse": "Recolher",
+    "expand": "Expandir",
+    "more_options": "Mais opções"
   },
   "results": {
     "title": "Resultado do Sorteio",
@@ -54,7 +60,7 @@
   "dialog": {
     "clear_participants": {
       "title": "Atenção!",
-      "description": "Deseja remover todos os participantes?",
+      "description": "Deseja remover todos os jogadores?",
       "confirm": "Remover",
       "cancel": "Cancelar"
     },
@@ -92,11 +98,11 @@
   },
   "tour": {
     "welcome": "Bem-vindo! Vamos fazer um tour rápido para conhecer as principais funcionalidades do app.",
-    "participant_form": "Aqui você pode adicionar participantes. Digite o nome e clique em 'Adicionar' ou pressione Enter.",
-    "participant_list": "Esta é a lista de participantes. Você pode editar ou remover qualquer participante clicando nos ícones ao lado do nome.",
+    "participant_form": "Aqui você pode adicionar jogadores. Digite o nome e clique em 'Adicionar' ou pressione Enter.",
+    "participant_list": "Esta é a lista de jogadores. Você pode editar ou remover um jogador usando os ícones ao lado do nome.",
     "draw_button": "Este botão sorteia os times de forma equilibrada, considerando níveis de habilidade e posições especiais.",
     "teams": "Aqui aparecerão os times sorteados, divididos de forma equilibrada.",
-    "bench": "Aqui aparecerão os jogadores que ficaram de fora (banco) quando não há número suficiente para formar times completos.",
+    "bench": "Os jogadores que ficaram de fora aparecem aqui.",
     "language": "Use este seletor para mudar o idioma da interface.",
     "faq": "Clique aqui para ver perguntas frequentes e obter ajuda sobre como usar o app.",
     "complete": "Pronto! Agora você conhece todas as funcionalidades principais. Divirta-se sorteando times!",
@@ -124,12 +130,12 @@
         "answer": "Ao sortear novamente, você pode escolher manter um dos times (Vermelho ou Azul) e apenas reorganizar o outro time e o banco. Isso é útil quando um time já está bom e você quer apenas ajustar o restante."
       },
       {
-        "question": "Como editar participantes?",
-        "answer": "Clique no botão 'Editar' (ícone de lápis) ao lado do nome de qualquer participante na lista. Você pode alterar o nome, nível de habilidade e posição. As mudanças são salvas automaticamente."
+        "question": "Como editar jogadores?",
+        "answer": "Clique no botão 'Editar' (ícone de lápis) ao lado do nome de qualquer jogador na lista. Você pode alterar o nome, nível de habilidade e posição. As mudanças são salvas automaticamente."
       },
       {
         "question": "Os dados são salvos?",
-        "answer": "Sim! Todos os participantes e times sorteados são salvos automaticamente no navegador (localStorage). Seus dados permanecerão mesmo se você fechar e reabrir a página."
+        "answer": "Sim! Todos os jogadores e times sorteados são salvos automaticamente no navegador (localStorage). Seus dados permanecerão mesmo se você fechar e reabrir a página."
       },
       {
         "question": "Funciona offline?",

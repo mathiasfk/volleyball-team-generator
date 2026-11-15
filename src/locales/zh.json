@@ -14,7 +14,8 @@
     "remove": "删除",
     "edit_dialog_title": "编辑参与者",
     "edit_dialog_description": "更改参与者的姓名和技能水平",
-    "example_player": "球员 {{number}}"
+    "example_player": "球员 {{number}}",
+    "examples_notice": "添加第一位球员后，示例球员将被替换。"
   },
   "skill_levels": {
     "beginner": "初级",
@@ -30,7 +31,10 @@
   },
   "actions": {
     "draw_teams": "分配队伍",
-    "clear_draw": "清除分配"
+    "clear_draw": "清除分配",
+    "collapse": "收起",
+    "expand": "展开",
+    "more_options": "更多选项"
   },
   "results": {
     "title": "分队结果",
@@ -96,7 +100,7 @@
     "participant_list": "这是参与者列表。您可以点击姓名旁边的图标来编辑或删除任何参与者。",
     "draw_button": "此按钮以平衡的方式抽签组队，考虑技能水平和特殊位置。",
     "teams": "这里将显示抽签的队伍，以平衡的方式分配。",
-    "bench": "当没有足够的球员组成完整队伍时，这里将显示替补球员。",
+    "bench": "未分配到队伍的球员会显示在这里。",
     "language": "使用此选择器更改界面语言。",
     "faq": "点击此处查看常见问题并获取有关如何使用应用程序的帮助。",
     "complete": "完成！现在您了解了所有主要功能。祝您抽签组队愉快！",

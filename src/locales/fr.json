@@ -14,7 +14,8 @@
     "remove": "Supprimer",
     "edit_dialog_title": "Modifier le participant",
     "edit_dialog_description": "Modifiez le nom et le niveau du participant",
-    "example_player": "Joueur {{number}}"
+    "example_player": "Joueur {{number}}",
+    "examples_notice": "Les joueurs d’exemple seront remplacés dès l’ajout du premier joueur."
   },
   "skill_levels": {
     "beginner": "Débutant",
@@ -30,7 +31,10 @@
   },
   "actions": {
     "draw_teams": "Former les équipes",
-    "clear_draw": "Réinitialiser le tirage"
+    "clear_draw": "Réinitialiser le tirage",
+    "collapse": "Réduire",
+    "expand": "Développer",
+    "more_options": "Plus d’options"
   },
   "results": {
     "title": "Résultats du tirage",
@@ -96,7 +100,7 @@
     "participant_list": "Voici la liste des participants. Vous pouvez modifier ou supprimer n'importe quel participant en cliquant sur les icônes à côté du nom.",
     "draw_button": "Ce bouton tire au sort les équipes de manière équilibrée, en tenant compte des niveaux de compétence et des positions spéciales.",
     "teams": "Ici apparaîtront les équipes tirées au sort, divisées de manière équilibrée.",
-    "bench": "Ici apparaîtront les joueurs qui sont restés en dehors (banc) lorsqu'il n'y a pas assez de joueurs pour former des équipes complètes.",
+    "bench": "Les joueurs non affectés à une équipe apparaissent ici.",
     "language": "Utilisez ce sélecteur pour changer la langue de l'interface.",
     "faq": "Cliquez ici pour voir les questions fréquentes et obtenir de l'aide sur l'utilisation de l'application.",
     "complete": "Terminé ! Vous connaissez maintenant toutes les fonctionnalités principales. Amusez-vous à tirer au sort les équipes !",
