@@ -13,8 +13,8 @@ A modern web application for automatic and fair volleyball team selection.
 ## Getting Started
 
 ### Prerequisites
-- Node.js (version 18 or higher)
-- pnpm (or npm/yarn)
+- Node.js version specified in `.nvmrc` (for example, run `nvm install` and `nvm use`)
+- pnpm version specified by `packageManager` in `package.json`
 
 ### Installation and Setup
 
@@ -25,7 +25,7 @@ A modern web application for automatic and fair volleyball team selection.
 
 2. **Install dependencies** (if needed):
    ```bash
-   pnpm install
+   pnpm install --frozen-lockfile
    ```
 
 3. **Start the development server**:
@@ -35,6 +35,10 @@ A modern web application for automatic and fair volleyball team selection.
 
 4. **Access the application**:
    Open your browser and go to `http://localhost:5173`
+
+### Validation
+
+Run `pnpm test --run`, `pnpm lint`, and `pnpm build` before submitting changes. The build regenerates `public/sitemap.xml`. CI runs these checks on the primary Node version and a newer compatibility version for pull requests.
 
 ## Technologies
 
