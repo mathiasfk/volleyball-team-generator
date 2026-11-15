@@ -1,7 +1,8 @@
 /**
  * @vitest-environment happy-dom
  */
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { Window } from 'happy-dom'
+import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import {
   existsInStorage,
@@ -12,6 +13,15 @@ import {
 } from './localStorage'
 
 describe('localStorage utils', () => {
+  beforeAll(() => {
+    // Node can expose an undefined localStorage that shadows happy-dom's global.
+    vi.stubGlobal('localStorage', new Window({ url: 'http://localhost' }).localStorage)
+  })
+
+  afterAll(() => {
+    vi.unstubAllGlobals()
+  })
+
   beforeEach(() => {
     // Clear localStorage before each test
     localStorage.clear()
