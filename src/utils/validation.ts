@@ -19,6 +19,10 @@ export const isDuplicateName = (
   )
 }
 
+/** Check names that will remain after sample players are replaced on add. */
+export const isDuplicateRealPlayerName = (name: string, participants: Participant[]): boolean =>
+  isDuplicateName(name, participants.filter((p) => p.isExample !== true))
+
 /**
  * Checks if a name is empty after trimming
  * @param name - The name to check

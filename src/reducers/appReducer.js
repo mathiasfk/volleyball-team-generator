@@ -48,13 +48,22 @@ export function appReducer(state, action) {
     case ACTIONS.CLEAR_ERROR:
       return { ...state, error: '' }
     
-    case ACTIONS.ADD_PARTICIPANT:
+    case ACTIONS.ADD_PARTICIPANT: {
+      // Replace only explicitly marked examples; old, unmarked stored data is user data.
+      const hasExamples = state.participants.some(p => p.isExample === true)
       return {
         ...state,
-        participants: [...state.participants, action.payload],
+        participants: [...state.participants.filter(p => p.isExample !== true), action.payload],
+        ...(hasExamples ? {
+          teams: [],
+          benchPlayers: [],
+          changedPlayerIds: [],
+          previousPlayerPositions: null,
+        } : {}),
         newName: '',
         error: '',
       }
+    }
     
     case ACTIONS.REMOVE_PARTICIPANT:
       return {
