@@ -1,7 +1,16 @@
 // @vitest-environment happy-dom
-import { afterEach, describe, expect, it, vi } from 'vitest'
+import { Window } from 'happy-dom'
+import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 
 import { languageFromPath, legacyLanguageUrl } from './languageUrl.js'
+
+beforeAll(() => {
+  vi.stubGlobal('localStorage', new Window({ url: 'http://localhost' }).localStorage)
+})
+
+afterAll(() => {
+  vi.unstubAllGlobals()
+})
 
 afterEach(() => {
   window.localStorage.clear()

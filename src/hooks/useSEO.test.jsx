@@ -1,7 +1,8 @@
 // @vitest-environment happy-dom
+import { Window } from 'happy-dom'
 import { act } from 'react'
 import { createRoot } from 'react-dom/client'
-import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import i18n from '../i18n.js'
 import { selectLanguage } from '../utils/languageUrl.js'
@@ -15,6 +16,14 @@ function SEO() {
 describe('language selection and SEO', () => {
   let root
   let container
+
+  beforeAll(() => {
+    vi.stubGlobal('localStorage', new Window({ url: 'http://localhost' }).localStorage)
+  })
+
+  afterAll(() => {
+    vi.unstubAllGlobals()
+  })
 
   beforeEach(async () => {
     globalThis.IS_REACT_ACT_ENVIRONMENT = true
