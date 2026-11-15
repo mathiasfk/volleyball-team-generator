@@ -1,0 +1,82 @@
+<div id="volei-palette-reference" lang="pt-BR">
+  <style>
+    #volei-palette-reference { --vp-bg:#0F141B; --vp-card:#171F2A; --vp-raised:#222D3B; --vp-hover:#2B394B; --vp-text:#F1F5F9; --vp-secondary:#B8C4D4; --vp-icon:#94A3B8; --vp-border:#334155; --vp-control:#71839A; --vp-action:#2563EB; --vp-action-hover:#1D4ED8; --vp-focus:#93C5FD; --vp-danger:#B91C1C; --vp-error:#FCA5A5; --vp-success:#86EFAC; color:var(--vp-text); font:400 14px/1.5 system-ui,sans-serif; color-scheme:dark; }
+    #volei-palette-reference * { box-sizing:border-box; }
+    #volei-palette-reference .board { background:var(--vp-bg); border-radius:14px; padding:24px; }
+    #volei-palette-reference h2 { font-size:20px; font-weight:600; line-height:1.3; margin:0; }
+    #volei-palette-reference h3 { font-size:14px; font-weight:600; margin:24px 0 10px; }
+    #volei-palette-reference .intro { color:var(--vp-secondary); margin:5px 0 20px; }
+    #volei-palette-reference .swatches { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px 12px; }
+    #volei-palette-reference .swatch { min-width:0; }
+    #volei-palette-reference .paint { height:52px; border-radius:7px; background:var(--paint); outline:1px solid var(--vp-border); outline-offset:-1px; }
+    #volei-palette-reference .name { display:block; margin-top:6px; color:var(--vp-text); }
+    #volei-palette-reference code { font:400 12px/1.5 ui-monospace,monospace; color:var(--vp-secondary); }
+    #volei-palette-reference .section-label { display:flex; gap:12px; align-items:center; margin:28px 0 12px; }
+    #volei-palette-reference .section-label:after { content:""; flex:1; height:1px; background:var(--vp-border); }
+    #volei-palette-reference .sample { background:var(--vp-card); border:1px solid var(--vp-border); border-radius:10px; padding:16px; }
+    #volei-palette-reference .sample-head { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:14px; }
+    #volei-palette-reference .sample-head strong { font-weight:600; }
+    #volei-palette-reference .secondary { color:var(--vp-secondary); }
+    #volei-palette-reference .add-row { display:flex; align-items:center; gap:8px; margin-bottom:12px; }
+    #volei-palette-reference input { min-width:0; width:100%; font:inherit; color:var(--vp-text); background:var(--vp-raised); border:1px solid var(--vp-control); border-radius:6px; padding:9px 11px; }
+    #volei-palette-reference input::placeholder { color:var(--vp-secondary); opacity:1; }
+    #volei-palette-reference button { font:500 14px/1.4 system-ui,sans-serif; border:1px solid var(--vp-control); border-radius:6px; padding:9px 12px; background:var(--vp-raised); color:var(--vp-text); cursor:pointer; }
+    #volei-palette-reference button:hover { background:var(--vp-hover); }
+    #volei-palette-reference button:focus-visible, #volei-palette-reference input:focus-visible { outline:2px solid var(--vp-focus); outline-offset:3px; }
+    #volei-palette-reference .person { display:flex; gap:12px; align-items:center; justify-content:space-between; padding:10px 12px; background:var(--vp-raised); border-radius:6px; margin-top:6px; }
+    #volei-palette-reference .person:hover { background:var(--vp-hover); }
+    #volei-palette-reference .meta { color:var(--vp-secondary); }
+    #volei-palette-reference .edit { color:var(--vp-icon); padding:9px; border-color:transparent; background:transparent; display:flex; align-items:center; justify-content:center; min-width:44px; min-height:44px; }
+    #volei-palette-reference .edit:hover { color:var(--vp-text); }
+    #volei-palette-reference .actions { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-top:16px; }
+    #volei-palette-reference .primary { background:var(--vp-action); border-color:var(--vp-action); color:#FFFFFF; display:flex; align-items:center; gap:8px; }
+    #volei-palette-reference .primary:hover { background:var(--vp-action-hover); border-color:var(--vp-action-hover); }
+    #volei-palette-reference .quiet { border-color:transparent; background:transparent; color:var(--vp-secondary); }
+    #volei-palette-reference .feedback { display:flex; gap:20px; flex-wrap:wrap; margin-top:16px; }
+    #volei-palette-reference .ok { color:var(--vp-success); }
+    #volei-palette-reference .error { color:var(--vp-error); }
+    #volei-palette-reference .ratios { color:var(--vp-secondary); display:flex; flex-wrap:wrap; gap:8px 20px; margin-top:16px; font-size:12px; }
+    #volei-palette-reference svg { width:16px; height:16px; }
+    @media(max-width:480px) { #volei-palette-reference .board { padding:16px; } #volei-palette-reference .swatches { grid-template-columns:repeat(2,minmax(0,1fr)); } #volei-palette-reference .sample { padding:12px; } #volei-palette-reference .sample-head { align-items:flex-start; } }
+  </style>
+  <section class="board" aria-label="Referência da paleta proposta para o sorteio de vôlei">
+    <h2>Escuro neutro · azul de ação</h2>
+    <p class="intro">Paleta proposta</p>
+    <h3>Superfícies e contornos</h3>
+    <div class="swatches">
+      <div class="swatch"><div class="paint" style="--paint:#0F141B"></div><span class="name">Fundo</span><code>#0F141B</code></div>
+      <div class="swatch"><div class="paint" style="--paint:#171F2A"></div><span class="name">Cartões e diálogos</span><code>#171F2A</code></div>
+      <div class="swatch"><div class="paint" style="--paint:#222D3B"></div><span class="name">Campos e linhas</span><code>#222D3B</code></div>
+      <div class="swatch"><div class="paint" style="--paint:#2B394B"></div><span class="name">Hover neutro</span><code>#2B394B</code></div>
+      <div class="swatch"><div class="paint" style="--paint:#334155"></div><span class="name">Borda decorativa</span><code>#334155</code></div>
+      <div class="swatch"><div class="paint" style="--paint:#71839A"></div><span class="name">Borda de campos</span><code>#71839A</code></div>
+    </div>
+    <h3>Texto e ícones</h3>
+    <div class="swatches">
+      <div class="swatch"><div class="paint" style="--paint:#F1F5F9"></div><span class="name">Texto principal</span><code>#F1F5F9</code></div>
+      <div class="swatch"><div class="paint" style="--paint:#B8C4D4"></div><span class="name">Texto secundário</span><code>#B8C4D4</code></div>
+      <div class="swatch"><div class="paint" style="--paint:#94A3B8"></div><span class="name">Ícones secundários</span><code>#94A3B8</code></div>
+      <div class="swatch"><div class="paint" style="--paint:#FFFFFF"></div><span class="name">Texto de botões</span><code>#FFFFFF</code></div>
+    </div>
+    <h3>Ações e feedback</h3>
+    <div class="swatches">
+      <div class="swatch"><div class="paint" style="--paint:#2563EB"></div><span class="name">Ação principal</span><code>#2563EB</code></div>
+      <div class="swatch"><div class="paint" style="--paint:#1D4ED8"></div><span class="name">Hover principal</span><code>#1D4ED8</code></div>
+      <div class="swatch"><div class="paint" style="--paint:#93C5FD"></div><span class="name">Links e foco</span><code>#93C5FD</code></div>
+      <div class="swatch"><div class="paint" style="--paint:#B91C1C"></div><span class="name">Confirmar exclusão</span><code>#B91C1C</code></div>
+      <div class="swatch"><div class="paint" style="--paint:#FCA5A5"></div><span class="name">Mensagem de erro</span><code>#FCA5A5</code></div>
+      <div class="swatch"><div class="paint" style="--paint:#86EFAC"></div><span class="name">Mensagem de sucesso</span><code>#86EFAC</code></div>
+    </div>
+    <h3 class="section-label">Aplicação da paleta</h3>
+    <section class="sample" aria-label="Exemplo de participantes">
+      <div class="sample-head"><strong>Participantes</strong><span class="secondary">3 jogadores</span></div>
+      <div class="add-row"><input aria-label="Nome do participante de exemplo" placeholder="Nome do participante"><button type="button">Adicionar</button></div>
+      <div class="person"><div><div>Marina Oliveira</div><div class="meta">Iniciante</div></div><button type="button" class="edit" aria-label="Editar Marina Oliveira"><i data-lucide="pencil" aria-hidden="true"></i></button></div>
+      <div class="person"><div><div>Lucas Santos</div><div class="meta">Intermediário · Líbero</div></div><button type="button" class="edit" aria-label="Editar Lucas Santos"><i data-lucide="pencil" aria-hidden="true"></i></button></div>
+      <div class="person"><div><div>Camila Costa</div><div class="meta">Avançado · Levantador</div></div><button type="button" class="edit" aria-label="Editar Camila Costa"><i data-lucide="pencil" aria-hidden="true"></i></button></div>
+      <div class="actions"><button type="button" class="primary"><i data-lucide="shuffle" aria-hidden="true"></i>Sortear times</button><button type="button" class="quiet">Limpar todos</button></div>
+      <div class="feedback"><span class="ok">Alterações salvas</span><span class="error">Informe um nome</span></div>
+    </section>
+    <div class="ratios"><span>Texto secundário / linha · 7,89:1</span><span>Branco / azul de ação · 5,17:1</span></div>
+  </section>
+</div>

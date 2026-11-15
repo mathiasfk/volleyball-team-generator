@@ -22,11 +22,11 @@ const ParticipantForm = ({
         value={newName}
         onChange={(e) => onNameChange(e.target.value)}
         onKeyPress={(e) => e.key === 'Enter' && onAdd()}
-        className="bg-gray-700 border-gray-600 text-white placeholder-gray-400"
+        className="bg-[var(--color-card-secondary)] border-input text-[var(--color-text-primary)] placeholder-[var(--color-text-secondary)]"
       />
       <Button
         onClick={onAdd}
-        className="bg-blue-600 hover:bg-blue-700 flex items-center justify-center"
+        variant="secondary" aria-label={t('participants.add')} className="min-h-11 min-w-11"
       >
         <span className="block sm:hidden text-xl">+</span>
         <span className="hidden sm:block">{t('participants.add')}</span>
@@ -34,8 +34,8 @@ const ParticipantForm = ({
       <AlertDialogTrigger asChild>
         <Button
           onClick={onClearStart}
-          variant="destructive"
-          className="bg-red-600 hover:bg-red-700 flex items-center justify-center"
+          variant="ghost"
+          className="min-h-11 min-w-11 text-muted-foreground" aria-label={t('participants.clear_all')}
           disabled={participantsCount === 0}
         >
           <Trash className="w-4 h-4" />

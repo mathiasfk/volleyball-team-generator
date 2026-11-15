@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "🏐 Generador de Equipos de Vóley"
+    "title": "Generador de Equipos de Vóley"
   },
   "participants": {
     "manage": "Gestionar Participantes",
@@ -41,7 +41,7 @@
   },
   "colors": {
     "red": "Rojo",
-    "blue": "Azul", 
+    "blue": "Azul",
     "green": "Verde",
     "purple": "Morado",
     "orange": "Naranja",
@@ -76,8 +76,8 @@
     "chinese": "中文",
     "hindi": "हिन्दी",
     "arabic": "العربية",
-    "french" : "Français",
-    "german" : "Deutsch", 
+    "french": "Français",
+    "german": "Deutsch",
     "indonesian": "Bahasa Indonesia",
     "turkish": "Türkçe",
     "japanese": "日本語",
@@ -162,5 +162,11 @@
       "Distribución basada en posición"
     ],
     "releaseNotes": "Mejoras en el soporte PWA"
+  },
+  "theme": {
+    "label": "Tema",
+    "light": "Claro",
+    "dark": "Oscuro",
+    "system": "Sistema"
   }
 }

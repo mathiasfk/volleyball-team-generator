@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next'
 
-import { Badge } from '@/components/ui/badge.jsx'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.jsx'
 
 import PlayerDisplay from './PlayerDisplay.jsx'
@@ -9,16 +8,12 @@ const TeamCard = ({ team, teamColor, _index, changedPlayerIds = [], onInlineName
   const { t } = useTranslation()
 
   return (
-    <Card className="bg-gray-800 border-gray-700">
-      <CardHeader
-        className="text-center"
-        style={{ backgroundColor: teamColor.color }}
-      >
-        <CardTitle
-          className="text-xl font-bold"
-          style={{ color: teamColor.textColor }}
-        >
+    <Card className="border-[var(--color-border)] bg-[var(--color-card-primary)]">
+      <CardHeader>
+        <CardTitle className="ds-text-section flex items-center gap-2">
+          <span className="w-2 h-6 rounded-full" style={{ backgroundColor: teamColor.color }} aria-hidden="true" />
           {t('results.team', { color: teamColor.name })}
+          <span className="text-sm font-normal text-muted-foreground">{t('results.players_count', { count: team.length })}</span>
         </CardTitle>
       </CardHeader>
       <CardContent className="pt-4">
@@ -28,22 +23,14 @@ const TeamCard = ({ team, teamColor, _index, changedPlayerIds = [], onInlineName
             return (
               <div
                 key={participant.id}
-                className={`player-card-base bg-gray-700 p-2 rounded text-center text-white transition-colors ${
+                className={`player-card-base rounded p-2 text-center text-[var(--color-text-primary)] transition-colors bg-[var(--color-card-secondary)] ${
                   isChanged ? 'player-changed' : ''
-                } ${onInlineNameUpdate ? 'hover:bg-gray-600' : ''}`}
+                } ${onInlineNameUpdate ? 'hover:bg-[var(--color-border-highlight)]' : ''}`}
               >
                 <PlayerDisplay participant={participant} onInlineNameUpdate={onInlineNameUpdate} />
               </div>
             )
           })}
-        </div>
-        <div className="mt-3 text-center">
-          <Badge
-            className="text-white"
-            style={{ backgroundColor: teamColor.color }}
-          >
-            {t('results.players_count', { count: team.length })}
-          </Badge>
         </div>
       </CardContent>
     </Card>

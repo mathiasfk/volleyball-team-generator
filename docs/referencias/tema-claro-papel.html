@@ -1,0 +1,77 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&display=swap">
+<div id="volley-parchment" lang="pt-BR">
+<style>
+#volley-parchment { --paper:#EDE6E3; --panel:#F5F0ED; --grey:#DADAD9; --coal:#36382E; --muted:#5E6056; --tomato:#F06449; --aqua:#5BC3EB; --line:#C6C3BB; --ink:#1C2018; color:var(--coal); font:400 14px/1.5 system-ui,sans-serif; color-scheme:light; }
+#volley-parchment * { box-sizing:border-box; }
+#volley-parchment .board { background:var(--paper); border-radius:14px; overflow:hidden; }
+#volley-parchment .hero { padding:26px 24px; border-bottom:1px solid var(--line); position:relative; overflow:hidden; }
+#volley-parchment .eyebrow { font-size:11px; letter-spacing:.14em; text-transform:uppercase; font-weight:600; position:relative; }
+#volley-parchment .eyebrow:before { content:""; display:inline-block; background:var(--tomato); width:9px; height:9px; border-radius:50%; margin-right:8px; }
+#volley-parchment h2 { font:700 42px/1.03 'Barlow Condensed','Arial Narrow',sans-serif; text-transform:uppercase; margin:10px 0 8px; position:relative; max-width:80%; }
+#volley-parchment .subtitle { color:var(--muted); margin:0; position:relative; }
+#volley-parchment .court { position:absolute; right:-36px; top:29px; width:174px; height:110px; border:1px solid var(--line); transform:rotate(-15deg); }
+#volley-parchment .court:before { content:""; position:absolute; left:50%; height:100%; border-left:3px solid var(--tomato); }
+#volley-parchment .court:after { content:""; position:absolute; left:25%; right:25%; height:100%; border-left:1px solid var(--line); border-right:1px solid var(--line); }
+#volley-parchment .content { padding:0 24px 24px; }
+#volley-parchment h3 { font-size:14px; font-weight:600; margin:22px 0 12px; }
+#volley-parchment .swatches { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:12px; }
+#volley-parchment .swatch { min-width:0; }
+#volley-parchment .paint { height:64px; border-radius:6px; background:var(--paint); outline:1px solid var(--line); outline-offset:-1px; }
+#volley-parchment .swatch span { display:block; margin-top:7px; }
+#volley-parchment code { color:var(--muted); font:400 12px/1.5 ui-monospace,monospace; }
+#volley-parchment .preview { margin-top:24px; border-top:1px solid var(--line); padding-top:20px; }
+#volley-parchment .preview-heading { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:16px; }
+#volley-parchment .preview-heading h3 { font:600 28px/1.1 'Barlow Condensed','Arial Narrow',sans-serif; text-transform:uppercase; margin:0 0 3px; }
+#volley-parchment .muted { color:var(--muted); }
+#volley-parchment button { background:var(--panel); color:var(--coal); border:1px solid #8A8B80; border-radius:5px; padding:10px 14px; font:500 14px/1.4 system-ui,sans-serif; cursor:pointer; }
+#volley-parchment button:hover { background:var(--grey); }
+#volley-parchment button:focus-visible { outline:2px solid var(--coal); outline-offset:3px; }
+#volley-parchment .draw { display:inline-flex; align-items:center; gap:8px; background:var(--tomato); color:var(--ink); border-color:var(--tomato); }
+#volley-parchment .draw:hover { background:#F47A63; border-color:#F47A63; }
+#volley-parchment .teams { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+#volley-parchment .team { background:var(--panel); border:1px solid var(--line); border-radius:7px; padding:15px; }
+#volley-parchment .team-head { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:12px; }
+#volley-parchment .team-name { display:flex; gap:8px; align-items:center; font:600 25px/1.2 'Barlow Condensed','Arial Narrow',sans-serif; text-transform:uppercase; }
+#volley-parchment .mark { background:var(--team); width:7px; height:25px; border-radius:2px; flex-shrink:0; }
+#volley-parchment .player { border-top:1px solid var(--line); padding:10px 0; }
+#volley-parchment .player:last-child { padding-bottom:0; }
+#volley-parchment .bench { margin-top:12px; padding:12px 15px; background:var(--grey); border-radius:7px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+#volley-parchment .actions { display:flex; gap:16px; align-items:center; flex-wrap:wrap; margin-top:14px; }
+#volley-parchment .quiet { color:#26627A; background:transparent; border-color:transparent; padding:8px 0; }
+#volley-parchment .quiet:hover { text-decoration:underline; background:transparent; }
+#volley-parchment .ratios { color:var(--muted); font-size:12px; margin-top:18px; display:flex; flex-wrap:wrap; gap:6px 18px; }
+#volley-parchment svg { width:16px; height:16px; }
+@media(max-width:540px) { #volley-parchment .swatches { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+@media(max-width:420px) { #volley-parchment .content { padding:0 16px 20px; } #volley-parchment .hero { padding:24px 16px; } #volley-parchment .swatches { grid-template-columns:repeat(2,minmax(0,1fr)); } #volley-parchment .teams { grid-template-columns:1fr; } #volley-parchment h2 { font-size:36px; } }
+</style>
+<section class="board" aria-label="Proposta clara: papel, carvão, terracota e azul-céu">
+  <header class="hero"><div class="court" aria-hidden="true"></div><div class="eyebrow">Vôlei · encontro marcado</div><h2>Junte a turma.<br>O jogo começa aqui.</h2><p class="subtitle">Papel, carvão e cores de uma tarde na quadra.</p></header>
+  <div class="content">
+    <h3>As cinco cores e seus papéis</h3>
+    <div class="swatches">
+      <div class="swatch"><div class="paint" style="--paint:#F06449"></div><span>Ação e time vermelho</span><code>#F06449</code></div>
+      <div class="swatch"><div class="paint" style="--paint:#EDE6E3"></div><span>Fundo de papel</span><code>#EDE6E3</code></div>
+      <div class="swatch"><div class="paint" style="--paint:#DADAD9"></div><span>Superfície secundária</span><code>#DADAD9</code></div>
+      <div class="swatch"><div class="paint" style="--paint:#36382E"></div><span>Texto carvão</span><code>#36382E</code></div>
+      <div class="swatch"><div class="paint" style="--paint:#5BC3EB"></div><span>Time azul</span><code>#5BC3EB</code></div>
+    </div>
+    <section class="preview" aria-label="Aplicação da paleta aos resultados">
+      <div class="preview-heading"><div><h3>Times prontos</h3><span class="muted">5 jogadores · exemplo de aplicação</span></div><button type="button" class="draw"><i data-lucide="shuffle" aria-hidden="true"></i>Refazer times</button></div>
+      <div class="teams">
+        <section class="team" aria-label="Time vermelho"><div class="team-head"><div class="team-name"><span class="mark" style="--team:#F06449" aria-hidden="true"></span>Time vermelho</div><span class="muted">2 jogadores</span></div><div class="player"><div>Marina Oliveira</div><div class="muted">Iniciante</div></div><div class="player"><div>Lucas Santos</div><div class="muted">Intermediário · Líbero</div></div></section>
+        <section class="team" aria-label="Time azul"><div class="team-head"><div class="team-name"><span class="mark" style="--team:#5BC3EB" aria-hidden="true"></span>Time azul</div><span class="muted">2 jogadores</span></div><div class="player"><div>Camila Costa</div><div class="muted">Avançado · Levantador</div></div><div class="player"><div>Rafael Lima</div><div class="muted">Intermediário</div></div></section>
+      </div>
+      <div class="bench"><div><div class="muted">Fora desta partida · 1 jogador</div><div>Bruno Almeida</div></div><span class="muted">Intermediário</span></div>
+      <div class="actions"><button type="button">Editar participantes</button><button type="button" class="quiet">Como funciona o sorteio?</button></div>
+    </section>
+    <div class="ratios"><span>Texto carvão / papel · 9,66:1</span><span>Texto do botão · <span id="parchment-contrast"></span></span></div>
+  </div>
+</section>
+<script>
+(() => {
+  const root = document.getElementById('volley-parchment');
+  const lum = hex => { const c=hex.match(/[a-f\d]{2}/gi).map(v=>parseInt(v,16)/255).map(v=>v<=0.04045?v/12.92:((v+0.055)/1.055)**2.4); return c[0]*0.2126+c[1]*0.7152+c[2]*0.0722; };
+  root.querySelector('#parchment-contrast').textContent=((lum('#F06449')+0.05)/(lum('#1C2018')+0.05)).toFixed(2).replace('.',',')+':1';
+})();
+</script>
+</div>

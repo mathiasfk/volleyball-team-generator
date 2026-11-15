@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "🏐 Sorteio de Times de Vôlei"
+    "title": "Sorteio de Times de Vôlei"
   },
   "participants": {
     "manage": "Gerenciar Participantes",
@@ -42,7 +42,7 @@
   "colors": {
     "red": "Vermelho",
     "blue": "Azul",
-    "green": "Verde", 
+    "green": "Verde",
     "purple": "Roxo",
     "orange": "Laranja",
     "pink": "Rosa"
@@ -76,8 +76,8 @@
     "chinese": "中文",
     "hindi": "हिन्दी",
     "arabic": "العربية",
-    "french" : "Français",
-    "german" : "Deutsch", 
+    "french": "Français",
+    "german": "Deutsch",
     "indonesian": "Bahasa Indonesia",
     "turkish": "Türkçe",
     "japanese": "日本語",
@@ -162,5 +162,11 @@
       "Distribuição baseada em posição"
     ],
     "releaseNotes": "Melhorias no suporte a PWA"
+  },
+  "theme": {
+    "label": "Tema",
+    "light": "Claro",
+    "dark": "Escuro",
+    "system": "Sistema"
   }
 }

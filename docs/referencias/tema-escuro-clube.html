@@ -1,0 +1,84 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&display=swap">
+<div id="volley-club-palette" lang="pt-BR">
+<style>
+#volley-club-palette { --club-bg:#141716; --club-card:#1D2320; --club-row:#29322C; --club-text:#F4F7ED; --club-muted:#BCC6B7; --club-lime:#C7F34A; --club-lime-hover:#B6E339; --club-ink:#182008; --club-line:#414D43; --club-red:#FB8B78; --club-blue:#7EB8F6; color:var(--club-text); font:400 14px/1.5 system-ui,sans-serif; color-scheme:dark; }
+#volley-club-palette * { box-sizing:border-box; }
+#volley-club-palette .palette-board { background:var(--club-bg); border-radius:14px; overflow:hidden; }
+#volley-club-palette .identity { padding:26px 24px 22px; position:relative; overflow:hidden; border-bottom:1px solid var(--club-line); }
+#volley-club-palette .court { position:absolute; right:-32px; top:22px; width:174px; height:105px; border:1px solid var(--club-line); transform:rotate(-17deg); pointer-events:none; }
+#volley-club-palette .court:before { content:""; position:absolute; left:50%; top:0; bottom:0; border-left:1px solid var(--club-line); }
+#volley-club-palette .court:after { content:""; position:absolute; left:25%; right:25%; top:0; bottom:0; border-left:1px solid var(--club-line); border-right:1px solid var(--club-line); }
+#volley-club-palette .eyebrow { color:var(--club-lime); font-weight:600; letter-spacing:.12em; font-size:11px; text-transform:uppercase; position:relative; }
+#volley-club-palette h2 { font:700 36px/1.05 'Barlow Condensed','Arial Narrow',sans-serif; letter-spacing:.01em; margin:8px 0; text-transform:uppercase; position:relative; max-width:80%; }
+#volley-club-palette .subtitle { color:var(--club-muted); margin:0; position:relative; }
+#volley-club-palette .content { padding:0 24px 24px; }
+#volley-club-palette h3 { font-size:14px; font-weight:600; margin:22px 0 12px; }
+#volley-club-palette .colors { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px 12px; }
+#volley-club-palette .swatch { min-width:0; }
+#volley-club-palette .paint { height:52px; border-radius:6px; background:var(--paint); box-shadow:inset 0 0 0 1px var(--club-line); }
+#volley-club-palette .swatch span { display:block; margin-top:6px; }
+#volley-club-palette code { color:var(--club-muted); font:400 12px/1.4 ui-monospace,monospace; }
+#volley-club-palette .preview { margin-top:26px; padding-top:20px; border-top:1px solid var(--club-line); }
+#volley-club-palette .preview-heading { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:16px; flex-wrap:wrap; }
+#volley-club-palette .preview-heading h3 { font:600 26px/1.1 'Barlow Condensed','Arial Narrow',sans-serif; margin:0; text-transform:uppercase; }
+#volley-club-palette .count { color:var(--club-muted); }
+#volley-club-palette button { border:1px solid var(--club-line); color:var(--club-text); background:var(--club-card); font:500 14px/1.4 system-ui,sans-serif; padding:10px 15px; border-radius:6px; cursor:pointer; }
+#volley-club-palette button:hover { background:var(--club-row); }
+#volley-club-palette button:focus-visible { outline:2px solid var(--club-lime); outline-offset:3px; }
+#volley-club-palette .draw { color:var(--club-ink); background:var(--club-lime); border-color:var(--club-lime); display:inline-flex; align-items:center; gap:8px; }
+#volley-club-palette .draw:hover { background:var(--club-lime-hover); border-color:var(--club-lime-hover); }
+#volley-club-palette .teams { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+#volley-club-palette .team { background:var(--club-card); border:1px solid var(--club-line); border-radius:8px; padding:14px; }
+#volley-club-palette .team-title { display:flex; align-items:center; gap:8px; margin-bottom:10px; }
+#volley-club-palette .team-title strong { font:600 23px/1.2 'Barlow Condensed','Arial Narrow',sans-serif; text-transform:uppercase; }
+#volley-club-palette .team-mark { width:5px; height:22px; border-radius:2px; background:var(--mark); flex-shrink:0; }
+#volley-club-palette .player { padding:9px 0; border-top:1px solid var(--club-line); }
+#volley-club-palette .meta { color:var(--club-muted); }
+#volley-club-palette .footer { color:var(--club-muted); margin-top:16px; font-size:12px; }
+#volley-club-palette svg { width:16px; height:16px; }
+@media(max-width:480px) { #volley-club-palette .identity { padding:22px 16px; } #volley-club-palette .content { padding:0 16px 20px; } #volley-club-palette .colors { grid-template-columns:repeat(2,minmax(0,1fr)); } #volley-club-palette .teams { grid-template-columns:1fr; } #volley-club-palette h2 { font-size:32px; } }
+</style>
+<section class="palette-board" aria-label="Paleta proposta: clube esportivo contemporâneo">
+  <header class="identity">
+    <div class="court" aria-hidden="true"></div>
+    <div class="eyebrow">Clube esportivo contemporâneo</div>
+    <h2>Vamos formar os times.</h2>
+    <p class="subtitle">Grafite · verde-lima · tons naturais</p>
+  </header>
+  <div class="content">
+    <h3>Base e legibilidade</h3>
+    <div class="colors">
+      <div class="swatch"><div class="paint" style="--paint:#141716"></div><span>Grafite</span><code>#141716</code></div>
+      <div class="swatch"><div class="paint" style="--paint:#1D2320"></div><span>Superfície</span><code>#1D2320</code></div>
+      <div class="swatch"><div class="paint" style="--paint:#29322C"></div><span>Superfície elevada</span><code>#29322C</code></div>
+      <div class="swatch"><div class="paint" style="--paint:#414D43"></div><span>Divisórias</span><code>#414D43</code></div>
+      <div class="swatch"><div class="paint" style="--paint:#F4F7ED"></div><span>Branco suave</span><code>#F4F7ED</code></div>
+      <div class="swatch"><div class="paint" style="--paint:#BCC6B7"></div><span>Texto secundário</span><code>#BCC6B7</code></div>
+    </div>
+    <h3>Assinatura e identificação</h3>
+    <div class="colors">
+      <div class="swatch"><div class="paint" style="--paint:#C7F34A"></div><span>Verde-lima · ação</span><code>#C7F34A</code></div>
+      <div class="swatch"><div class="paint" style="--paint:#182008"></div><span>Texto sobre lima</span><code>#182008</code></div>
+      <div class="swatch"><div class="paint" style="--paint:#FB8B78"></div><span>Coral · time vermelho</span><code>#FB8B78</code></div>
+      <div class="swatch"><div class="paint" style="--paint:#7EB8F6"></div><span>Azul · time azul</span><code>#7EB8F6</code></div>
+    </div>
+    <section class="preview" aria-label="Aplicação das cores nos resultados">
+      <div class="preview-heading"><div><h3>Times prontos</h3><span class="count">4 jogadores · exemplo de aplicação</span></div><button type="button" class="draw"><i data-lucide="shuffle" aria-hidden="true"></i>Refazer times</button></div>
+      <div class="teams">
+        <section class="team" aria-label="Time vermelho"><div class="team-title"><span class="team-mark" style="--mark:#FB8B78" aria-hidden="true"></span><strong>Time vermelho</strong></div><div class="player"><div>Marina Oliveira</div><div class="meta">Iniciante</div></div><div class="player"><div>Lucas Santos</div><div class="meta">Intermediário · Líbero</div></div></section>
+        <section class="team" aria-label="Time azul"><div class="team-title"><span class="team-mark" style="--mark:#7EB8F6" aria-hidden="true"></span><strong>Time azul</strong></div><div class="player"><div>Camila Costa</div><div class="meta">Avançado · Levantador</div></div><div class="player"><div>Rafael Lima</div><div class="meta">Intermediário</div></div></section>
+      </div>
+      <div class="footer">Contraste: texto do botão <span id="club-action-ratio"></span> · texto secundário sobre superfície elevada <span id="club-meta-ratio"></span></div>
+    </section>
+  </div>
+</section>
+<script>
+(() => {
+ const root = document.getElementById('volley-club-palette');
+ const luminance = hex => { const c = hex.match(/[a-f\d]{2}/gi).map(v => parseInt(v,16)/255).map(v => v <= 0.04045 ? v/12.92 : ((v+0.055)/1.055)**2.4); return c[0]*0.2126+c[1]*0.7152+c[2]*0.0722; };
+ const contrast = (a,b) => { const x=luminance(a), y=luminance(b); return ((Math.max(x,y)+0.05)/(Math.min(x,y)+0.05)).toFixed(2).replace('.',',')+':1'; };
+ root.querySelector('#club-action-ratio').textContent = contrast('#182008','#C7F34A');
+ root.querySelector('#club-meta-ratio').textContent = contrast('#BCC6B7','#29322C');
+})();
+</script>
+</div>

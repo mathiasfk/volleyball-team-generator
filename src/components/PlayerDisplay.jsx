@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import { Input } from '@/components/ui/input.jsx'
 
@@ -19,11 +20,10 @@ import SkillLevelIcon from './SkillLevelIcon.jsx'
  */
 const PlayerDisplay = ({ 
   participant, 
-  skillIconSize = 14,
-  roleIconSize = 16,
   className = '',
   onInlineNameUpdate
 }) => {
+  const { t } = useTranslation()
   const [isEditing, setIsEditing] = useState(false)
   const [editingName, setEditingName] = useState(participant.name)
   const inputRef = useRef(null)
@@ -87,31 +87,21 @@ const PlayerDisplay = ({
   }
 
   return (
-    <div 
-      className={`flex items-center justify-center gap-2 ${className} ${onInlineNameUpdate && !isEditing ? 'cursor-pointer' : ''}`}
-      onClick={onInlineNameUpdate && !isEditing ? handleNameClick : undefined}
-    >
+    <div className={`min-w-0 text-start ${className}`}>
       {isEditing ? (
-        <Input
-          ref={inputRef}
-          value={editingName}
-          onChange={(e) => setEditingName(e.target.value)}
-          onKeyDown={handleKeyDown}
-          onBlur={handleBlur}
-          className="h-6 text-white bg-gray-600 border-gray-500 focus:border-blue-400"
-        />
-      ) : (
-        <span 
-          className={onInlineNameUpdate ? 'hover:text-blue-300 transition-colors' : ''}
-        >
-          {participant.name}
-        </span>
-      )}
-      <SkillLevelIcon weight={participant.weight} size={skillIconSize} />
-      <RoleIcon role={participant.role} size={roleIconSize} />
+        <Input ref={inputRef} value={editingName} onChange={(e) => setEditingName(e.target.value)}
+          onKeyDown={handleKeyDown} onBlur={handleBlur} aria-label={t('participants.edit') + ': ' + participant.name}
+          className="min-w-0 w-full bg-card border-input" />
+      ) : onInlineNameUpdate ? (
+        <button type="button" onClick={handleNameClick} className="block max-w-full text-start break-words rounded hover:text-[var(--link)]"
+          aria-label={t('participants.edit') + ': ' + participant.name}>{participant.name}</button>
+      ) : <span className="block break-words">{participant.name}</span>}
+      <div className="flex flex-wrap gap-x-2 text-sm text-muted-foreground">
+        <SkillLevelIcon weight={participant.weight} />
+        {participant.role && participant.role !== 'any' && <><span aria-hidden="true">·</span><RoleIcon role={participant.role} /></>}
+      </div>
     </div>
   )
 }
 
 export default PlayerDisplay
-

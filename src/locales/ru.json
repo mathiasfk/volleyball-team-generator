@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "🏐 Генератор волейбольных команд"
+    "title": "Генератор волейбольных команд"
   },
   "participants": {
     "manage": "Управление участниками",
@@ -76,8 +76,8 @@
     "chinese": "中文",
     "hindi": "हिन्दी",
     "arabic": "العربية",
-    "french" : "Français",
-    "german" : "Deutsch", 
+    "french": "Français",
+    "german": "Deutsch",
     "indonesian": "Bahasa Indonesia",
     "turkish": "Türkçe",
     "japanese": "日本語",
@@ -162,5 +162,11 @@
       "Распределение на основе позиции"
     ],
     "releaseNotes": "Улучшена поддержка PWA"
+  },
+  "theme": {
+    "label": "Тема",
+    "light": "Светлая",
+    "dark": "Тёмная",
+    "system": "Системная"
   }
 }

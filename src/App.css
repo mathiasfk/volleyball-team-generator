@@ -41,97 +41,31 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-:root {
-  --radius: 0.625rem;
-  
-  /* Design System - Typography */
-  --text-title: 1.125rem;
-  --text-emphasis: 1rem;
-  --text-primary: 1rem;
-  --text-secondary: 1rem;
-  --text-small: 0.825rem;
-  
-  /* Design System - Colors (HSL) */
-  --color-text-primary: hsl(0, 0%, 95%);
-  --color-text-secondary: hsl(0, 0%, 50%);
-  --color-error: hsl(0, 85%, 55%);
-  --color-success: hsl(145, 65%, 45%);
-  --color-team-blue: hsl(210, 60%, 45%);
-  --color-team-red: hsl(8, 60%, 55%);
-  --color-primary: hsl(223, 100%, 50%);
-  --color-primary-hover: hsl(223, 100%, 70%);
-  --color-border: hsl(222, 30%, 20%);
-  --color-border-highlight: hsl(222, 30%, 40%);
-  --color-card-primary: hsl(222, 33%, 14%);
-  --color-card-secondary: hsl(222, 30%, 24%);
-  --color-background: hsl(225, 31%, 8%);
-  
-  /* Legacy variables - keeping for compatibility */
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+/* Semantic values are defined once per theme and inherited by portals. */
+:root, .light {
+  --radius: .625rem;
+  --text-display: 1.75rem; --text-section: 1.25rem; --text-title: 1.125rem;
+  --text-emphasis: 1rem; --text-primary: 1rem; --text-secondary: .875rem; --text-small: .875rem;
+  --background: #EDE6E3; --foreground: #36382E; --card: #F5F0ED; --card-foreground: #36382E;
+  --popover: #F5F0ED; --popover-foreground: #36382E; --primary: #F06449; --primary-foreground: #1C2018;
+  --primary-hover: #F47A63; --secondary: #DADAD9; --secondary-foreground: #36382E;
+  --muted: #DADAD9; --muted-foreground: #53554C; --accent: #CBCBC8; --accent-foreground: #36382E;
+  --destructive: #B91C1C; --border: #C6C3BB; --input: #77796F; --ring: #36382E;
+  --link: #20546A; --selection-indicator: #8D301E; --error: #A01919; --success: #216A3C; --team-red: #F06449; --team-blue: #5BC3EB;
+  --color-text-primary: var(--foreground); --color-text-secondary: var(--muted-foreground);
+  --color-error: var(--error); --color-success: var(--success); --color-team-red: var(--team-red); --color-team-blue: var(--team-blue);
+  --color-primary-hover: var(--primary-hover); --color-border-highlight: var(--accent);
+  --color-card-primary: var(--card); --color-card-secondary: var(--secondary);
+  --color-action-add: var(--secondary); --color-action-destructive: var(--destructive);
+  --color-bench: var(--secondary); --color-bench-muted: var(--muted-foreground);
 }
-
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --background: #141716; --foreground: #F4F7ED; --card: #1D2320; --card-foreground: #F4F7ED;
+  --popover: #1D2320; --popover-foreground: #F4F7ED; --primary: #C7F34A; --primary-foreground: #182008;
+  --primary-hover: #B6E339; --secondary: #29322C; --secondary-foreground: #F4F7ED;
+  --muted: #29322C; --muted-foreground: #BCC6B7; --accent: #3A473D; --accent-foreground: #F4F7ED;
+  --destructive: #B91C1C; --border: #414D43; --input: #84917F; --ring: #C7F34A;
+  --link: #C7F34A; --selection-indicator: #C7F34A; --error: #FCA5A5; --success: #86EFAC; --team-red: #FB8B78; --team-blue: #7EB8F6;
 }
 
 @layer base {
@@ -144,58 +78,46 @@
 }
 
 /* Design System Typography Classes */
+.ds-text-display {
+  font-size: var(--text-display);
+  font-weight: bold;
+}
+
+.ds-text-section {
+  font-size: var(--text-section);
+  font-weight: bold;
+}
+
 .ds-text-title {
   font-size: var(--text-title);
   font-weight: normal;
-  color: var(--color-text-primary);
 }
 
 .ds-text-emphasis {
   font-size: var(--text-emphasis);
   font-weight: bold;
-  color: var(--color-text-primary);
 }
 
 .ds-text-primary {
   font-size: var(--text-primary);
   font-weight: normal;
-  color: var(--color-text-primary);
 }
 
 .ds-text-secondary {
   font-size: var(--text-secondary);
   font-weight: normal;
-  color: var(--color-text-secondary);
 }
 
 .ds-text-small {
   font-size: var(--text-small);
   font-weight: normal;
-  color: var(--color-text-secondary);
 }
 
-/* Animation for players that changed position after draw */
 @keyframes highlightFade {
-  0% {
-    background-color: rgb(75 85 99); /* gray-600 - slightly lighter than gray-700 */
-    box-shadow: 0 0 12px rgb(255, 255, 255);
-  }
-  50% {
-    background-color: rgb(75 85 99);
-    box-shadow: 0 0 12px rgb(255, 255, 255);
-  }
-  100% {
-    background-color: rgb(55 65 81); /* gray-700 */
-    transform: scale(1);
-    box-shadow: none;
-  }
+  0%, 35% { box-shadow: inset 0 0 0 2px var(--ring); }
+  100% { box-shadow: inset 0 0 0 2px transparent; }
 }
-
-/* Base styling for player cards that supports smooth transitions */
-.player-card-base {
-  transition: background-color 0.3s ease-out, box-shadow 0.3s ease-out, transform 0.3s ease-out;
-}
-
-.player-changed {
-  animation: highlightFade 4s ease-in-out forwards;
-}
+.player-changed { animation: highlightFade 4s ease-out; }
+@media (prefers-reduced-motion: reduce) { .player-changed { animation: none; } }
+html, body { background: var(--background); color: var(--foreground); }
+:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; }
