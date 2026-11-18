@@ -77,7 +77,7 @@ const LanguageSelector = ({ onRestartTour }) => {
       >
         <SelectTrigger
           className={cn(
-            'min-h-11 border-input text-foreground hover:bg-accent',
+            'min-h-11 border-border text-foreground hover:bg-accent dark:border-input',
             isMobile ? 'w-[95px]' : 'w-auto min-w-[120px]',
             isMobile && '[&_[data-slot=select-value]_.lang-name]:hidden [&_[data-slot=select-value]_.lang-code]:!inline-block',
             !isMobile && '[&_[data-slot=select-value]_.lang-code]:hidden'

@@ -27,7 +27,7 @@ import LanguageSelector from './LanguageSelector.jsx'
 import ParticipantForm from './ParticipantForm.jsx'
 import ParticipantList from './ParticipantList.jsx'
 import TeamCard from './TeamCard.jsx'
-import ThemeSelector from './ThemeSelector.jsx'
+import ThemeToggle from './ThemeToggle.jsx'
 import { AlertDialog } from './ui/alert-dialog.jsx'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './ui/collapsible.jsx'
 import {
@@ -582,7 +582,7 @@ function MainApp() {
             {t('app.title')}
           </h1>
           <div className="ms-auto flex items-center gap-2">
-            <ThemeSelector />
+            <ThemeToggle />
             <LanguageSelector onRestartTour={restartTour} />
           </div>
         </div>

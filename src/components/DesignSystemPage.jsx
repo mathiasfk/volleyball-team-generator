@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input.jsx'
 import { Label } from '@/components/ui/label.jsx'
 
-import ThemeSelector from './ThemeSelector.jsx'
+import ThemeToggle from './ThemeToggle.jsx'
 
 const DesignSystemPage = () => {
   const [, setPaletteVersion] = useState(0)
@@ -53,7 +53,7 @@ const DesignSystemPage = () => {
       <div className="max-w-6xl mx-auto p-6 space-y-12">
         {/* Header */}
         <div className="text-center space-y-4">
-          <ThemeSelector />
+          <ThemeToggle />
           <h1 className="ds-text-title">
             Design System
           </h1>
