@@ -17,7 +17,7 @@ jobs:
         node: [primary, '26.13.1']
     steps:
       - uses: actions/checkout@v5
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
       - name: Set up primary Node version
         if: matrix.node == 'primary'
         uses: actions/setup-node@v5
