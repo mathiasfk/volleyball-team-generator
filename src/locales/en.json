@@ -94,7 +94,8 @@
     "ukrainian": "Українська",
     "italian": "Italiano",
     "serbian": "Српски",
-    "tagalog": "Tagalog"
+    "tagalog": "Tagalog",
+    "norwegian": "Norsk bokmål"
   },
   "tour": {
     "welcome": "Welcome! Let's take a quick tour to learn about the main features of the app.",
@@ -111,7 +112,8 @@
     "skip": "Skip",
     "close": "Close",
     "next": "Next",
-    "last": "End"
+    "last": "End",
+    "open": "Open the dialog"
   },
   "faq": {
     "title": "Frequently Asked Questions",
@@ -151,12 +153,17 @@
     "title": "Volleyball Team Generator - Create Balanced Teams Easily",
     "description": "Free online volleyball team generator. Automatically create fair and balanced teams from your players. Perfect for pickup games. Completely free, with no registration required.",
     "languageName": "English",
-    "locale": "en_US"
+    "locale": "en_US",
+    "imageAlt": "Volleyball Team Generator App Screenshot",
+    "image": "/og-image.png",
+    "manifest": "/site.webmanifest"
   },
   "structuredData": {
     "name": "Volleyball Team Generator",
     "alternateName": "Volleyball Team Generator",
     "description": "Free online volleyball team generator. Automatically create fair and balanced teams from your players. Perfect for pickup games. Completely free, with no registration required.",
+    "operatingSystem": "Web Browser",
+    "browserRequirements": "Requires JavaScript.",
     "featureList": [
       "Random team generation",
       "Fair team balancing",

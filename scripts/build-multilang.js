@@ -3,37 +3,15 @@ import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
+import { supportedLanguages as languages } from '../src/utils/languageUrl.js'
+
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const rootDir = path.resolve(__dirname, '..')
 const distDir = path.join(rootDir, 'dist')
 const localesDir = path.join(rootDir, 'src', 'locales')
 
-const languages = ['en', 'pt', 'es', 'zh', 'hi', 'ar', 'fr', 'de', 'id', 'tr', 'ja', 'ru', 'fa', 'ur', 'bn', 'uk', 'it', 'sr', 'tl']
 const baseUrl = 'https://volleyball-team-generator.com'
-
-// Map language codes to Open Graph locale codes
-const ogLocaleMap = {
-  en: 'en_US',
-  pt: 'pt_BR',
-  es: 'es_ES',
-  zh: 'zh_CN',
-  hi: 'hi_IN',
-  ar: 'ar_SA',
-  fr: 'fr_FR',
-  de: 'de_DE',
-  id: 'id_ID',
-  tr: 'tr_TR',
-  ja: 'ja_JP',
-  ru: 'ru_RU',
-  fa: 'fa_IR',
-  ur: 'ur_PK',
-  bn: 'bn_BD',
-  uk: 'uk_UA',
-  it: 'it_IT',
-  sr: 'sr_RS',
-  tl: 'tl_PH'
-}
 
 // RTL languages
 const rtlLanguages = ['ar', 'fa', 'ur']
@@ -88,10 +66,10 @@ function generateStructuredData(lang, translation) {
     "alternateName": structuredData.alternateName || structuredData.name || "Volleyball Team Generator",
     "description": structuredData.description || "",
     "url": canonicalUrl,
-    "screenshot": `${baseUrl}/og-image.png`,
+    "screenshot": `${baseUrl}${translation.seo?.image || '/og-image.png'}`,
     "applicationCategory": "SportsApplication",
-    "operatingSystem": "Web Browser",
-    "browserRequirements": "Requires JavaScript.",
+    "operatingSystem": structuredData.operatingSystem || "Web Browser",
+    "browserRequirements": structuredData.browserRequirements || "Requires JavaScript.",
     "offers": {
       "@type": "Offer",
       "price": "0",
@@ -117,7 +95,7 @@ function generateStructuredData(lang, translation) {
 // Update meta tags in HTML for a specific language
 function updateHTMLForLanguage(html, lang, translation) {
   const seo = translation.seo || {}
-  const ogLocale = ogLocaleMap[lang] || 'en_US'
+  const ogLocale = seo.locale || 'en_US'
   const isRTL = rtlLanguages.includes(lang)
   const dir = isRTL ? 'rtl' : 'ltr'
   
@@ -205,6 +183,23 @@ function updateHTMLForLanguage(html, lang, translation) {
     `<meta name="twitter:description" content="${description}" />`
   )
   
+  const appName = escapeHtml(translation.app.title)
+  const image = `${baseUrl}${seo.image || '/og-image.png'}`
+  const imageAlt = escapeHtml(seo.imageAlt || 'Volleyball Team Generator App Screenshot')
+  const manifest = seo.manifest || '/site.webmanifest'
+  html = html
+    .replace(/(<meta (?:name|property)="(?:author|application-name|apple-mobile-web-app-title|og:site_name)" content=")[^"]*/g, `$1${appName}`)
+    .replace(/(<meta (?:name|property)="(?:og|twitter):image" content=")[^"]*/g, `$1${image}`)
+    .replace(/(<meta (?:name|property)="(?:og|twitter):image:alt" content=")[^"]*/g, `$1${imageAlt}`)
+    .replace(/(<link rel="manifest" href=")[^"]*/, `$1${manifest}`)
+    .replace(/^ {4}<meta property="og:locale:alternate" content="[^"]*" \/>\n/gm, '')
+    .replace(/(<meta property="og:locale"[^>]*\/>)/, (tag) => [
+      tag,
+      ...languages.filter(code => code !== lang).map(code =>
+        `    <meta property="og:locale:alternate" content="${loadTranslation(code).seo.locale}" />`
+      ),
+    ].join('\n'))
+
   // Update Structured Data
   const structuredDataJson = generateStructuredData(lang, translation)
   // Match from <!-- Structured Data --> to the closing </script> tag
