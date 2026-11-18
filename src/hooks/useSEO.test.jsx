@@ -5,6 +5,8 @@ import { createRoot } from 'react-dom/client'
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import i18n from '../i18n.js'
+import nb from '../locales/nb.json'
+import th from '../locales/th.json'
 import { selectLanguage } from '../utils/languageUrl.js'
 import useSEO from './useSEO.js'
 
@@ -58,10 +60,13 @@ describe('language selection and SEO', () => {
     expect(document.querySelector('link[rel="canonical"]').href).toBe('https://volleyball-team-generator.com/')
   })
 
-  it('updates the Norwegian social, install and structured metadata on language changes', async () => {
+  it.each([
+    ['nb', 'nb_NO', nb],
+    ['th', 'th_TH', th],
+  ])('updates localized social, install and structured metadata for %s', async (language, locale, translation) => {
     document.head.insertAdjacentHTML('beforeend', `
       <meta property="og:locale" content="en_US">
-      <meta property="og:locale:alternate" content="nb_NO">
+      <meta property="og:locale:alternate" content="${locale}">
       <meta property="og:image:alt">
       <meta name="twitter:image">
       <meta name="apple-mobile-web-app-title">
@@ -69,25 +74,26 @@ describe('language selection and SEO', () => {
       <script type="application/ld+json">{"@type":"WebApplication"}</script>
     `)
 
-    await act(async () => selectLanguage('nb', i18n))
-    expect(window.location.pathname).toBe('/nb/')
-    expect(document.documentElement.lang).toBe('nb')
-    expect(document.querySelector('meta[property="og:locale"]').content).toBe('nb_NO')
+    await act(async () => selectLanguage(language, i18n))
+    expect(window.location.pathname).toBe(`/${language}/`)
+    expect(document.documentElement.lang).toBe(language)
+    expect(document.title).toBe(translation.seo.title)
+    expect(document.querySelector('meta[property="og:locale"]').content).toBe(locale)
     expect(document.querySelector('meta[property="og:locale:alternate"]').content).toBe('en_US')
-    expect(document.querySelector('meta[property="og:image:alt"]').content).toMatch(/^Skjermbilde/)
-    expect(document.querySelector('meta[name="twitter:image"]').content).toBe('https://volleyball-team-generator.com/nb/og-image.png')
-    expect(document.querySelector('meta[name="apple-mobile-web-app-title"]').content).toBe('Lagtrekning for volleyball')
-    expect(document.querySelector('link[rel="manifest"]').getAttribute('href')).toBe('/nb/site.webmanifest')
+    expect(document.querySelector('meta[property="og:image:alt"]').content).toBe(translation.seo.imageAlt)
+    expect(document.querySelector('meta[name="twitter:image"]').content).toBe(`https://volleyball-team-generator.com/${language}/og-image.png`)
+    expect(document.querySelector('meta[name="apple-mobile-web-app-title"]').content).toBe(translation.app.title)
+    expect(document.querySelector('link[rel="manifest"]').getAttribute('href')).toBe(`/${language}/site.webmanifest`)
 
     const appSchema = JSON.parse(document.querySelector('script[type="application/ld+json"]:not([data-schema])').textContent)
     expect(appSchema).toMatchObject({
-      name: 'Lagtrekning for volleyball',
-      browserRequirements: 'Krever JavaScript.',
-      url: 'https://volleyball-team-generator.com/nb/',
+      name: translation.structuredData.name,
+      browserRequirements: translation.structuredData.browserRequirements,
+      url: `https://volleyball-team-generator.com/${language}/`,
     })
     const faqSchema = JSON.parse(document.querySelector('script[data-schema="faq"]').textContent)
-    expect(faqSchema.inLanguage).toBe('nb')
-    expect(faqSchema.mainEntity[0].name).toBe('Hvordan fungerer lagtrekningen?')
+    expect(faqSchema.inLanguage).toBe(language)
+    expect(faqSchema.mainEntity.map(item => item.name)).toEqual(translation.faq.questions.map(item => item.question))
 
     await act(async () => selectLanguage('en', i18n))
     expect(document.querySelector('meta[property="og:locale"]').content).toBe('en_US')
