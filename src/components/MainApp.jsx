@@ -1,5 +1,6 @@
 
 import { AlertCircle, ChevronDown, HelpCircle, ListChevronsDownUp, ListChevronsUpDown, Shuffle, Users } from 'lucide-react'
+import { useTheme } from 'next-themes'
 import { useEffect, useReducer, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Joyride, { ACTIONS as JOYRIDE_ACTIONS, EVENTS, STATUS } from 'react-joyride'
@@ -39,6 +40,7 @@ import {
 
 function MainApp() {
   const { t } = useTranslation()
+  const { resolvedTheme } = useTheme()
   useSEO() // Initialize SEO management
 
   const [state, dispatch] = useReducer(appReducer, initialState)
@@ -161,7 +163,10 @@ function MainApp() {
       }
     })
 
+    // The initial HTML applies the theme before next-themes resolves it.
+    const theme = resolvedTheme ?? (document.documentElement.classList.contains('dark') ? 'dark' : 'light')
     gtag('event', 'load_local_storage', {
+      theme,
       'found_storage': !!loadedParticipants || !!loadedTeams,
       'loaded_participant_count': loadedParticipants ? loadedParticipants.length : 0,
       'loaded_team_count': loadedTeams ? loadedTeams.length : 0,
@@ -172,7 +177,7 @@ function MainApp() {
 
     // Mark that data has been loaded (or attempt was made)
     dispatch({ type: ACTIONS.SET_DATA_LOADED })
-  }, [dataLoaded, t])
+  }, [dataLoaded, resolvedTheme, t])
 
   // Check if user has seen the tour and start it if not
   useEffect(() => {
