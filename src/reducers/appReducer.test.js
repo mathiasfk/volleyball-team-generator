@@ -1,5 +1,6 @@
 import { describe, expect,it } from 'vitest'
 
+import { detectPlayerChanges } from '../utils/playerChanges.ts'
 import { ACTIONS,appReducer, initialState } from './appReducer'
 
 describe('appReducer', () => {
@@ -520,6 +521,25 @@ describe('appReducer', () => {
   })
 
   describe('LOAD_DATA', () => {
+    it('detects team and bench changes on the first redraw after loading', () => {
+      const staying = { id: '1' }
+      const benched = { id: '2' }
+      const promoted = { id: '3' }
+      const switched = { id: '4' }
+      const loaded = appReducer(initialState, {
+        type: ACTIONS.LOAD_DATA,
+        payload: { teams: [[staying, benched], [switched]], benchPlayers: [promoted] },
+      })
+
+      const changes = detectPlayerChanges(
+        loaded.previousPlayerPositions,
+        [[staying, switched], [promoted]],
+        [benched]
+      )
+
+      expect(changes).toEqual(new Set(['2', '3', '4']))
+    })
+
     it('should load participants, teams, and bench players', () => {
       const participants = [{ id: '1', name: 'João' }]
       const teams = [[{ id: '1', name: 'João' }], []]
@@ -545,6 +565,7 @@ describe('appReducer', () => {
       expect(newState.participants).toEqual([])
       expect(newState.teams).toEqual([])
       expect(newState.benchPlayers).toEqual([])
+      expect(newState.previousPlayerPositions).toBeNull()
     })
 
     it('should only load provided data', () => {
