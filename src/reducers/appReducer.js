@@ -1,3 +1,5 @@
+import { createPlayerPositionMap } from '../utils/playerChanges.ts'
+
 // Action Types
 export const ACTIONS = {
   SET_NEW_NAME: 'SET_NEW_NAME',
@@ -33,7 +35,7 @@ export const initialState = {
   openParticipants: true,
   openDrawDialog: false,
   changedPlayerIds: [], // Array of player IDs that changed position
-  previousPlayerPositions: null, // Map of player positions before last draw (not serializable, reset on page load)
+  previousPlayerPositions: null, // Position map of the current draw, used on the next draw
 }
 
 // Reducer function
@@ -200,13 +202,19 @@ export function appReducer(state, action) {
     case ACTIONS.SET_OPEN_DRAW_DIALOG:
       return { ...state, openDrawDialog: action.payload }
     
-    case ACTIONS.LOAD_DATA:
+    case ACTIONS.LOAD_DATA: {
+      const teams = action.payload.teams || state.teams
+      const benchPlayers = action.payload.benchPlayers || state.benchPlayers
       return {
         ...state,
         participants: action.payload.participants || state.participants,
-        teams: action.payload.teams || state.teams,
-        benchPlayers: action.payload.benchPlayers || state.benchPlayers,
+        teams,
+        benchPlayers,
+        previousPlayerPositions: teams.some(team => team.length > 0) || benchPlayers.length > 0
+          ? createPlayerPositionMap(teams, benchPlayers)
+          : null,
       }
+    }
     
     case ACTIONS.SET_DATA_LOADED:
       return { ...state, dataLoaded: true }
