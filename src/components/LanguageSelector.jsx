@@ -25,6 +25,7 @@ const languages = [
   { code: 'fr', labelKey: 'language.french' },
   { code: 'tr', labelKey: 'language.turkish' },
   { code: 'ru', labelKey: 'language.russian' },
+  { code: 'nb', labelKey: 'language.norwegian' },
   { code: 'de', labelKey: 'language.german' },
   { code: 'it', labelKey: 'language.italian' },
   { code: 'sr', labelKey: 'language.serbian' },
@@ -76,6 +77,7 @@ const LanguageSelector = ({ onRestartTour }) => {
         onValueChange={handleChange}
       >
         <SelectTrigger
+          aria-label={t('language.label')}
           className={cn(
             'min-h-11 border-border text-foreground hover:bg-accent dark:border-input',
             isMobile ? 'w-[95px]' : 'w-auto min-w-[120px]',

@@ -1,0 +1,188 @@
+{
+  "app": {
+    "title": "Lagtrekning for volleyball"
+  },
+  "participants": {
+    "manage": "Spillere",
+    "add": "Legg til",
+    "clear_all": "Fjern alle",
+    "placeholder": "Spillerens navn",
+    "total": "Totalt: {{count}} spillere",
+    "save": "Lagre",
+    "cancel": "Avbryt",
+    "edit": "Rediger",
+    "remove": "Fjern",
+    "edit_dialog_title": "Rediger spiller",
+    "edit_dialog_description": "Endre spillerens navn, ferdighetsnivå og posisjon.",
+    "example_player": "Spiller {{number}}",
+    "examples_notice": "Eksempelspillerne fjernes når du legger til den første spilleren din.",
+    "total_one": "Totalt: {{count}} spiller",
+    "total_other": "Totalt: {{count}} spillere"
+  },
+  "skill_levels": {
+    "beginner": "Nybegynner",
+    "intermediate": "Litt øvet",
+    "advanced": "Viderekommen",
+    "label": "Ferdighetsnivå"
+  },
+  "role": {
+    "label": "Posisjon",
+    "any": "Ingen fast posisjon",
+    "libero": "Libero",
+    "setter": "Opplegger"
+  },
+  "actions": {
+    "draw_teams": "Trekk lag",
+    "clear_draw": "Fjern laginndelingen",
+    "collapse": "Skjul spillerlisten",
+    "expand": "Vis spillerlisten",
+    "more_options": "Flere alternativer"
+  },
+  "results": {
+    "title": "Laginndeling",
+    "team": "{{color}} lag",
+    "players_count": "{{count}} spillere",
+    "players_count_one": "{{count}} spiller",
+    "players_count_other": "{{count}} spillere",
+    "bench_title": "Benken",
+    "bench_count": "{{count}} spillere på benken",
+    "bench_count_one": "{{count}} spiller på benken",
+    "bench_count_other": "{{count}} spillere på benken"
+  },
+  "colors": {
+    "red": "Rødt",
+    "blue": "Blått",
+    "green": "Grønt",
+    "purple": "Lilla",
+    "orange": "Oransje",
+    "pink": "Rosa"
+  },
+  "errors": {
+    "empty_name": "Skriv inn et gyldig navn.",
+    "duplicate_name": "Det finnes allerede en spiller med dette navnet. Velg et annet navn."
+  },
+  "dialog": {
+    "clear_participants": {
+      "title": "Fjerne alle spillere?",
+      "description": "Alle spillerne fjernes fra spillerlisten.",
+      "confirm": "Fjern alle",
+      "cancel": "Avbryt"
+    },
+    "draw_teams": {
+      "title": "Hvordan vil du trekke lagene på nytt?",
+      "description": "Velg et alternativ nedenfor.",
+      "keep_red": "Behold rødt lag",
+      "keep_blue": "Behold blått lag",
+      "redraw_all": "Trekk alle lag på nytt",
+      "cancel": "Avbryt"
+    }
+  },
+  "language": {
+    "label": "Språk",
+    "select": "Velg språk",
+    "english": "English",
+    "portuguese": "Português",
+    "spanish": "Español",
+    "chinese": "中文",
+    "hindi": "हिन्दी",
+    "arabic": "العربية",
+    "french": "Français",
+    "german": "Deutsch",
+    "indonesian": "Bahasa Indonesia",
+    "turkish": "Türkçe",
+    "japanese": "日本語",
+    "russian": "Русский",
+    "persian": "فارسی",
+    "urdu": "اردو",
+    "bengali": "বাংলা",
+    "ukrainian": "Українська",
+    "italian": "Italiano",
+    "serbian": "Српски",
+    "tagalog": "Tagalog",
+    "norwegian": "Norsk bokmål"
+  },
+  "tour": {
+    "welcome": "Velkommen! Bli kjent med appen på en kort omvisning.",
+    "participant_form": "Legg til spillerne her. Skriv inn et navn og velg «Legg til» eller trykk på Enter.",
+    "participant_list": "Bruk knappene ved siden av navnet for å redigere eller fjerne en spiller.",
+    "draw_button": "Her kan du trekke jevne lag ut fra spillernes ferdighetsnivå og posisjon.",
+    "teams": "Her ser du lagene som er trukket.",
+    "bench": "Spillere som ikke er med på et lag, vises her.",
+    "language": "Her kan du endre språket i appen.",
+    "faq": "Her finner du vanlige spørsmål og hjelp til å bruke appen.",
+    "complete": "Nå er du klar til å trekke lag!",
+    "restart_button": "Start omvisningen på nytt",
+    "back": "Tilbake",
+    "skip": "Hopp over",
+    "close": "Lukk",
+    "next": "Neste",
+    "last": "Fullfør",
+    "open": "Åpne omvisningen"
+  },
+  "faq": {
+    "title": "Vanlige spørsmål",
+    "button": "Vanlige spørsmål",
+    "questions": [
+      {
+        "question": "Hvordan fungerer lagtrekningen?",
+        "answer": "Appen fordeler spillerne så jevnt som mulig ut fra ferdighetsnivå (nybegynner, litt øvet eller viderekommen) og spesialposisjon (libero eller opplegger). Målet er jevne lag og at alle får spille omtrent like mange kamper."
+      },
+      {
+        "question": "Hva betyr ferdighetsnivåene?",
+        "answer": "Ferdighetsnivåene hjelper appen med å sette sammen jevne lag. Nybegynnere (vekt 0,5) er nye i volleyball, litt øvede spillere (vekt 1) har noe erfaring, og viderekomne spillere (vekt 1,5) har god erfaring. Appen bruker vektene til å gjøre lagene så jevne som mulig."
+      },
+      {
+        "question": "Hva betyr «Behold lag»?",
+        "answer": "Når du trekker lag på nytt, kan du beholde rødt eller blått lag. Da trekkes bare det andre laget og spillerne på benken på nytt. Det er praktisk hvis du vil la vinnerlaget fortsette etter en kamp."
+      },
+      {
+        "question": "Hvordan redigerer jeg en spiller?",
+        "answer": "Velg «Rediger» (blyantikonet) ved siden av spillerens navn. Du kan endre navn, ferdighetsnivå og posisjon. Velg «Lagre» når du er ferdig."
+      },
+      {
+        "question": "Blir spillerlisten og lagene lagret?",
+        "answer": "Ja, spillerlisten og laginndelingen lagres automatisk i nettleseren din. Du finner dem igjen når du åpner siden i samme nettleser."
+      },
+      {
+        "question": "Kan jeg installere appen eller bruke den uten nett?",
+        "answer": "Du kan legge til appen på hjemskjermen. I Chrome på Android åpner du menyen ⋮ og følger valget for å installere nettappen eller opprette en snarvei. I Safari på iPhone trykker du på Del og velger «Legg til på Hjem-skjerm». På datamaskinen kan du bruke nettleserens installasjonsvalg hvis det vises. Du trenger nett for å laste inn appen."
+      },
+      {
+        "question": "Hvordan melder jeg fra om en feil?",
+        "answer": "Send en e-post til admin@volleyball-team-generator.com og fortell hva som gikk galt."
+      }
+    ]
+  },
+  "seo": {
+    "title": "Lagtrekning for volleyball – trekk jevne lag",
+    "description": "Trekk jevne volleyballag automatisk ut fra ferdighetsnivå og posisjon. Passer til trening og uformelle kamper. Gratis og uten registrering.",
+    "languageName": "Norsk bokmål",
+    "locale": "nb_NO",
+    "image": "/nb/og-image.png",
+    "imageAlt": "Skjermbilde av appen for lagtrekning i volleyball",
+    "manifest": "/nb/site.webmanifest"
+  },
+  "structuredData": {
+    "name": "Lagtrekning for volleyball",
+    "alternateName": "Volleyball – trekk lag",
+    "description": "Trekk jevne volleyballag automatisk ut fra ferdighetsnivå og posisjon. Passer til trening og uformelle kamper. Gratis og uten registrering.",
+    "operatingSystem": "Nettleser",
+    "browserRequirements": "Krever JavaScript.",
+    "featureList": [
+      "Tilfeldig lagtrekning",
+      "Jevn fordeling av spillere",
+      "Støtte for flere språk",
+      "Tilpasset mobil og større skjermer",
+      "Ingen registrering nødvendig",
+      "Gratis å bruke",
+      "Jevne lag etter ferdighetsnivå",
+      "Fordeling etter spillerposisjon"
+    ]
+  },
+  "theme": {
+    "label": "Tema",
+    "light": "Lyst",
+    "dark": "Mørkt",
+    "system": "Følg systemet"
+  }
+}

@@ -21,6 +21,7 @@ describe('language entry URLs', () => {
   it.each([
     ['/', 'pt', 'fr-FR', 'en'],
     ['/pt/', 'en', 'es-ES', 'pt'],
+    ['/nb/', 'en', 'en-US', 'nb'],
     ['/es', 'pt', 'en-US', 'es'],
     ['/en/', 'pt', 'pt-BR', 'en'],
   ])('uses %s regardless of saved and browser preferences', async (path, saved, browser, expected) => {

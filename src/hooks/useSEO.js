@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next'
 
 import { languageFromPath, languagePath } from '../utils/languageUrl.js'
 
+const baseUrl = 'https://volleyball-team-generator.com'
+
 const useSEO = () => {
   const { i18n, t } = useTranslation()
 
@@ -31,7 +33,11 @@ const useSEO = () => {
       if (ogDesc) ogDesc.setAttribute('content', description)
 
       let ogLang = document.querySelector('meta[property="og:locale"]')
-      if (ogLang) ogLang.setAttribute('content', locale)
+      if (ogLang && ogLang.content !== locale) {
+        const alternate = document.querySelector(`meta[property="og:locale:alternate"][content="${locale}"]`)
+        if (alternate) alternate.content = ogLang.content
+        ogLang.content = locale
+      }
 
       let twitterTitle = document.querySelector('meta[name="twitter:title"]')
       if (twitterTitle) twitterTitle.setAttribute('content', title)
@@ -39,8 +45,20 @@ const useSEO = () => {
       let twitterDesc = document.querySelector('meta[name="twitter:description"]')
       if (twitterDesc) twitterDesc.setAttribute('content', description)
 
+      const appName = t('app.title')
+      const image = `${baseUrl}${t('seo.image')}`
+      const imageAlt = t('seo.imageAlt')
+      document.querySelector('meta[name="title"]')?.setAttribute('content', title)
+      document.querySelectorAll('meta[name="author"], meta[name="application-name"], meta[name="apple-mobile-web-app-title"], meta[property="og:site_name"]')
+        .forEach(meta => meta.setAttribute('content', appName))
+      document.querySelectorAll('meta[property="og:image"], meta[name="twitter:image"]')
+        .forEach(meta => meta.setAttribute('content', image))
+      document.querySelectorAll('meta[property="og:image:alt"], meta[name="twitter:image:alt"]')
+        .forEach(meta => meta.setAttribute('content', imageAlt))
+      document.querySelector('link[rel="manifest"]')?.setAttribute('href', t('seo.manifest'))
+
       // Match the language URLs emitted by the static build, without query strings.
-      const canonicalUrl = `https://volleyball-team-generator.com${languagePath(lang)}`
+      const canonicalUrl = `${baseUrl}${languagePath(lang)}`
       document.querySelector('link[rel="canonical"]')?.setAttribute('href', canonicalUrl)
       document.querySelector('meta[property="og:url"]')?.setAttribute('content', canonicalUrl)
       document.querySelector('meta[name="twitter:url"]')?.setAttribute('content', canonicalUrl)
@@ -55,6 +73,24 @@ const useSEO = () => {
 
       // Update HTML lang attribute
       document.documentElement.lang = lang
+
+      const applicationSchema = document.querySelector('script[type="application/ld+json"]:not([data-schema])')
+      if (applicationSchema) {
+        const schema = JSON.parse(applicationSchema.textContent)
+        const name = t('structuredData.name')
+        applicationSchema.textContent = JSON.stringify({
+          ...schema,
+          name,
+          alternateName: t('structuredData.alternateName'),
+          description: t('structuredData.description'),
+          url: canonicalUrl,
+          screenshot: image,
+          operatingSystem: t('structuredData.operatingSystem'),
+          browserRequirements: t('structuredData.browserRequirements'),
+          publisher: { ...schema.publisher, name },
+          featureList: t('structuredData.featureList', { returnObjects: true }),
+        })
+      }
 
       // Update FAQ Schema
       updateFAQSchema()
@@ -78,6 +114,7 @@ const useSEO = () => {
       const faqSchema = {
         "@context": "https://schema.org",
         "@type": "FAQPage",
+        "inLanguage": i18n.language,
         "mainEntity": questions.map(item => ({
           "@type": "Question",
           "name": item.question,

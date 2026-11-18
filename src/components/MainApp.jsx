@@ -254,12 +254,12 @@ function MainApp() {
     });
 
     if (isEmpty) {
-      dispatch({ type: ACTIONS.SET_ERROR, payload: t('errors.empty_name') })
+      dispatch({ type: ACTIONS.SET_ERROR, payload: 'errors.empty_name' })
       return
     }
 
     if (isDuplicate) {
-      dispatch({ type: ACTIONS.SET_ERROR, payload: t('errors.duplicate_name') })
+      dispatch({ type: ACTIONS.SET_ERROR, payload: 'errors.duplicate_name' })
       return
     }
 
@@ -331,12 +331,12 @@ function MainApp() {
     });
 
     if (isEmpty) {
-      dispatch({ type: ACTIONS.SET_ERROR, payload: t('errors.empty_name') })
+      dispatch({ type: ACTIONS.SET_ERROR, payload: 'errors.empty_name' })
       return false
     }
 
     if (isDuplicate) {
-      dispatch({ type: ACTIONS.SET_ERROR, payload: t('errors.duplicate_name') })
+      dispatch({ type: ACTIONS.SET_ERROR, payload: 'errors.duplicate_name' })
       return false
     }
 
@@ -369,12 +369,12 @@ function MainApp() {
     })
 
     if (isEmpty) {
-      dispatch({ type: ACTIONS.SET_ERROR, payload: t('errors.empty_name') })
+      dispatch({ type: ACTIONS.SET_ERROR, payload: 'errors.empty_name' })
       return false // Return false to indicate validation failed
     }
 
     if (isDuplicate) {
-      dispatch({ type: ACTIONS.SET_ERROR, payload: t('errors.duplicate_name') })
+      dispatch({ type: ACTIONS.SET_ERROR, payload: 'errors.duplicate_name' })
       return false // Return false to indicate validation failed
     }
 
@@ -577,6 +577,8 @@ function MainApp() {
           back: t('tour.back'),
           close: t('tour.close'),
           last: t('tour.last'),
+          next: t('tour.next'),
+          open: t('tour.open'),
           nextLabelWithProgress: `${t('tour.next')} ({step}/{steps})`,
           skip: t('tour.skip'),
         }}
@@ -597,7 +599,7 @@ function MainApp() {
             <Alert className="mb-6 border-[var(--color-action-destructive)] bg-[var(--color-action-destructive)]/20">
               <AlertCircle className="size-4" />
               <AlertDescription className="text-[var(--color-text-primary)]">
-                {error}
+                {t(error)}
               </AlertDescription>
             </Alert>
           )}
@@ -662,7 +664,7 @@ function MainApp() {
                   <EditParticipantDialog
                     open={editDialogOpen}
                     onOpenChange={(open) => { setEditDialogOpen(open); if (!open) clearError() }}
-                    error={error}
+                    error={error ? t(error) : ''}
                     onClearError={clearError}
                     participant={editingParticipant}
                     onSave={saveParticipantEdit}
