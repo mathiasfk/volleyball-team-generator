@@ -30,6 +30,7 @@ const languages = [
   { code: 'it', labelKey: 'language.italian' },
   { code: 'sr', labelKey: 'language.serbian' },
   { code: 'tl', labelKey: 'language.tagalog' },
+  { code: 'th', labelKey: 'language.thai' },
   { code: 'id', labelKey: 'language.indonesian' },
   { code: 'zh', labelKey: 'language.chinese' },
   { code: 'ja', labelKey: 'language.japanese' },

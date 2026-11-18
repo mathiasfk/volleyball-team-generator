@@ -1,5 +1,5 @@
 // Keep these codes aligned with the locale files and the static multilingual build.
-export const supportedLanguages = ['en', 'pt', 'es', 'zh', 'hi', 'ar', 'fr', 'de', 'id', 'tr', 'ja', 'ru', 'fa', 'ur', 'bn', 'uk', 'it', 'sr', 'tl', 'nb']
+export const supportedLanguages = ['en', 'pt', 'es', 'zh', 'hi', 'ar', 'fr', 'de', 'id', 'tr', 'ja', 'ru', 'fa', 'ur', 'bn', 'uk', 'it', 'sr', 'tl', 'nb', 'th']
 
 export const languagePath = (lang) => lang === 'en' ? '/' : `/${lang}/`
 

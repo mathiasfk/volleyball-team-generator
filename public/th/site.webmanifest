@@ -1,0 +1,30 @@
+{
+  "name": "สุ่มจัดทีมวอลเลย์บอล",
+  "short_name": "สุ่มทีมวอลเลย์บอล",
+  "description": "สุ่มจัดทีมวอลเลย์บอลให้สูสีกันตามระดับฝีมือและตำแหน่งของผู้เล่น เหมาะทั้งสำหรับซ้อมและเล่นกับเพื่อน ใช้ฟรีโดยไม่ต้องสมัครสมาชิก",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#1f2937",
+  "background_color": "#111827",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "start_url": "/th/",
+  "scope": "/",
+  "lang": "th",
+  "categories": [
+    "sports",
+    "productivity",
+    "utilities"
+  ],
+  "id": "/"
+}
