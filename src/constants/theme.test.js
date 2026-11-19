@@ -31,7 +31,7 @@ describe('head bootstrap', () => {
     const { readFileSync } = await import('node:fs')
     const { runInNewContext } = await import('node:vm')
     const html = readFileSync('index.html', 'utf8')
-    const script = html.match(/<script>\s*([\s\S]*?)<\/script>/)[1]
+    const script = html.match(/<script>\s*([\s\S]*?)<\/script>/i)[1]
     const classes = new Set(['unrelated'])
     const root = { classList: { remove: (...values) => values.forEach(v => classes.delete(v)), add: value => classes.add(value) }, style: {} }
     const meta = {}
@@ -45,7 +45,7 @@ describe('head bootstrap', () => {
   it('works when storage is unavailable', async () => {
     const { readFileSync } = await import('node:fs')
     const { runInNewContext } = await import('node:vm')
-    const script = readFileSync('index.html', 'utf8').match(/<script>\s*([\s\S]*?)<\/script>/)[1]
+    const script = readFileSync('index.html', 'utf8').match(/<script>\s*([\s\S]*?)<\/script>/i)[1]
     const root = { classList: { remove() {}, add() {} }, style: {} }
     expect(() => runInNewContext(script, { localStorage: { getItem() { throw Error('blocked') } }, document: { documentElement: root, querySelector: () => ({}) }, window: {} })).not.toThrow()
     expect(root.style.colorScheme).toBe('light')
