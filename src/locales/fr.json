@@ -146,6 +146,7 @@
     ]
   },
   "seo": {
+    "manifest": "/fr/site.webmanifest",
     "image": "/fr/og-image.png",
     "imageAlt": "Capture d’écran de l’application de tirage des équipes de volley-ball",
     "title": "Générateur d'équipes de volley - Créez des équipes équilibrées facilement",

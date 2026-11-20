@@ -148,6 +148,7 @@
     ]
   },
   "seo": {
+    "manifest": "/pt/site.webmanifest",
     "image": "/pt/og-image.png",
     "imageAlt": "Captura de tela do aplicativo de sorteio de times de vôlei",
     "title": "Gerador de Times de Vôlei - Crie Times Equilibrados Facilmente",

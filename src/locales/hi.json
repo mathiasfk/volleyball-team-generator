@@ -146,6 +146,7 @@
     ]
   },
   "seo": {
+    "manifest": "/hi/site.webmanifest",
     "image": "/hi/og-image.png",
     "imageAlt": "वॉलीबॉल टीम बनाने वाले ऐप का स्क्रीनशॉट",
     "title": "वॉलीबॉल टीम जनरेटर - संतुलित टीमें आसानी से बनाएं",

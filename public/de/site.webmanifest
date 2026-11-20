@@ -1,0 +1,30 @@
+{
+  "name": "Volleyball-Teamgenerator",
+  "short_name": "Volleyball-Teamgenerator",
+  "description": "Kostenlose Volleyball-Teamauslosung online. Erstellen Sie automatisch faire und ausgewogene Teams aus Ihren Spielern. Perfekt für Freundschaftsspiele. Völlig kostenlos, keine Registrierung erforderlich.",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#1f2937",
+  "background_color": "#111827",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "start_url": "/de/",
+  "scope": "/",
+  "lang": "de",
+  "categories": [
+    "sports",
+    "productivity",
+    "utilities"
+  ],
+  "id": "/"
+}

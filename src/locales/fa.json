@@ -146,6 +146,7 @@
     ]
   },
   "seo": {
+    "manifest": "/fa/site.webmanifest",
     "image": "/fa/og-image.png",
     "imageAlt": "تصویر صفحهٔ برنامهٔ قرعه‌کشی تیم‌های والیبال",
     "title": "مولد تیم والیبال - ایجاد تیم‌های متعادل به آسانی",

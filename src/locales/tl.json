@@ -146,6 +146,7 @@
     ]
   },
   "seo": {
+    "manifest": "/tl/site.webmanifest",
     "image": "/tl/og-image.png",
     "imageAlt": "Screenshot ng app para sa pagbuo ng mga koponan ng volleyball",
     "title": "Tagabuo ng mga Koponan sa Volleyball - Bumuo ng Balanseng mga Koponan",

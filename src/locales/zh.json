@@ -146,6 +146,7 @@
     ]
   },
   "seo": {
+    "manifest": "/zh/site.webmanifest",
     "image": "/zh/og-image.png",
     "imageAlt": "排球分队应用的屏幕截图",
     "title": "排球队伍生成器 - 轻松创建平衡的队伍",

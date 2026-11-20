@@ -146,6 +146,7 @@
     ]
   },
   "seo": {
+    "manifest": "/tr/site.webmanifest",
     "image": "/tr/og-image.png",
     "imageAlt": "Voleybol takımı oluşturma uygulamasının ekran görüntüsü",
     "title": "Voleybol Takımı Oluşturucu - Dengeli Takımları Kolayca Oluşturun",

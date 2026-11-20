@@ -146,6 +146,7 @@
     ]
   },
   "seo": {
+    "manifest": "/bn/site.webmanifest",
     "image": "/bn/og-image.png",
     "imageAlt": "ভলিবল দল তৈরির অ্যাপের স্ক্রিনশট",
     "title": "ভলিবল টিম জেনারেটর - সহজে ভারসাম্যপূর্ণ দল তৈরি করুন",

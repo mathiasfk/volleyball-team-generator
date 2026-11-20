@@ -146,6 +146,7 @@
     ]
   },
   "seo": {
+    "manifest": "/es/site.webmanifest",
     "image": "/es/og-image.png",
     "imageAlt": "Captura de pantalla de la app de sorteo de equipos de voleibol",
     "title": "Generador de Equipos de Voleibol - Crea Equipos Equilibrados Fácilmente",

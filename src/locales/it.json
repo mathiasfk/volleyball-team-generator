@@ -146,6 +146,7 @@
     ]
   },
   "seo": {
+    "manifest": "/it/site.webmanifest",
     "image": "/it/og-image.png",
     "imageAlt": "Schermata dell’app per sorteggiare le squadre di pallavolo",
     "title": "Generatore di Squadre di Pallavolo - Crea Squadre Equilibrate Facilmente",

@@ -146,6 +146,7 @@
     ]
   },
   "seo": {
+    "manifest": "/ja/site.webmanifest",
     "image": "/ja/og-image.png",
     "imageAlt": "バレーボールのチーム分けアプリのスクリーンショット",
     "title": "バレーボールチームジェネレーター - バランスの取れたチームを簡単に作成",

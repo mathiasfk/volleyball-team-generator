@@ -1,0 +1,31 @@
+{
+  "name": "والی بال ٹیم جنریٹر",
+  "short_name": "والی بال ٹیم جنریٹر",
+  "description": "مفت آن لائن والی بال ٹیم قرعہ اندازی۔ اپنے کھلاڑیوں سے خودکار طور پر منصفانہ اور متوازن ٹیمیں بنائیں۔ دوستانہ کھیلوں کے لیے بہترین۔ مکمل طور پر مفت اور رجسٹریشن کی ضرورت نہیں۔",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#1f2937",
+  "background_color": "#111827",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "start_url": "/ur/",
+  "scope": "/",
+  "lang": "ur",
+  "categories": [
+    "sports",
+    "productivity",
+    "utilities"
+  ],
+  "id": "/",
+  "dir": "rtl"
+}

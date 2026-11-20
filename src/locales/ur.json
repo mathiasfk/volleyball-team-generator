@@ -146,6 +146,7 @@
     ]
   },
   "seo": {
+    "manifest": "/ur/site.webmanifest",
     "image": "/ur/og-image.png",
     "imageAlt": "والی بال کی ٹیمیں بنانے والی ایپ کا اسکرین شاٹ",
     "title": "والی بال ٹیم جنریٹر - متوازن ٹیمیں آسانی سے بنائیں",

@@ -1,0 +1,30 @@
+{
+  "name": "Tagabuo ng mga Koponan sa Volleyball",
+  "short_name": "Tagabuo ng mga Koponan sa Volleyball",
+  "description": "Libreng online na tagabuo ng mga koponan sa volleyball. Awtomatikong lumikha ng makatarungan at balanseng mga koponan mula sa iyong mga manlalaro. Perpekto para sa mga pickup games. Ganap na libre, walang kinakailangang pagrehistro.",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#1f2937",
+  "background_color": "#111827",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "start_url": "/tl/",
+  "scope": "/",
+  "lang": "tl",
+  "categories": [
+    "sports",
+    "productivity",
+    "utilities"
+  ],
+  "id": "/"
+}

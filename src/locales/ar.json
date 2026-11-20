@@ -146,6 +146,7 @@
     ]
   },
   "seo": {
+    "manifest": "/ar/site.webmanifest",
     "image": "/ar/og-image.png",
     "imageAlt": "لقطة شاشة لتطبيق توزيع فرق الكرة الطائرة",
     "title": "مولّد فرق الكرة الطائرة - أنشئ فرقاً متوازنة بسهولة",

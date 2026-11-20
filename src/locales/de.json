@@ -146,6 +146,7 @@
     ]
   },
   "seo": {
+    "manifest": "/de/site.webmanifest",
     "image": "/de/og-image.png",
     "imageAlt": "Screenshot der App zum Auslosen von Volleyballteams",
     "title": "Volleyball-Teamgenerator – Erstellen Sie ausgewogene Teams einfach",

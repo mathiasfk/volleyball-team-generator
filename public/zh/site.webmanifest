@@ -1,0 +1,30 @@
+{
+  "name": "排球队伍生成器",
+  "short_name": "排球队伍生成器",
+  "description": "免费在线排球分队抽签。自动从您的球员中创建公平、均衡的队伍。非常适合休闲比赛。完全免费，无需注册。",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#1f2937",
+  "background_color": "#111827",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "start_url": "/zh/",
+  "scope": "/",
+  "lang": "zh",
+  "categories": [
+    "sports",
+    "productivity",
+    "utilities"
+  ],
+  "id": "/"
+}
