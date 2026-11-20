@@ -1,0 +1,30 @@
+{
+  "name": "Генератор волейбольных команд",
+  "short_name": "Генератор волейбольных команд",
+  "description": "Бесплатная жеребьёвка волейбольных команд онлайн. Автоматически создавайте честные и сбалансированные команды из своих игроков. Идеально подходит для дружеских матчей. Полностью бесплатно, регистрация не требуется.",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#1f2937",
+  "background_color": "#111827",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "start_url": "/ru/",
+  "scope": "/",
+  "lang": "ru",
+  "categories": [
+    "sports",
+    "productivity",
+    "utilities"
+  ],
+  "id": "/"
+}

@@ -146,6 +146,9 @@
     ]
   },
   "seo": {
+    "manifest": "/fr/site.webmanifest",
+    "image": "/fr/og-image.png",
+    "imageAlt": "Capture d’écran de l’application de tirage des équipes de volley-ball",
     "title": "Générateur d'équipes de volley - Créez des équipes équilibrées facilement",
     "description": "Tirage au sort gratuit d'équipes de volley en ligne. Créez automatiquement des équipes justes et équilibrées avec vos joueurs. Parfait pour les matchs entre amis. Entièrement gratuit, sans inscription requise.",
     "languageName": "Français",

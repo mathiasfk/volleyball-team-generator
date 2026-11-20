@@ -146,6 +146,9 @@
     ]
   },
   "seo": {
+    "manifest": "/tr/site.webmanifest",
+    "image": "/tr/og-image.png",
+    "imageAlt": "Voleybol takımı oluşturma uygulamasının ekran görüntüsü",
     "title": "Voleybol Takımı Oluşturucu - Dengeli Takımları Kolayca Oluşturun",
     "description": "Ücretsiz çevrimiçi voleybol takımı oluşturucu. Oyuncularınızdan otomatik olarak adil ve dengeli takımlar oluşturun. Günlük maçlar için mükemmel. Tamamen ücretsiz, kayıt gerekmez.",
     "languageName": "Türkçe",

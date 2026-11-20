@@ -146,6 +146,9 @@
     ]
   },
   "seo": {
+    "manifest": "/de/site.webmanifest",
+    "image": "/de/og-image.png",
+    "imageAlt": "Screenshot der App zum Auslosen von Volleyballteams",
     "title": "Volleyball-Teamgenerator – Erstellen Sie ausgewogene Teams einfach",
     "description": "Kostenlose Volleyball-Teamauslosung online. Erstellen Sie automatisch faire und ausgewogene Teams aus Ihren Spielern. Perfekt für Freundschaftsspiele. Völlig kostenlos, keine Registrierung erforderlich.",
     "languageName": "Deutsch",

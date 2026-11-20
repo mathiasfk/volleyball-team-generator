@@ -1,0 +1,30 @@
+{
+  "name": "Generador de Equipos de Vóley",
+  "short_name": "Generador de Equipos de Vóley",
+  "description": "Sorteo gratuito de equipos de voleibol en línea. Crea automáticamente equipos justos y equilibrados con tus jugadores. Perfecto para partidos informales. Completamente gratis y no requiere registro.",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#1f2937",
+  "background_color": "#111827",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "start_url": "/es/",
+  "scope": "/",
+  "lang": "es",
+  "categories": [
+    "sports",
+    "productivity",
+    "utilities"
+  ],
+  "id": "/"
+}

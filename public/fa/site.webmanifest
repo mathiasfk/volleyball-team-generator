@@ -1,0 +1,31 @@
+{
+  "name": "مولد تیم والیبال",
+  "short_name": "مولد تیم والیبال",
+  "description": "قرعه‌کشی رایگان تیم والیبال آنلاین. به صورت خودکار تیم‌های عادلانه و متعادل از بازیکنان خود ایجاد کنید. عالی برای بازی‌های دوستانه. کاملاً رایگان و بدون نیاز به ثبت‌نام.",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#1f2937",
+  "background_color": "#111827",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "start_url": "/fa/",
+  "scope": "/",
+  "lang": "fa",
+  "categories": [
+    "sports",
+    "productivity",
+    "utilities"
+  ],
+  "id": "/",
+  "dir": "rtl"
+}

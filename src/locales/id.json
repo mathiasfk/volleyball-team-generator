@@ -146,6 +146,9 @@
     ]
   },
   "seo": {
+    "manifest": "/id/site.webmanifest",
+    "image": "/id/og-image.png",
+    "imageAlt": "Tangkapan layar aplikasi pengacak tim bola voli",
     "title": "Generator Tim Voli - Buat Tim yang Seimbang dengan Mudah",
     "description": "Pengundian tim voli online gratis. Buat tim yang adil dan seimbang secara otomatis dari pemain Anda. Sempurna untuk pertandingan kasual. Sepenuhnya gratis dan tidak perlu registrasi.",
     "languageName": "Bahasa Indonesia",

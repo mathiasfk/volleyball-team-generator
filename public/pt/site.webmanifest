@@ -1,0 +1,30 @@
+{
+  "name": "Sorteio de Times de Vôlei",
+  "short_name": "Sorteio de Times de Vôlei",
+  "description": "Sorteio gratuito de times de vôlei online. Crie automaticamente times justos e equilibrados com seus jogadores. Perfeito para jogos casuais. Completamente grátis e não precisa de cadastro.",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#1f2937",
+  "background_color": "#111827",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "start_url": "/pt/",
+  "scope": "/",
+  "lang": "pt",
+  "categories": [
+    "sports",
+    "productivity",
+    "utilities"
+  ],
+  "id": "/"
+}
