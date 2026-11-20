@@ -45,6 +45,10 @@ function MainApp() {
 
   const [state, dispatch] = useReducer(appReducer, initialState)
   const clearHighlightTimeoutRef = useRef(null)
+  const participantsContentRef = useRef(null)
+  const resultsRef = useRef(null)
+  const redrawButtonRef = useRef(null)
+  const revealDrawResultsRef = useRef(null)
 
   const {
     participants,
@@ -57,6 +61,41 @@ function MainApp() {
     changedPlayerIds,
     previousPlayerPositions,
   } = state
+
+  useEffect(() => {
+    const reveal = revealDrawResultsRef.current
+    revealDrawResultsRef.current = null
+    if (!reveal || teams.length === 0) return
+
+    if (reveal.restoreFocus && document.activeElement === document.body) {
+      redrawButtonRef.current?.focus({ preventScroll: true })
+    }
+
+    const showResults = () => {
+      const results = resultsRef.current
+      const redrawButton = redrawButtonRef.current
+      if (!results || !redrawButton) return
+
+      const firstTeam = results.querySelector('.tour-teams')?.firstElementChild
+      if (redrawButton.getBoundingClientRect().top < 0 || firstTeam?.getBoundingClientRect().top >= window.innerHeight) {
+        redrawButton.scrollIntoView({ block: 'start', behavior: 'instant' })
+      }
+    }
+
+    const animations = participantsContentRef.current?.getAnimations() ?? []
+    if (animations.length === 0) {
+      showResults()
+      return
+    }
+
+    let cancelled = false
+    Promise.allSettled(animations.map(animation => animation.finished)).then(() => {
+      if (!cancelled && participantsContentRef.current?.dataset.state !== 'open') {
+        showResults()
+      }
+    })
+    return () => { cancelled = true }
+  }, [teams])
 
   const [editDialogOpen, setEditDialogOpen] = useState(false)
   const [editingParticipant, setEditingParticipant] = useState(null)
@@ -387,12 +426,12 @@ function MainApp() {
     return true // Return true to indicate success
   }
 
-  const handleDrawTeamsClick = () => {
+  const handleDrawTeamsClick = (event) => {
     gtag('event', 'draw_team_primary', {
       'participant_count': participants.length,
       'has_existing_teams': teams.length > 0
     });
-    drawTeams(null)
+    drawTeams(null, { restoreFocus: document.activeElement === event.currentTarget })
   }
 
   const handleDropdownOpenChange = (open) => {
@@ -412,7 +451,7 @@ function MainApp() {
     drawTeams(keepTeamId)
   }
 
-  const drawTeams = (keepTeamId = null) => {
+  const drawTeams = (keepTeamId = null, revealResults = null) => {
     // Clear any existing timeout to prevent conflicts
     if (clearHighlightTimeoutRef.current) {
       clearTimeout(clearHighlightTimeoutRef.current)
@@ -460,13 +499,15 @@ function MainApp() {
 
     // Use a small delay to ensure the cleared state is processed before applying new highlights
     setTimeout(() => {
+      revealDrawResultsRef.current = formedTeams.length > 0 ? revealResults : null
       dispatch({
         type: ACTIONS.SET_TEAMS,
         payload: {
           teams: formedTeams,
           benchPlayers: remainingPlayers,
           changedPlayerIds: changedPlayersArray,
-          newPlayerPositions: newPlayerPositions
+          newPlayerPositions: newPlayerPositions,
+          collapseParticipants: Boolean(revealDrawResultsRef.current)
         }
       })
 
@@ -628,7 +669,7 @@ function MainApp() {
                   </CardTitle>
                 </CollapsibleTrigger>
               </CardHeader>
-              <CollapsibleContent className="mb-6">
+              <CollapsibleContent ref={participantsContentRef} className="participants-content mb-6">
                 <CardContent className="px-4 py-3 sm:px-6 sm:py-4">
                   {participants.some(p => p.isExample === true) && (
                     <p className="mb-3 ds-text-small text-[var(--color-text-secondary)]">
@@ -690,9 +731,10 @@ function MainApp() {
               // Split button when teams exist
               <div className="flex items-stretch tour-draw-button w-full md:w-auto">
                 <Button
+                  ref={redrawButtonRef}
                   onClick={handleDrawTeamsClick}
                   disabled={participants.length === 0}
-                  className="flex-1 px-8 py-3 rounded-e-none border-e border-white/20 bg-primary text-primary-foreground hover:bg-[var(--primary-hover)] disabled:opacity-50 md:flex-initial ds-text-primary"
+                  className="flex-1 scroll-mt-4 px-8 py-3 rounded-e-none border-e border-white/20 bg-primary text-primary-foreground hover:bg-[var(--primary-hover)] disabled:opacity-50 md:flex-initial ds-text-primary"
                 >
                   <Shuffle className="size-5 me-2" />
                   {t('dialog.draw_teams.redraw_all')}
@@ -739,7 +781,7 @@ function MainApp() {
 
           {/* Draw Results */}
           {teams.length > 0 && (
-            <div className="space-y-6 tour-results">
+            <div ref={resultsRef} className="space-y-6 tour-results">
               <h2 className="ds-text-section text-center text-[var(--color-text-primary)]">
                 {t('results.title')}
               </h2>
