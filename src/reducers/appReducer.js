@@ -177,6 +177,7 @@ export function appReducer(state, action) {
         benchPlayers: updatedBenchPlayers,
         changedPlayerIds: action.payload.changedPlayerIds || [],
         previousPlayerPositions: action.payload.newPlayerPositions || null,
+        openParticipants: action.payload.collapseParticipants ? false : state.openParticipants,
         error: '',
         openDrawDialog: false,
       }
