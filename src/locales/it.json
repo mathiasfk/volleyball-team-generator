@@ -146,6 +146,8 @@
     ]
   },
   "seo": {
+    "image": "/it/og-image.png",
+    "imageAlt": "Schermata dell’app per sorteggiare le squadre di pallavolo",
     "title": "Generatore di Squadre di Pallavolo - Crea Squadre Equilibrate Facilmente",
     "description": "Sorteggio gratuito di squadre di pallavolo online. Crea automaticamente squadre eque ed equilibrate con i tuoi giocatori. Perfetto per partite amichevoli. Completamente gratuito, nessuna registrazione richiesta.",
     "languageName": "Italiano",
